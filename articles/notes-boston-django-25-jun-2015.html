@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../static/css/style.css">
-    <title>Notes: Boston Django Meetup, Intro to Flask, 25 June 2015- Samuel Taylor</title>
+    <title>Notes: Boston Django Meetup, Intro to Flask, 25 June 2015 - Samuel Taylor</title>
   </head>
   <body>
 <span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Notes: Boston Django Meetup, Intro to Flask, 25 June 2015</span>
@@ -19,13 +19,13 @@ they may or may not be useful to others. Theses notes are not exhaustive.</p>
 
 <p>Functions that are decorated with <code>@flaskapp.route()</code> should return:</p>
 
-<ul>
+<ul class="section-content">
 <li>a string</li>
 <li>a tuple of (response, status, headers)</li>
 <li><code>flask.Response</code> / <code>current_app.response_class</code></li>
 <li><p>a WSGI callable</p>
 
-<ul>
+<ul class="section-content">
 <li>In theory, your function could return another Flask app, or spit out a WSGI
 callable that generated a massive CSV on the fly and streamed it to the user</li>
 </ul></li>
@@ -42,7 +42,7 @@ callable that generated a massive CSV on the fly and streamed it to the user</li
 
 <p>Sessions in Flask are interesting</p>
 
-<ul>
+<ul class="section-content">
 <li>Session data is serialized to JSON, cryptographically signed, and set in the
 user's browser as a cookie</li>
 <li>Because it's client side, it doesn't matter which datacenter they end up in</li>
@@ -60,7 +60,7 @@ have to implement two <code>__</code> methods to get the benefits of them</p></l
 
 <p>Blueprints:</p>
 
-<ul>
+<ul class="section-content">
 <li>Helpful when your app gets bigger</li>
 <li>They're very similar to <code>Flask</code> objects with an additional "namespace"</li>
 <li><p>`app.register<em>blueprint(bp, url</em>prefix='/counter')</p></li>
@@ -69,7 +69,7 @@ have to implement two <code>__</code> methods to get the benefits of them</p></l
 
 <p>Deploying:</p>
 
-<ul>
+<ul class="section-content">
 <li>gevent, gunicorn, nginx, ansible  </li>
 <li>supervisor  </li>
 <li>pip freeze</li>
