@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Hackathon report: HackTX 2015 - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Hackathon report: HackTX 2015</span>
+<h1>Hackathon report: HackTX 2015</h1>
+
+<h2>Idea</h2>
+
+<p>My team and I started thinking of ideas on the drive down to Austin. We ended up
+deciding to do something that would automate the scheduling of meetings.</p>
+
+<h2>Project</h2>
+
+<p>We started writing a Python/Flask app hosted on Azure. Getting the project
+deployed initially was easy, as was setting up continuous integration. Last
+year, we wrote a PHP web app, and none of us were able to use our computers to
+test. In essence, the production server was also our development server. Using
+Flask was awesome because it comes with a development server.</p>
+
+<p>Wes started to work on the UI, I worked on figuring out a way to read people's
+emails with Context.IO, and Evan worked on user account management. He started
+to use Flask-User, but then we couldn't get it to work on the Azure
+configuration we had set up. It was late at night, I wasn't sure what other
+library to use, and Wes was starting to hate Python, so we made a hard decision
+and switched everything to PHP.</p>
+
+<p>At this point, we had to set up DeployBot to do continuous integration, and we
+went back to the issue of not having servers to do development on. As a result,
+the git log got pretty terrible.</p>
+
+<p>I got a script to check a user's email inbox for emails that looked like someone
+trying to schedule a meeting and set it up to run on a cron job while Evan
+worked on our SendGrid integration.</p>
+
+<p>The actual scheduling logic came into play much later in the day than we would
+have hoped. Luckily, it didn't turn out to be too challenging, so we were able
+to get it implemented and finally create our app's core functionality.</p>
+
+<p>In the end, our product was definitely more hacky than any of us would have
+liked, but it worked well enough to demonstrate.</p>
+
+<h2>Presentation</h2>
+
+<p>Once again, presentations were "science fair" style this year, which was great.
+Several judges came around and asked about our project. Our pitch was something
+like this:</p>
+
+<p>I've been doing job hunting lately, which involves a good amount of emailing
+back and forth to coordinate interviews. This process is a tedious chore; sounds
+like a job for computers! We built Schedule Ninja, an awesome computerized ninja
+that slices and dices your meetings so you don't have to.</p>
+
+<p>Users log in with their Google account, which we use to pull in their
+availability through Google Calendar. We read their email in order to find
+messages that look like someone trying to set up a meeting. From those emails,
+we generate a request on the user's dashboard that they can either accept or
+deny. If they accept the request, Schedule Ninja emails the requester back with
+the user's availability and asks them to click a link to confirm their meeting
+time.</p>
+
+<p>Schedule Ninja can also be used to request a meeting with someone else. The user
+types in an email address, and we detect whether that person is on our service.
+If they are, we are able to avoid email altogether, compare the two people's
+schedules, and set up a meeting for them automatically.</p>
+
+<p>We got some great feedback from several judges who wanted to sign up for the
+service immediately. That felt very validating; we had built something users
+actually wanted! Unfortunately, we didn't place overall, but we did end up
+winning sponsor prizes from Microsoft and Indeed.</p>
+
+<h2>Conclusion</h2>
+
+<p>We had a lot of fun and built a useful product in 24 hours. Big thanks to the
+HackTX organizers, Context.IO, Square, Microsoft, and Indeed for all their
+feedback and help. If you've not gone to a hackathon, you should definitely sign
+up! They're super fun!</p>
+
+<p>If you want to get in touch for any reason, I can be reached at
+sgt@samueltaylor.org. Thanks!</p>
+  </body>
+</html>
