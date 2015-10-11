@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Hackathon report: TAMUHack 2015 - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Hackathon report: TAMUHack 2015</span>
+<h1>Hackathon report: TAMUHack 2015</h1>
+
+<h2>Idea</h2>
+
+<p>Two weeks ago, <a href="/articles/hacktx-2015.md">I went to HackTX</a> and won a Leap
+Motion. While thinking about what things we could build with skeletal tracking
+and gesture recognition, I thought it would be cool to build a language learning
+tool (like Rosetta Stone) for American Sign Language. My friend
+<a href="http://matttinsley.org/">Matt</a> also thought it sounded cool, so we decided to
+build something like that at TAMUHack.</p>
+
+<h2>Environment</h2>
+
+<p>TAMUHack was fun. The venue was called "The Zone", which is a big room in A&amp;M's
+stadium. All 300 of us were in this massive room, along eight big tables. Being
+in the same room as everyone else was really cool; you felt like you were all a
+part of something. I've been to other hackathons where I've not been able to
+find a seat in the main areas; being separated from the rest of the teams is not
+fun. The organizers of TAMUHack found a great solution to that problem--put
+everyone together!</p>
+
+<h2>Project evolution</h2>
+
+<p>We started to build something that would simply transcribe signs of the ASL
+alphabet as a user signed them above the Leap Motion. By around
+<a href="https://github.com/ssaamm/sign-language-tutor/commit/35aac3168fd37a984087dc269607aa815e382fc8">3:00am</a>,
+we had that more or less working. Playing around with it, we knew it definitely
+wasn't perfect, but it showed promise.</p>
+
+<p>The Leap Motion is not particularly well-suited to sign language recognition. In
+our research during the hackathon, we found a research paper that said the Leap
+Motion in its current state <a href="http://www98.griffith.edu.au/dspace/bitstream/handle/10072/59247/89839_1.pdf">isn't a good choice for recognizing Australian Sign
+Language</a>.</p>
+
+<p>As an initial run at solving this, we decided to implement some simple Markov
+chain analysis. The idea was that if certain letters commonly precede others, we
+should be able to figure out that a person signing "q" will probably sign "u"
+next. That idea didn't end up helping us out all that much; we tore it out
+later. After we input some more training data, the recognition was good enough
+that we could work with it.</p>
+
+<p>At that point, we had some time left and felt like we could keep going to make
+something cooler than what we had. We decided to make the language learning tool
+we'd originally planned on making. By
+<a href="https://github.com/ssaamm/sign-language-tutor/commit/90bed1fbe605bec0932b3ccb6e41e685dc70ea3b">8:00am</a>,
+we had a basic version working. The app would show you a picture of a sign and
+ask you to replicate it. Once you had, it would give you 100 points and pick
+another sign for you to make. After 30 seconds, you could enter your score on
+our leaderboard. We decided to make our project into a game because it seemed
+like a fun way to demo the tech we had built.</p>
+
+<p>We ended up
+<a href="https://github.com/ssaamm/sign-language-tutor/commit/c0fb39b539a579419516ae6e6bcfc2b59452caf2">finishing</a>
+about an hour before projects were due. We were so happy to have built something
+so cool and fun to make in such a short amount of time.</p>
+
+<h2>Presentations</h2>
+
+<p>We set up our area with our laptops and the two external monitors we brought. We
+each ran a copy of our app on an external monitor and had the Leap Motion
+visualizer on our laptop screens. This ended up being super useful; we could
+show people what the Leap Motion was seeing in real time.</p>
+
+<p>Getting to show off our project to judges and other hackers was super fun.
+People thought it was super cool and were excited to play around with it.</p>
+
+<p>We got into the top six and were asked to present at closing cermonies. Awesome!
+It was a little rushed because things were running late, but I still enjoyed
+getting to talk about our hack in front of everyone.</p>
+
+<p>Apparently the judges also thought it was cool, because Matt and I won second
+place overall!</p>
+
+<h2>Thanks</h2>
+
+<p>TAMUHack was super fun. Huge thanks to the organizers, volunteers, and judges.</p>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>ASL Tutor - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Projects</a> &gt; ASL Tutor</span>
+<h1>ASL Tutor</h1>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KUIJNmyelaY"
+frameborder="0" allowfullscreen></iframe>
+
+<h1>Idea</h1>
+
+<p>Deaf people have significant things to offer to society, yet they are often left
+out of critical dialogues because of communication barriers.</p>
+
+<p>ASL tutor is Rosetta Stone for sign language; it helps people learn American
+Sign Language in a fun, easy way. We show users an image of a particular sign
+and use skeletal tracking combined with machine learning to detect the physical
+location/orientation of your hand and determine what sign you are making.</p>
+
+<h1>Tech used</h1>
+
+<ol class="section-content">
+<li>Leap Motion -- used for the skeletal tracking. We were able to get sixty
+parameters of data about the human hand out of the SDK, which was extremely
+useful.</li>
+<li>scikit-learn -- used for the machine learning algorithms. We analyzed roughly
+ten different classification algorithms before settling on a support vector
+classifier with parameters tuned to our specific data set.</li>
+<li>Python/Flask -- used for the front end. We feel comfortable with web
+technologies, so we decided to use them to build the front end of our
+application.</li>
+<li>SQLAlchemy/Redis -- used for storing training data for the machine learning
+algorithms and for storing the scoreboard.</li>
+</ol>
+
+<p>I wrote more about the process of building it in my <a href="/articles/tamuhack-2015.html">writeup of TAMUHack
+2015</a>.</p>
+
+<h1>Future improvements</h1>
+
+<p>Currently, ASL Tutor is only able to recognize the alphabet, but we'd like to
+improve it to be able to recognize any sign.</p>
+
+<p>The "game" aspect of it was mostly devised as a fun way to demo our sign
+language recognition at a hackathon. Turns out that it's legitimately fun, but I
+think there are other applications of this technology as well. For example, it
+would be cool to build an on-the-fly translator for ASL.</p>
+  </body>
+</html>
