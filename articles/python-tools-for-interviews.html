@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Useful Python language features for interviews - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Useful Python language features for interviews</span>
+<h1>Useful Python language features for interviews</h1>
+
+<h2><code>collections.namedtuple</code></h2>
+
+<p><code>namedtuple</code> can make your code a lot more readable. In an interview, that's
+helpful for a few reasons. First, it can help you demonstrate a good
+understanding of some of Python's standard libraries. Second, it helps you show
+off that you place importance on writing readable code. Third, it makes writing
+your code easier. If you're passing around tuples, it can be easy to forget
+what the object at each index into the tuple is. Using a <code>namedtuple</code> can help
+you avoid that.</p>
+
+<p>Consider the case where you need to represent colors. You could choose to do so
+with a 3-tuple of the form <code>(i, j, k)</code> (where <code>i</code>, <code>j</code>, and <code>k</code> are integers on
+the range 0-255). This representation seems intuitive and natural enough. <code>i</code>
+could be the value for red, <code>j</code> for green, and <code>k</code> for blue. A problem with this
+approach is that you may forget which of the three numbers represents which
+primary color of light. Using a <code>namedtuple</code> could help with this:</p>
+
+<pre><code>Color = namedtuple('Color', ['red', 'green', 'blue'])
+</code></pre>
+
+<p>What does this change? Well, building a <code>Color</code> is almost the same as building
+that tuple you were previously building. Instead of doing <code>(i, j, k)</code>, you'll
+now write <code>Color(i, j, k)</code>. This is perhaps a little more readable, and it adds
+some more semantic meaning to your code. We're no longer just building a tuple;
+we're building a <code>Color</code>.</p>
+
+<p>The real win for <code>namedtuple</code> is in access to its elements.  Before, to get the
+red value for a color <code>c</code>, we would use brackets: <code>c[0]</code>. By comparison, if we
+have a <code>Color</code> called <code>c</code>, we could use a more friendly dot syntax: <code>c.red</code>. In
+my experience, while not having to remember the index of the red element is
+nice, the real win is in how much more readable <code>c.red</code> is in contrast to
+<code>c[0]</code>.</p>
+
+<h2><code>collections.defaultdict</code> and <code>collections.Counter</code></h2>
+
+<p>Suppose your interviewer asks you to find the most common string in a list of
+strings. We can solve this problem using a <code>defaultdict</code> (let's call it <code>d</code>). We
+could loop through the list, incrementing <code>d[elem]</code> for each element. Then, we
+just find the one we saw most. The implementation would look like this:</p>
+
+<pre><code>def most_common_dd(lst):
+    d = defaultdict(int)
+    for e in lst:
+        d[e] += 1
+
+    return max(d.iteritems(), key=lambda t: t[1])
+</code></pre>
+
+<p>Apparently, users and maintainers of Python saw this pattern enough that they
+decided to create <code>Counter</code>. <code>Counter</code> lets us write a much more succinct
+version of this function, because <code>Counter</code> encapsulates the process of counting
+the number of ocurrences of elements in an iterable. Implementing this
+functionality with a `Counter object would look like this:</p>
+
+<pre><code>def most_common_ctr(lst):
+    return Counter(lst).most_common(1)[0]
+</code></pre>
+
+<p>These both have the same result:</p>
+
+<pre><code>from collections import Counter, defaultdict
+
+strings = ['bear', 'down', 'you', 'bears', 'of', 'old', 'baylor', 'u', "we're",
+        'all', 'for', 'you', "we're", 'gonna', 'show', 'dear', 'old', 'baylor',
+        'spirit', 'through', 'and', 'through', 'come', 'on', 'and', 'fight',
+        'them', 'with', 'all', 'your', 'might', 'you', 'bruins', 'bold', 'and',
+        'win', 'all', 'our', 'victories', 'for', 'the', 'green', 'and', 'gold']
+
+'''
+definitions for most_common_ctr and most_common_dd
+'''
+
+assert most_common_dd(strings) == most_common_ctr(strings)
+</code></pre>
+
+<p>But the version using <code>Counter</code> is more concise.</p>
+
+<h2>Comprehensions</h2>
+
+<p>I love list comprehensions. They can make code much more concise and readable.
+Consider a problem where we have a start point and an end point on a grid:</p>
+
+<pre><code>|S|_|_|_|
+|_|_|_|_|
+|_|_|_|_|
+| | | |E|
+</code></pre>
+
+<p>Let's further say that from a given cell, you can travel up, down, left or right
+into another cell (but not diagonally). We may want to do a bread-first search
+to find the minimum cost to get from the start to the end. At some point, we'll
+need to push the neighbors of the current cell onto the queue we're using for
+the BFS. This could look something like this:</p>
+
+<pre><code>for neigh in neighbors(cell):
+    # validate neigh
+    queue.append(neigh)
+</code></pre>
+
+<p>How should <code>neighbors(cell)</code> work? Well, we could use a double for loop to
+generate the neighbors:</p>
+
+<pre><code>def neighbors(cell):
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if i == 0 and j == 0 or abs(i) + abs(j) &gt; 1:
+                continue
+            yield (cell[0] + i, cell[0] + j)
+</code></pre>
+
+<p>This works, but it's ugly. Instead, we could use a list comprehension:</p>
+
+<pre><code>DIRS = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+def neighbors(cell):
+    return [(cell[0] + d[0], cell[1] + d[1]) for d in DIRS]
+</code></pre>
+
+<p>We're also probably going to want to keep track of which cells we've already
+visited (so we don't try to go back through them). We could create a matrix of
+<code>bool</code>s the same size as our original grid (let's call it <code>visited</code>) and set
+<code>visited[r][c]</code> when we visit the cell located at row <code>r</code> and column <code>c</code>. But
+how should we initialize this matrix? We could do something like this:</p>
+
+<pre><code>visited = []
+for i in range(n):
+    visited.append([])
+    for j in range(n):
+        visited[i].append(False)
+</code></pre>
+
+<p>But list comprehensions can make this much more concise:</p>
+
+<pre><code>visited = [[False for _ in range(n)] for _ in range(n)]
+</code></pre>
+
+<p>The possibilities with list comprehensions are just about endless, so I'll leave
+it at that!</p>
+  </body>
+</html>
