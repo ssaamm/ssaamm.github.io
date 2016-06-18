@@ -11,45 +11,13 @@
 <span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Projects</a> &gt; Social and Drift-Aware Collaborative Filtering</span>
 <h1>Social and Drift-Aware Collaborative Filtering</h1>
 
-<p>I am interested in the task of recommending new items to users. Roughly
-speaking, the input to this task is a set of (user, item, rating) tuples (that
-is to say, <code>$user</code> gave <code>$item</code> a rating of <code>$rating</code>) as well as a specific
-user for whom to generate a recommendation. The output is an item (or
-potentially a set of items) that the user has not already rated, but ideally
-will rate highly.</p>
+<p>For my CSI 5325 (Introduction to Machine Learning) class, I worked on a project
+which explored improvement on collaborative filtering by (a) taking into account
+social data when calculating user similarity and (b) taking into account changes
+in user similarity over time (for example, two people may like the same
+Christmas movies and give lots of similar ratings in December, but diverge
+significantly afterward).</p>
 
-<p>Systems to do this are called recommender systems. One technique often used in
-recommender systems is collaborative filtering, in which users are recommended
-items that are liked by other users with similar rating histories. A principle
-of collaborative filtering is that similar users like similar things.</p>
-
-<p>For my CSI 5325 (Introduction to Machine Learning) class, I am attempting an
-improvement on collaborative filtering by (a) taking into account social data
-when calculating user similarity and (b) taking into account changes in user
-similarity over time (for example, two people may like the same Christmas movies
-and give lots of similar ratings in December, but diverge significantly
-afterward). The hope is that this view of user similarity, being aware of both
-social data and change over time, could improve rating accuracy.</p>
-
-<p>People have already researched social network-based recommender systems
-<a href="http://link.springer.com/chapter/10.1007/978-1-4419-6287-4_4">[1]</a> with good
-results (friends often like the same kinds of things). Some of the problems with
-collaborative filtering can be circumvented by calculating user similarity using
-social data.</p>
-
-<p>There is also promising research on accounting for drift in user interests
-<a href="http://dse.fmi.uni-sofia.bg/HomePages/IvanKoychev/papers/ECAI2000_WSTR.pdf">[2]</a>
-(e.g. someone may have a phase of really liking kung fu movies, but stop
-enjoying them after some time). Gradual forgetting is used to give more weight
-to recent ratings and more accurately reflect a user's interests at a given
-time. Having this drift-aware view of user interests is useful in content based
-filtering. I don't think much (if any) research has been done on the drift in
-user similarity (though I'm willing to be wrong about this).</p>
-
-<p>I am interested in exploring the drift in user similarity (based both on social
-data and calculated via collaborative filtering) to see if a system aware of
-user similarity drift can improve rating accuracy. As of right now, I am hopeful
-that I can use gradual forgetting to weight more recent similarities between
-users to improve on collaborative filtering.</p>
+<p>My final report, in PDF format, can be found <a href="/static/pdf/taylor-CollaborativeFilteringImprovements.pdf">here</a>.</p>
   </body>
 </html>
