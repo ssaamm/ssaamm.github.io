@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Python Puzzlers - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Python Puzzlers</span>
+<h1>Python Puzzlers</h1>
+<h2>Default arguments</h2>
+<p>What is the output of this code?</p>
+<pre><code>def foo(arg=[]):
+    return arg
+
+my_list = foo()
+my_list.extend('abc')
+
+print(foo())
+</code></pre>
+<p>My first intution was that this would output the empty list (<code>[]</code>). However, the
+output is:</p>
+<pre><code>['a', 'b', 'c']
+</code></pre>
+<p>Why does this happen? Well, Python evaluates default arguments when the function
+is defined, rather than when it's run. As a consequence, if a default argument
+is mutable and is mutated in one function call, future function calls will be
+working with the mutated argument.</p>
+<h3>Check your understanding</h3>
+<p>Now that you know a bit more about default arguments, what is the output of this
+code?</p>
+<pre><code>def bar(arg=[]):
+    arg.append('a')
+    return arg
+
+bar()
+print(bar())
+</code></pre>
+<p>If you answered:</p>
+<pre><code>['a', 'a']
+</code></pre>
+<p>then you're right!</p>
+  </body>
+</html>
