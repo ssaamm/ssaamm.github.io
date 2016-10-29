@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Writing Better Code: Code as Communication - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Writing Better Code: Code as Communication</span>
+<h1>Writing Better Code: Code as Communication</h1>
+<p>After we compile our code, why do we keep it? The machine is able to interpret
+the compiled code and perform the function we wanted it to, so why keep the
+original code around? Often, the answer to this question is that we may need to
+modify the program in the future. Modifying a bunch of 1's and 0's in a compiled
+file would be very costly in terms of developer time. We keep the original code
+because we can maintain it more easily than the compiled code.</p>
+<p>Code is read more often than it is written. As such, when we are writing code,
+we should keep future developers in mind. Our code is a tool for communicating
+with future developers who are attempting to maintain it. I find two worthwhile
+ways to make code more communicative.</p>
+<h2>Avoid unnecessary comments</h2>
+<p>Only write comments that explain something which isn't apparent after reading
+the code.</p>
+<p>As an example, suppose we're writing an application that interacts with a web
+API to get the current weather. We might write something like this:</p>
+<pre><code>r = requests.get('http://weather.example.com/currentweather?zip=76706')
+</code></pre>
+<p>A bad comment for this code might look like this:</p>
+<pre><code># make a GET request to the weather API for a given ZIP code
+r = requests.get('http://weather.example.com/currentweather?zip=76706')
+</code></pre>
+<p>This comment is unnecessary because it's more or less restating what the code
+says. Any developer reading this code sans the comment will be able to surmise
+that it makes a GET request to some weather API for some ZIP code. Because
+developers can figure this out without the comment, the comment is unnecessary.</p>
+<p>Unnecessary comments are unnecessary; who would've guessed? More interestingly,
+I would argue that they can be harmful. In the future, the API and our use of it
+may change in a number of ways. Suppose we want to lookup weather with a
+latitude/longitude coordinate or that the developers of the API require us to
+make a POST request. We open our code back up, find the line where we look up
+the weather, and modify it</p>
+<pre><code># make a GET request to the weather API for a given ZIP code
+r = requests.post('http://weather.example.com/currentweather?lat=31.5491667&amp;lon=-97.1463889')
+</code></pre>
+<p>Oops! In our haste to update our code, we forgot to update the comment above it,
+which is now an incorrect description of the code below it. Our program
+continues to work just fine (the compiler or interpreter doesn't care about the
+comments), but we've left a confusing artifact for the next developer to find.
+Unnecessary comments are harmful because they can become out of sync with the
+code they are describing, creating confusion and slowing down developers.</p>
+<p>A better comment might look like this:</p>
+<pre><code># get current weather in Waco
+r = requests.get('http://weather.example.com/currentweather?zip=76706')
+</code></pre>
+<p>This comment is better because it's speaking to the reasoning for the code below
+it. As a rule of thumb, comments should describe the <em>why</em> rather than the
+<em>what</em>. Because this comment describes the <em>why</em> rather than the <em>what</em>, it is
+still true when we modify our code as we did abobe--we're still getting the
+current weather in Waco.</p>
+<p>Still, I don't love this comment. It's probably unnecessary, as a developer can
+probably figure out that we're getting the weather (though they may not know
+Waco's ZIP code). At the same time, we may not want future developers to
+have to take the time to read this code thoroughly; that's wy we wrote a comment
+in the first place! If our intent is to create a program that is easily read and
+understood, I think there are often better tools than comments.</p>
+<h2>Write self-documenting code</h2>
+<p>Name and create the constructs of your programs in such a way as to be easily
+read and understood by future maintainers.</p>
+<p>In our previous example, we were getting the current weather in a given place.
+Because we didn't want a future developer to have to read our code in order to
+understand it, we wrote a comment explaining what it did. Alternatively, we
+could have created a well-named function:</p>
+<pre><code>def get_current_weather(zip_code):
+    return requests.get(f'http://weather.example.com/currentweather?zip={zip_code}')
+</code></pre>
+<p>Using this function might look like this:</p>
+<pre><code>get_current_weather(zip_code=76706)
+</code></pre>
+<p>Because the function's behavior is easy to infer from its name, maintainers
+don't have to read the definition of <code>get_current_weather</code> to understand what it
+does (though they can easily choose to). Further, changes to the function can be
+enforced by the interpreter. Suppose we modify this function to take a
+latitude/longitude coordinate:</p>
+<pre><code>def get_current_weather(lat, lon):
+    return requests.get(f'http://weather.example.com/currentweather?lat={lat}&amp;lon={lon}')
+</code></pre>
+<p>Now, if we try to run our program without updating our calls to that function,
+the interpreter will tell us:</p>
+<pre><code>TypeError: get_current_weather() got an unexpected keyword argument 'zip_code'
+</code></pre>
+<p>By creating a well-named function, we not only improved our program's
+readability, we also made it harder for maintainers to break our program
+unintentionally.</p>
+<h2>Conclusion</h2>
+<p>You should be thoughtful about the code you write because the marginal cost of
+being a bit more thoughtful on writing the code is less than the cost of the
+additional time future developers will have to spend in order to read your code.</p>
+  </body>
+</html>
