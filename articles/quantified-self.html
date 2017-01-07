@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../static/css/style.css">
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.min.js' charset='utf-8'></script>
+    <script src="../static/js/metricsgraphics.min.js"></script>
+
+    <link href="../static/css/metricsgraphics.css" rel="stylesheet" type="text/css">
     <title>Experiments with Self-Tracking/Quantified Self - Samuel Taylor</title>
   </head>
   <body>
@@ -19,5 +24,37 @@ every time I sneezed over the course of a week. Here are the results:</p>
 <p>All this time, I though it was fairly rare for me to sneeze once. In reality, I
 sneeze once in a row with decent frequency, and I sneeze twice very
 infrequently.</p>
+<h2>How long does it take to get to work?</h2>
+<p>For a little while, I tracked my commute time with a DO Button that logged the
+time and my location to a spreadsheet. After <a href="https://github.com/ssaamm/personal-etl/blob/d96b546f62cb36f865b938acef5de71e069499dc/commute_time.py">a little cleaning</a>,
+the data looks like this:</p>
+<div id="commute-time"></div>
+
+<script>
+  d3.csv('../static/data/commute_time.csv', function(data) {
+    MG.data_graphic({
+      data: data.map(function transform(point) {
+        return {
+          'start_time': new Date(point.start_time),
+          'duration': point.duration / 60,
+          'destination': point.destination == 'WORK' ? 'Work' :
+            point.destination == 'HOME' ? 'Home' : 'Unknown',
+        };
+      }),
+      //full_width: true,
+      //height: 400,
+      //right: 40,
+      chart_type: 'point',
+      target: '#commute-time',
+      x_accessor: 'start_time',
+      y_accessor: 'duration',
+      y_label: 'Duration (min)',
+      color_accessor: 'destination',
+      color_type: 'category',
+      area: false,
+      interpolate: 'linear',
+    });
+  });
+</script>
   </body>
 </html>
