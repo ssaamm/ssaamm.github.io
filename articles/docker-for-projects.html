@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Host all your projects on one machine with Docker - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Host all your projects on one machine with Docker</span>
+<h1>Host all your projects on one machine with Docker</h1>
+<p>Like many digital builders/hackers/makers, I have <a href="../projects/index.html">several
+projects</a> that I want to put on the internet. I don't,
+however, want to have loads of servers to manage. Given that the highest-traffic
+project I maintain only around 100 unique visitors a day, it's feasible for me
+to host them all on the same node.</p>
+<p>I already deploy these things in Docker containers, so I imagined I could use
+nginx to solve this problem. It would work, I imagined, by having a single
+Docker host running an nginx container that would reverse proxy requests to
+other containers (which would be running the aforementioned projects). When I
+started researching how to do this, I found a great project that made it super
+easy.</p>
+<p>Jason Wilder has a <a href="http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/">great
+post</a>
+that you should read if you want more detail, but the gist is that
+<a href="https://hub.docker.com/r/jwilder/nginx-proxy/">jwilder/nginx-proxy</a> is an nginx
+container that proxies to other containers. It automatically configures nginx
+based on the <code>EXPOSE</code>d ports of the containers you're running, which is almost
+magical.</p>
+<p>Start it up like this:</p>
+<p><code>docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock -t jwilder/nginx-proxy</code></p>
+<p>You can make this even cooler with a bit of fiddling with your DNS records. Add
+an A record that points to the Docker host, then add a wildcard CNAME that
+points to the URL you set up in the A record (see screenshot below for how I
+have it set up).</p>
+<p><img src="/static/img/dns_config.png" alt="DNS configuration"></img></p>
+<p>(where "1.2.3.4" is the IP of your Docker host)</p>
+<p>Now, you can start up a container with a <code>VIRTUAL_HOST</code> environment variable
+that is in that subdomain:</p>
+<p><code>docker run -e 'VIRTUAL_HOST=rss.project.samueltaylor.org' -tid ssaamm/rss_filter</code></p>
+<p>When you navigate to this URL, your browser will ask your nginx container for
+the site at that URL, and that container will know to reverse proxy the request
+to the container you just started. Nifty!</p>
+<hr />
+<p>Please reach out if you have any questions or want to get in touch! My email
+address is sgt at this domain.</p>
+  </body>
+</html>
