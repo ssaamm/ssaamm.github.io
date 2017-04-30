@@ -24,20 +24,21 @@ the team's overall success[1], I would expect income inequality to be greater in
 point, I went looking for data.</p>
 <p>After some searching, I found <a href="http://www.spotrac.com/">Spotrac</a>, which has salary data for the NFL, NBA, MLB, NHL, and
 MLS. After scraping the site, I had a decent dataset of salaries. First, I looked at a histogram of the salaries:</p>
-<p>```
-fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(16, 10))
-axes[1, 2].set_visible(False)</p>
-<p>for ndx, league in enumerate(df['League'].unique()):
+<pre><code>fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(16, 10))
+axes[1, 2].set_visible(False)
+
+for ndx, league in enumerate(df['League'].unique()):
     league_df = df[df.League == league]
         league_df.plot(kind='hist', ax=axes[ndx % 2, ndx % 3], title='{} salary distribution ({} players)'.format(league, league_df.shape[0]))
-```</p>
+</code></pre>
 <p><img src="/static/img/salary_dist.png" alt="Professional sport league salary distribution"></img></p>
 <p>Standard deviation quantifies the variation in the distribution, but comparing the standard deviations across leagues
 doesn't make sense because the mean salary in each league is so different. By dividing the standard deviation by the
 mean, we get the <a href="https://en.wikipedia.org/wiki/Coefficient_of_variation">coefficient of variation</a>.</p>
-<p><code>aggregates = df.groupby('League').agg([len, np.mean, np.std, np.median])['Base Salary']
+<pre><code>aggregates = df.groupby('League').agg([len, np.mean, np.std, np.median])['Base Salary']
 cv = (aggregates['std'] / aggregates['mean'])
-cv.sort_values().plot(kind='bar', title='std as percent of mean')</code></p>
+cv.sort_values().plot(kind='bar', title='std as percent of mean')
+</code></pre>
 <p><img src="/static/img/salary_std_over_mean.png" alt="Professional sport league salary standard deviation over mean"></img></p>
 <p>This tells us that MLS salaries vary most widely and NHL salaries vary the least. Digging deeper into the MLS, Bastian
 Schweinsteiger is making $5,400,000 in base salary, with the next highest salary being Tim Howard's $2,000,000. Removing
