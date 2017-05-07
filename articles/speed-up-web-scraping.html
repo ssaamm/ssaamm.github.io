@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Speed up your Python-based web scraping - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Speed up your Python-based web scraping</span>
+<h1>Speed up your Python-based web scraping</h1>
+<p>Sometimes when I'm working on a project that involves web scraping, the actual scraping starts to slow me down. If
+you've ever re-run a script and then sat for a few minutes while your computer re-scraped the data, you know what I'm
+talking about. I've found two simple and practical ways to make this process significantly faster.</p>
+<p>For the sake of example, say we're crawling two links deep on the front page of the New York Times. A straightforward
+way of doing this is:</p>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+def get_links(url):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, 'lxml')
+    return {e.get('href') for e in soup.find_all('a')
+            if e.get('href') and e.get('href').startswith('https')}
+
+links = get_links('https://www.nytimes.com')
+
+all_links = set()
+for link in links:
+    all_links |= get_links(link)
+</code></pre>
+<p>On my machine/internet, this took about 103 seconds. We can do better than that!</p>
+<h2>Use <code>multiprocessing</code></h2>
+<p>Python's <code>multiprocessing</code> module can help speed up I/O-bound tasks like web scraping. Our case here is a good example
+because we don't need to scrape each link separately; we can run them in parallel. The first step here is to convert our
+code to use the built in <code>map</code> function:</p>
+<pre><code>import itertools as it
+# import requests
+# ...
+# links = get_links('https://www.nytimes.com')
+
+links_on_pages = map(get_links, links)
+all_links = set(it.chain.from_iterable(links_on_pages))
+</code></pre>
+<p>On my machine, this ran in a similar amount of time to the original example. From there, using <code>multiprocessing</code> is a
+quick change:</p>
+<pre><code>import multiprocessing
+# import itertols as it
+# ...
+# links = get_links('https://www.nytimes.com')
+
+with multiprocessing.Pool() as p:
+    links_on_pages = p.map(get_links, links)
+# all_links = ...
+</code></pre>
+<p>This example ran in about 25 seconds (~24% of the original time). The speed-up happens because Python spins up four
+worker processes[0] that go through <code>links</code> and run <code>get_links</code> on each element. You can tweak the number of processes
+that are spawned to get even faster wall-clock times. For example, by using 8 worker processes, the script took 16
+seconds instead of 25.  This won't scale infinitely, but it can be a simple and effective way to speed things up in
+cases where your code doesn't have to be entirely serial.</p>
+<h2>Cache to disk</h2>
+<p>One common use case I have for scraped data is to analyze it in a Jupyter notebook. I have a habit of using the "Restart
+kernel and run all" option to re-run my whole notebook, but that means the scraping has to run again. I often don't want
+to wait a few minutes for my computer to do something it already did 10 minutes ago. In cases like this, I've found
+caching the results of my scraping to disk to be a useful way to avoid re-doing work.</p>
+<p>As a first step, let's move our existing code into a function:</p>
+<pre><code>def get_links_2_deep(url):
+    links = get_links(url)
+    with multiprocessing.Pool(8) as p:
+        links_on_pages = p.map(get_links, links)
+    return set(it.chain.from_iterable(links_on_pages))
+
+print(len(get_links_2_deep('https://www.nytimes.com')))
+</code></pre>
+<p>We can extend our code to cache the result of this function to disk by writing a decorator.</p>
+<pre><code>def cache_to_disk(func):
+    def wrapper(*args):
+        cache = '.{}{}.pkl'.format(func.__name__, args).replace('/', '_')
+        try:
+            with open(cache, 'rb') as f:
+                return pickle.load(f)
+        except IOError:
+            result = func(*args)
+            with open(cache, 'wb') as f:
+                pickle.dump(result, f)
+            return result
+
+    return wrapper
+</code></pre>
+<p>Now let's use the decorator:</p>
+<pre><code>@cache_to_disk
+def get_links_2_deep(url):
+#    links = ...
+</code></pre>
+<p>After the first time we run this script, it's able to load the cached result, which takes around a quarter of a second.
+I find this useful while I'm writing and developing some analysis code, but I have to be mindful that to get the most
+up-to-date results, I need to delete the <code>.pkl</code> file that this is using as its cache. I happily take this tradeoff, and
+if this technique fits your use case, you should too!</p>
+<hr />
+<p>0: I say four here because my computer has four cores. When no arguments are passed to the <code>Pool()</code> constructor, Python
+chooses the amount of processes in the pool to be the result of <code>os.cpu_count()</code>
+(<a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool">docs</a>).</p>
+  </body>
+</html>
