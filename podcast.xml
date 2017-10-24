@@ -7,7 +7,8 @@
     <itunes:explicit>no</itunes:explicit>
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-podgen v1.0.0 https://podgen.readthedocs.org</generator>
-    <lastBuildDate>Tue, 24 Oct 2017 00:56:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Oct 2017 01:20:36 +0000</lastBuildDate>
+    <pubDate>Mon, 23 Oct 2017 20:12:00 -0551</pubDate>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
     </itunes:category>
@@ -16,6 +17,16 @@
       <description><![CDATA[This is just a test]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/0-Test_episode.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/0-Test_episode.mp3" length="11910" type="audio/mpeg"/>
+      <itunes:duration>00:01</itunes:duration>
+      <pubDate>Mon, 23 Oct 2017 20:00:00 -0551</pubDate>
+    </item>
+    <item>
+      <title>Test episode pt. 2</title>
+      <description><![CDATA[This is another test]]></description>
+      <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/1-Test_episode_pt._2.mp3</guid>
+      <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/1-Test_episode_pt._2.mp3" length="82336" type="audio/mpeg"/>
+      <itunes:duration>00:10</itunes:duration>
+      <pubDate>Mon, 23 Oct 2017 20:12:00 -0551</pubDate>
     </item>
   </channel>
 </rss>
