@@ -8,10 +8,10 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-podgen v1.0.0 https://podgen.readthedocs.org</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 24 Oct 2017 01:48:13 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Oct 2017 00:34:35 +0000</lastBuildDate>
     <itunes:author>Samuel Taylor</itunes:author>
     <managingEditor>podcast@samueltaylor.org (Samuel Taylor)</managingEditor>
-    <pubDate>Mon, 23 Oct 2017 20:12:00 -0500</pubDate>
+    <pubDate>Tue, 24 Oct 2017 19:30:00 -0500</pubDate>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
     </itunes:category>
@@ -22,20 +22,12 @@
     </itunes:owner>
     <atom:link href="https://www.samueltaylor.org/podcast.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Test episode</title>
-      <description><![CDATA[This is just a test]]></description>
-      <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/0-Test_episode.mp3</guid>
-      <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/0-Test_episode.mp3" length="11910" type="audio/mpeg"/>
-      <itunes:duration>00:01</itunes:duration>
-      <pubDate>Mon, 23 Oct 2017 20:00:00 -0500</pubDate>
-    </item>
-    <item>
-      <title>Test episode pt. 2</title>
-      <description><![CDATA[This is another test]]></description>
-      <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/1-Test_episode_pt._2.mp3</guid>
-      <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/1-Test_episode_pt._2.mp3" length="82336" type="audio/mpeg"/>
-      <itunes:duration>00:10</itunes:duration>
-      <pubDate>Mon, 23 Oct 2017 20:12:00 -0500</pubDate>
+      <title>How to Attend a Tech Conference</title>
+      <description><![CDATA[Conferences can be both fun and valuable, but they can also be a huge waste of time. Here's some things I've learned that have helped me get the most out of conferences as an attendee.]]></description>
+      <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/0-How_to_Attend_a_Tech_Conference.mp3</guid>
+      <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/0-How_to_Attend_a_Tech_Conference.mp3" length="2156870" type="audio/mpeg"/>
+      <itunes:duration>04:29</itunes:duration>
+      <pubDate>Tue, 24 Oct 2017 19:30:00 -0500</pubDate>
     </item>
   </channel>
 </rss>
