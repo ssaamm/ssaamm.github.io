@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Build a "function with a memory" in Python - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Build a "function with a memory" in Python</span>
+<h1>Build a "function with a memory" in Python</h1>
+<p>Are you familiar with the <code>__call__</code> method in Python? By defining this method, an instance of your class can be called
+as though it were a function. Here's a contrived example solely to demonstrate how it works:</p>
+<pre><code>class Foo:
+    def __init__(self, name):
+        self.name = name
+        self.call_ct = 0
+        print(self.name, 'initialized')
+
+    def __call__(self):
+        self.call_ct += 1
+        print(self.name, self.call_ct)
+
+bar = Foo('bar')
+bar()
+
+baz = Foo('baz')
+baz()
+bar()
+</code></pre>
+<p>Output:</p>
+<pre><code>bar initialized
+bar 1
+baz initialized
+baz 1
+bar 2
+</code></pre>
+<p>A more interesting use case is <a href="https://twitter.com/brandon_rhodes/status/923393090920026114">given by Brandon Rhodes</a>,
+that of swapping out an <code>http_get(url)</code> method for an object that caches pages. Say for instance that we are maintaining
+a project that includes the following web crawling code:</p>
+<pre><code>import urllib.request
+from urllib.error import HTTPError, URLError
+
+def http_get(url):
+    with urllib.request.urlopen(url) as page:
+        return page.getcode(), page.read().decode('utf-8')
+
+def get_links(page_content):
+    loc = page_content.find('href')
+    while loc != -1:
+        start = loc + len('href="')
+        quote_char = page_content[start - 1]
+        end = page_content.find(quote_char, start)
+        yield page_content[start:end]
+
+        loc = page_content.find('href', loc + 1)
+
+def crawl(start_page, max_depth, on_page):
+    stack = [(0, start_page)]
+    while stack:
+        depth, url = stack.pop()
+        try:
+            code, content = http_get(url)
+        except (ValueError, HTTPError, URLError):
+            continue
+
+        on_page(url, code, content)
+        if depth &lt; max_depth and code == 200:
+            stack.extend((depth + 1, u) for u in get_links(content))
+
+if __name__ == '__main__':
+    crawl('https://www.python.org', max_depth=1, on_page=lambda url, code, content: print(code, url))
+</code></pre>
+<p>Now say we become unsatisfied with the performance of this code and want to stop getting the same page multiple times.
+The standard library provides a <a href="https://docs.python.org/3/library/functools.html?highlight=lru_cache#functools.lru_cache">caching
+mechanism</a> that we could
+decorate our <code>http_get</code> function with.</p>
+<pre><code>from functools import lru_cache
+
+# ...
+
+@lru_cache()
+def http_get(url):
+    with urllib.request.urlopen(url) as page:
+        return page.getcode(), page.read().decode('utf-8')
+</code></pre>
+<p>But another option is an object that implements <code>__call__(self)</code>. What might that look like?</p>
+<pre><code># ...
+class CachedHttpGet:
+    def __init__(self):
+        self.cache = {}
+
+    def __call__(self, url):
+        if url not in self.cache:
+            with urllib.request.urlopen(url) as page:
+                self.cache[url] = (page.getcode(), page.read().decode('utf-8'))
+        return self.cache[url]
+
+http_get = CachedHttpGet()
+# ...
+</code></pre>
+<p>While <code>lru_cache</code> is probably better in this contrived example, I hope this article gives you another tool for your
+toolbox. The <a href="https://docs.python.org/3/reference/datamodel.html#emulating-callable-objects">official docs are here</a>.
+Keep this in mind the next time you're refactoring something; it may be the right choice.</p>
+  </body>
+</html>
