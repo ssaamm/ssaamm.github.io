@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Use Machine Learning to Find your Next Job - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Use Machine Learning to Find your Next Job</span>
+<h1>Use Machine Learning to Find your Next Job</h1>
+<p>Delivered at <a href="https://www.devspaceconf.com/">DevSpace</a> on 14 Oct 2017. Audio available on <a href="/podcast.xml">my podcast</a>.
+Slides available <a href="/static/pdf/find_job_ml.pdf">here</a>.</p>
+<h2>Transcript</h2>
+<p>A wise man once said, "I got ninety-nine problems," and I can relate to that in some sense. Because on a day to day
+basis I run into problems; I run into things that aren't as easy as they should be or things that I want to be better.
+And I suspect that because you are all in this room on a Saturday you also have problems, you also run into things and
+want to use software to solve them. Today I want to talk about ways that we can use software to solve our problems and
+specifically to give those software solutions some intelligence using data.</p>
+<p>Now the motivating example and the one for which this talk is titled is a job search helper thing that I made. Basically
+what happened was a few months ago I was passively job searching, which is to say that I wasn't actively out there
+knocking on people's doors and handing out résumés, but I was curious to see if there were any particularly excellent
+jobs in my area. I went out and tried to sign up for different job alert things that would give me the coolest jobs and
+I couldn't find anything that did exactly what I wanted it to do. Like any good Engineer I decided to build it myself. I
+built this little email newsletter that I would send to myself every week that essentially had the coolest sounding jobs
+in my area. I could go through and just review those jobs. It was basically a way to filter out a lot of the noise. And
+so we're going to use this as sort of a case study today, to talk about a process that I've gotten to use a few times
+that has worked for me. I wanted to share it with you all to hopefully provide some value in your own lives.</p>
+<p>So this is how we're going to be doing that, the astute among you have probably noticed we are currently in the
+introduction. After that we're going to talk about asking the right question; basically phrasing questions in ways
+computers can help us answer them. Once we do that we'll talk about ways to gather the data, and then we'll analyze the
+data. Finally, we'll deploy the insights that we gather, and here I don't mean deploy in the sense of we're going to put
+the code on a server somewhere. That part is interesting, but more relevant to this discussion is how do we get a number
+to be something interesting to a person and express in a way that people can understand it.</p>
+<p>So as for me I'm originally from this part of California (Bakersfield, CA). It's the really boring part, but it was a
+great place to grow up, and then I left and went to Baylor University where I studied Computer Science. I really enjoyed
+my time there, and while I was there I sort of got bit by the data bug and got to do some research in an autonomous
+drone lab that was really exciting, do some research with collaborative filtering (which is a recommender systems kind
+of thing) that got me started down the path of the thing that I ended up building for this.  Another relevant thing I
+got to do while I was there was I taught a computer sign language which was really fun. And then over the summers I
+would go do internships in various places and learn a lot about software and good engineering practices. I tried to
+unify this all together, and then after I graduated went and started doing some data engineering work, and now I
+actually work at Indeed (which is the world's largest job site).  Interestingly enough literally everything that I'm
+going to talk about today is completely unrelated to my job there (other than the fact that I do data stuff there too)
+but all the code that I wrote for this I actually wrote while I was at my prior company. But the most important thing on
+this map is the fact that we're all here in this room today to talk about this stuff, and I'm really glad that you are
+all able to come and honored by your presence here today.</p>
+<p>So that's all the boring stuff–let's get in to the cool part! The first step in this process is to have a problem. This
+is the easiest step because it's the one that just comes naturally. It's the one that you bump into on a day by day
+basis. For me, I bumped into the problem that job alerts are too noisy. There's too many jobs for me to reasonably look
+over in a short amount of time. I've also run into problems where I was trying to figure out how to get my energy bill
+lower or trying to figure out how to get home from work faster. Once you have a problem the next thing you're going to
+want to do is start to think about solutions. In order to do that, you need to understand the ways we can ask computers
+questions and get useful answers back from them, which leads us to the fun buzzword of the day: Machine Learning.</p>
+<p>If you have heard the phrase "Machine Learning" please raise your hand. Alright, yeah it's a buzzword we've all heard.
+If you feel like you have used machine learning in a substantial or interesting way, raise your hand. Awesome, some more
+great hands. Alright, one last question: if the phrase approximation-generalization tradeoff means anything to you,
+please raise your hand. That's fine we'll talk about it later, I just wanted to know what to go into. Thanks for your
+participation there.</p>
+<p>So what is machine learning? There are a few different things that comprise it, and I'm going to talk about a subset of
+it today. There are a few kinds of algorithms broken into a lot of different categories, but this is good enough for
+today. There's a type of algorithm called a supervised algorithm in which you are basically feeding training data into a
+computer. That training data has a number of features that are like input values and then a number of output variables.
+Here on this graph what you see is that the X axis is age and the Y axis is net worth. The example problem here is
+basically: I'm a bank and people are coming to me asking for a line of credit. I'm trying to decide whether to extend
+them a line of credit or not. One way you could theoretically do this is to just look at your past history and say,
+"Okay when people have come to us in the past and asked for credit, how old were they? What was their net worth? And did
+we extend credit?" That's what this graph is displaying: the age and then the net worth. The plus or minus you can think
+of as a one or zero of whether or not we extended them a loan. And then the machine learning part of this is basically
+draw a line through this data. It doesn't have to be a line but a line works for this so we're just drawing a line. And
+you'll see here that because in the past we had someone who is ninety and did not have very much money who came to us
+and asked for a loan and we rejected them, if someone who is similarly aged and similarly wealthy came to us, they will
+be below this line, so we would not extend them a line of credit. That is an example of a classification problem,
+because there are classes involved. There is a "positive" (we did extend them a loan) or a "negative" (we didn't extend
+them a loan) kind of question. Classification is great for when you're trying to find out what kind of thing something
+is.</p>
+<p>Now, if I were a bank trying to decide how much credit I should extend to a person, I would have to use a regression
+algorithm. Regression is very similar to classification in that you still have a number of input features and an output
+of some sort. Here it's a little bit confusing because here only the X axis is an input. On this last slide both X and Y
+were inputs and then the plus and minus was the output, but here we're just saying that the X axis is our input of net
+worth. Someone comes up to us and they say, "I have five hundred thousand dollars, how much of a loan can I get?" The
+"X" symbols aren't significant (they're just to mark position), but you can see (for instance) someone who had very high
+of a net worth down near that bottom left hand corner only got a loan of a thousand dollars because that was a more
+risky person (for instance). As a bank, I have all this historical data, and I can train some sort of algorithm that
+would again draw a line, and we could then say if someone comes up to us and has a seven hundred fifty million dollars
+net worth we can look at where they would land on the X position of the line.  Then the Y value then would be the size
+of loan we extend them. Here it looks like seventy five thousand dollars or something. So that is another kind of
+supervised machine learning algorithm.</p>
+<p>There are also unsupervised algorithms. One such algorithm is called clustering and in clustering you have a bunch of
+data points, and I apologize that this is not the same example, but you can imagine that each of these dots is a
+customer. The X axis could again be their age and Y axis could again be the net worth. Maybe it's computationally
+prohibitive to do the calculation on the full data set, but you could theoretically cluster people and say there are
+(for instance) eleven kinds of people. Then, depending on the kind of person you are, we could make a decision based off
+of that. In clustering, you're not trying to get a specific output, you're just trying understand the data better. It's
+often useful as a preprocessing step. You might again have someone come in and they have a certain net worth and certain
+age. You could say this person is really similar to this other kind of person that we usually extend a credit to, so
+let's extend credit this person.</p>
+<p>There's a lot of other stuff in the field of machine learning that is time prohibitive to talk about today. So this
+third of this slide is here to prevent angry tweets because there's a lot of stuff that is really interesting that just
+doesn't quite fit in today.</p>
+<p>So once we know the kinds of questions we can ask a computer, we can figure out a way to phrase our question. In my
+example, I'm thinking, "OK, job alerts are too noisy for me. What do I want? I want to know what are the coolest jobs.
+OK, well maybe I can ask a computer. Given my input of a job title, give me the output: does it sound cool or not (just
+as a one or a zero)." And that's a way we can phrase our question in a way a computer can actually help us with. So now
+that we have this formulation of our problem, we can jump into gathering our data.</p>
+<p>There's a lot of data out there, and the best thing to do is just search for it. Go out and Google it. For instance, one
+time I was trying to determine my energy usage, and I thought it was probably going to be correlated with weather. I was
+looking for weather data, and there is this government agency called the NOAA that has a big weather data set that you
+can just download and use. And so it's very likely that you'll get out there and search for something and there's
+already a government agency whose job it is to collect this data, which is really exciting because it means you then
+have to do less work. In the case where you don't find something that already exists through searching, you can also try
+various websites. data.world is one, Kaggle datasets also has a similar feel where they have a bunch of existing
+datasets about usually more broad things. They don't tend to be a specifically relevant if that makes sense, although
+they'll have things like crime data on their website. That may or may not be useful to you, but if if you're trying to
+figure where to buy an apartment and you want to look at crime statistics, that dataset might already exist.</p>
+<p>So you may or you may not find the data you need, and if you don't you're going to have to create it at some point. I
+like using spreadsheets for this because I can have them on my computer and I can have them on my phone, and anywhere I
+am I can collect more data. Other than that there's a tool called If This Then That that can be useful, especially when
+you're collecting data on your own personal habits. For instance, when I was trying to find out when the best time to
+leave my office was to minimize my commute time, you can get a little button that IFTTT will make for you where when you
+click it, it'll log your location and the current time to a Google Sheet. So what I would do was when I left the office,
+I would press the button then when I got home I would press the button again. In that way I could calculate how long it
+took me to get from my office to my home and at what time I left. And then I could have all this data about, okay you
+can leave at this time (that's your input value) and it took you this long (that's the output value). Now I know that
+Google Maps can also do this for me, but I'm a nerd and we are at a developer conference so I think it's fair to
+over-engineer something.</p>
+<p>Beyond that, web scraping is another great tool. What this basically is downloading a website and picking out the
+important bits. There are some legal things here, and I am not a lawyer, so do your own lawyer stuff but an important
+tip is that when you're trying to scrape a website, look at their robots.txt. Whatever a website you're on, take the
+domain name and put <code>/robots.txt</code> and it'll have a listing of thing of basically the places you're not supposed to go if
+you are a computer. Please obey that and you're probably fine, but again I'm not lawyer and this is not legal advice.</p>
+<p>And maybe the case is that you combined these two methods. That's exactly what I am doing in this project. I web scraped
+a bunch of job titles, and then when I had spare time on the bus or something I could click through the links on my
+phone, read the description and come back to say whether or not the jobs sounded cool. Columns A through D here are
+existing data and then column E is the augmented data that I'm creating myself.</p>
+<p>You're going to need to clean this data.  I heard someone speaking at a conference and they said, "Fifty percent of data
+science is cleaning data." And when he got done he had all these people coming up to him that said, "That's ridiculous!
+At my job it's eighty percent!" There's two tools that I highly recommend if you're in the Python ecosystem: Pandas
+(which does a great job of loading data into a tabular format in memory). I've heard it described as "in memory SQL".
+And then scikit-learn has some stuff built in to massage data into a format that computers can more easily understand
+that we'll get to in a moment.</p>
+<p>Now you may remember this graph from before that had numeric data. Computers are good at numbers; computers aren't as
+good at words.  You may think, "Well, if I had someone's age and net worth, I easily see how those are just numbers. But
+for something like a job title, that is different. That doesn't feel like I can just type that into a computer and have
+it fit that into a graph because I I don't even know how that mapping would work. And so we want to introduce something
+where we take as input the job title and as output whether or not it sounds cool, then turn it into some set of numbers.
+The great thing is that when you run into a problem like this there are a wealth of giants whose shoulders you can stand
+upon. You can just Google "text representation for machine learning" and out will pop this probably. This is the idea of
+word count vectors or "bag of words." Essentially what's happening here is you'd take all of your job titles and you
+keep track of either all of the words that were used in every single one or maybe the three hundred that are used most
+frequently. Then you stack them all up, go through each job title, and count that how many times each word occurred in
+the given job title. So we can see for this first job title "Senior Web Applications Developer" that the word "Engineer"
+occurs zero times in this job title and the word "Web" occurs one time, etc. I'm not going to bore you by enumerating
+this matrix but you see how this process works. "Word count vectors" is a fancy way of saying strings of numbers that
+count up how many times a given word is in a given job title, and that gives us exactly what we're looking for. We can
+now go from the job title and the output variable (of whether or not it sound cool) to this set of numbers where these
+first ten numbers are the number of times a given word occurs (so maybe that first number is "senior") and that last
+number there is a one because that job title sounded cool to me.</p>
+<p>And so now can start actually analyzing this data which is great. There's a few tools that I recommend for doing this
+kind of work. Jupyter is really great; it's an interactive programming thing. Essentially you run it on your computer,
+and you can load a browser up and do stuff, and it'll show you the output of it immediately (which is super helpful).
+It's nice being able to see what the data looks like and it's nice to be able to understand what your next step should
+be. You can also do neat things like drawing graphs, such as the one shown in this screenshot. The maintainers of this
+project have put a ton of work to make it basically the de facto, interactive, iterative programming tool for data
+science and data analysis people who are using Python. I spend a lot of my day in Jupyter Notebooks at work.</p>
+<p>I also definitely recommend Pandas and scikit-learn (which we talked about earlier). It's nice to not have to
+re-implement all these algorithms from scratch because other people have already done it for you.</p>
+<p>So this is just a little code example to show you how easy this kind of stuff can be. Often times we talk about machine
+learning and it sounds really scary and foreign. But when you actually look at the code you'll realize this is something
+anyone can do. This is not complicated, it's just a little bit of understanding how these algorithms work and then
+reading some documentation. I often call things X and Y because I'm just used to that nomenclature so I take our job
+titles out of the dataset that I have and I put them into this X matrix. I take whether or not this sound cool and put
+that in this Y vector. The next line is a CountVectorizer (it just does that word counting thing that we were talking
+about earlier) and then you can just say, "OK, take this matrix and turn it into the word counts." Then you create a
+model, you fit the data to it and then you can just call <code>.predict</code> on it and it will give you this beautiful array
+(that I have here bolded) that says, "Job zero did not sound interesting, and then job four does sound interesting." You
+can get this all out very easily; it's not a lot of code to get a lot of value.</p>
+<p>The thing you want to do after you've been able to gather your data is just do the simplest thing that could possibly
+work.  There's good reasons for doing this. Earlier, no one knew what the Approximation-Generalization Tradeoff was. My
+hope is that you are about to learn. The idea here is that the better your algorithm approximates the input dataset, the
+worse it is going to do at generalizing to data that is outside of your input data.  That's a little hard to just say
+and have it be understood, so I made a little graph that I think will help. In the process of making this graph, I first
+generated a true dataset. You can see here the blue line and this basically says that when we enter zero the value that
+comes out is zero, and then at the far right end of the scale when we entered ten we expected negative twenty two out.
+It is a very simple function that we're trying to estimate with our machine learning stuff (it's purely for
+illustration). And you can see then I generated ten data points from this blue line by just adding a little bit of noise
+to each point because the real world is fairly noisy for a number of reasons.  And then I fit two different models. The
+red line is a nearest neighbor model (which is a more complicated model than the linear regression model,) and you can
+see that it does an excellent job of representing the dataset that we gave to it.  It is matching perfectly at every
+single data point there which is great, but you can also see that it is not very close to the truth. If you were to draw
+more data points from the same truth we would basically find that the red line isn't doing a good job of generalizing to
+data that it has not seen yet. This would be like if you were taking a practice test for a math class and all you did
+was memorize the right answers to each question. You would do great at the practice test, but once you got to the real
+test you would do horribly (because you don't know actually know how to do any of it, you just know the right answers).</p>
+<p>By contrast linear regression is doing a much worse job of approximating the input data set.  If you see for X value
+equal zero it's roughly five units underneath that data point and similarly from the range like two, three, four it's
+not doing a great job either of approximating the input data.  However one thing that you'll notice is that line on
+average looks a lot closer to the truth than the red line does and the reason is that it is better able to generalize to
+out of sample data. What we can see here is that the red line is doing what is called overfitting, which is when you
+learn too much of the noise in your algorithm.  And that's a real problem that is easy to run into, especially when
+you're using complicated methods. There's a lot of really interesting stuff on Hacker News that will have you believe
+that you should use TensorFlow and PyTorch and all these really interesting and exciting deep learning frameworks. And
+they are all very interesting and very exciting and have great applications, however they are often more prone to
+overfitting than some simpler models. So it's great to just start with something simple and you can move on from that if
+you need to.</p>
+<p>Another benefit is it often just easier. It's a lot easier to get scikit-learn running on a Mac or a Windows computer
+than it is to get PyTorch or TensorFlow running. Aside from that, when you're iterating through this development process
+it's a lot easier to have something that trains really fast and you can try out a bunch of different ways of
+representing your data or different ways of sampling it (and have that be fast) rather than something that takes a long
+time to train. In practice with this means is just start with something simple, linear regression and logistic
+regression are both great models that are good places to start and you can use them both for regression or
+classification.</p>
+<p>So we've gotten to the point here with this that we're in the deployment process. By this I mean that we have these
+numbers right? We got those numbers out of our model (the zero and the one), but if I were to just look at zero, one,
+zero, one, zero, zero, one, that doesn't do anything for me. And I also don't want to have to run that code myself every
+time so one thing that I was thinking (because I am my own user, and I can kinda read my own mind) was I wanted to build
+this email which you already saw earlier (spoiler alert, sorry) but basically the thought is I don't want to run this
+thing on my own and I want to get just the relevant and interesting jobs. So what I did was just put it onto a server
+that I rent and have it run every week, and then send me just the jobs that are interesting. It formats them a little
+nicely and puts them into an email and sends them off to me. And this is a good thing to do is just build something
+simple and ship it. Get it working, because the next step here (and if you've gone to any of talks that people have been
+doing about agile practices this should sound familiar. Because just because we're using data in the software does not
+make it any less software) is to test out our product. We still need to test out our product, we still need to try it on
+actual users, we still need to figure out what doesn't work and what does work, we still need to iterate and we still
+need to iterate again and try something new. And we need to iterate even another time, and we just keep moving and keep
+trying new things until we get to something that works really well.</p>
+<p>So to summarize because that was a good amount of things:</p>
+<ol class="section-content">
+<li>Step one is to have a problem. Find something that you want to solve that sucks in your life</li>
+<li>Once you have that thing, phrase it in a way that a computers can help you answer it. There's a lot of things
+   computers are good at. If you have a problem that you can rephrase as a "how much?" or "what kind of?" problem, those
+   are really great candidates for a machine learning application.</li>
+<li>Once you do that, you're ready to get some data.</li>
+<li>Try the simplest thing you possibly can and see how well that works. You can test out and iterate from there. But
+   it's really important to get this in front of users and to just try new stuff.</li>
+</ol>
+<p>So that is the gist of what I have for you today.  If you want to learn more, there's a text book called Learning from
+Data that is really excellent. It does a good job teaching machine learning in a good way. A lot of times when people
+talk about machine learning, it comes off as a bag of tricks, but this book does a good job of helping you understand
+some of the theoretical underpinnings that help make these algorithms work. And then from a less academic but more
+practical side there's a blog called Practical Business Python where the author talks a lot about data visualization and
+how to do useful stuff with Pandas and it's extremely useful when you're trying to learn this stuff.</p>
+<p>Also sponsors are good. We like them. If you are looking for a job I'm sure some of these people are hiring, and we're
+very grateful to have them here. I would be remiss not to thank my employer (Indeed) because they paid for me to be here
+so thanks for that. Other than that I hope that you've gotten something out of today and would love to meet you all
+after. If you have any feedback: if it's negative please email me; I would love to hear what I can do to make this
+better. If you have any positive feedback please tweet it. </p>
+<p>I hope you've gotten something out of today and are better able to go solve your problems.</p>
+  </body>
+</html>
