@@ -14,6 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../static/css/style.css">
+    <link href="../static/css/code.css" rel="stylesheet" type="text/css">
     <title>Build a "function with a memory" in Python - Samuel Taylor</title>
   </head>
   <body>
@@ -21,23 +22,24 @@
 <h1>Build a "function with a memory" in Python</h1>
 <p>Are you familiar with the <code>__call__</code> method in Python? By defining this method, an instance of your class can be called
 as though it were a function. Here's a contrived example solely to demonstrate how it works:</p>
-<pre><code>class Foo:
-    def __init__(self, name):
-        self.name = name
-        self.call_ct = 0
-        print(self.name, 'initialized')
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_ct</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;initialized&#39;</span><span class="p">)</span>
 
-    def __call__(self):
-        self.call_ct += 1
-        print(self.name, self.call_ct)
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_ct</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_ct</span><span class="p">)</span>
 
-bar = Foo('bar')
-bar()
+<span class="n">bar</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">bar</span><span class="p">()</span>
 
-baz = Foo('baz')
-baz()
-bar()
-</code></pre>
+<span class="n">baz</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">)</span>
+<span class="n">baz</span><span class="p">()</span>
+<span class="n">bar</span><span class="p">()</span>
+</pre></div>
+
 <p>Output:</p>
 <pre><code>bar initialized
 bar 1
@@ -48,67 +50,70 @@ bar 2
 <p>A more interesting use case is <a href="https://twitter.com/brandon_rhodes/status/923393090920026114">given by Brandon Rhodes</a>,
 that of swapping out an <code>http_get(url)</code> method for an object that caches pages. Say for instance that we are maintaining
 a project that includes the following web crawling code:</p>
-<pre><code>import urllib.request
-from urllib.error import HTTPError, URLError
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">urllib.error</span> <span class="kn">import</span> <span class="n">HTTPError</span><span class="p">,</span> <span class="n">URLError</span>
 
-def http_get(url):
-    with urllib.request.urlopen(url) as page:
-        return page.getcode(), page.read().decode('utf-8')
+<span class="k">def</span> <span class="nf">http_get</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">page</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">page</span><span class="o">.</span><span class="n">getcode</span><span class="p">(),</span> <span class="n">page</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
 
-def get_links(page_content):
-    loc = page_content.find('href')
-    while loc != -1:
-        start = loc + len('href="')
-        quote_char = page_content[start - 1]
-        end = page_content.find(quote_char, start)
-        yield page_content[start:end]
+<span class="k">def</span> <span class="nf">get_links</span><span class="p">(</span><span class="n">page_content</span><span class="p">):</span>
+    <span class="n">loc</span> <span class="o">=</span> <span class="n">page_content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">loc</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">loc</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="s1">&#39;href=&quot;&#39;</span><span class="p">)</span>
+        <span class="n">quote_char</span> <span class="o">=</span> <span class="n">page_content</span><span class="p">[</span><span class="n">start</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">page_content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">quote_char</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">page_content</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
 
-        loc = page_content.find('href', loc + 1)
+        <span class="n">loc</span> <span class="o">=</span> <span class="n">page_content</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">,</span> <span class="n">loc</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-def crawl(start_page, max_depth, on_page):
-    stack = [(0, start_page)]
-    while stack:
-        depth, url = stack.pop()
-        try:
-            code, content = http_get(url)
-        except (ValueError, HTTPError, URLError):
-            continue
+<span class="k">def</span> <span class="nf">crawl</span><span class="p">(</span><span class="n">start_page</span><span class="p">,</span> <span class="n">max_depth</span><span class="p">,</span> <span class="n">on_page</span><span class="p">):</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_page</span><span class="p">)]</span>
+    <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">depth</span><span class="p">,</span> <span class="n">url</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">code</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">http_get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">HTTPError</span><span class="p">,</span> <span class="n">URLError</span><span class="p">):</span>
+            <span class="k">continue</span>
 
-        on_page(url, code, content)
-        if depth &lt; max_depth and code == 200:
-            stack.extend((depth + 1, u) for u in get_links(content))
+        <span class="n">on_page</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="n">max_depth</span> <span class="ow">and</span> <span class="n">code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">stack</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">get_links</span><span class="p">(</span><span class="n">content</span><span class="p">))</span>
 
-if __name__ == '__main__':
-    crawl('https://www.python.org', max_depth=1, on_page=lambda url, code, content: print(code, url))
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">crawl</span><span class="p">(</span><span class="s1">&#39;https://www.python.org&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">on_page</span><span class="o">=</span><span class="k">lambda</span> <span class="n">url</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+</pre></div>
+
 <p>Now say we become unsatisfied with the performance of this code and want to stop getting the same page multiple times.
 The standard library provides a <a href="https://docs.python.org/3/library/functools.html?highlight=lru_cache#functools.lru_cache">caching
 mechanism</a> that we could
 decorate our <code>http_get</code> function with.</p>
-<pre><code>from functools import lru_cache
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 
-# ...
+<span class="c1"># ...</span>
 
-@lru_cache()
-def http_get(url):
-    with urllib.request.urlopen(url) as page:
-        return page.getcode(), page.read().decode('utf-8')
-</code></pre>
+<span class="nd">@lru_cache</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">http_get</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">page</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">page</span><span class="o">.</span><span class="n">getcode</span><span class="p">(),</span> <span class="n">page</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+
 <p>But another option is an object that implements <code>__call__(self)</code>. What might that look like?</p>
-<pre><code># ...
-class CachedHttpGet:
-    def __init__(self):
-        self.cache = {}
+<div class="highlight"><pre><span></span><span class="c1"># ...</span>
+<span class="k">class</span> <span class="nc">CachedHttpGet</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
 
-    def __call__(self, url):
-        if url not in self.cache:
-            with urllib.request.urlopen(url) as page:
-                self.cache[url] = (page.getcode(), page.read().decode('utf-8'))
-        return self.cache[url]
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">page</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">getcode</span><span class="p">(),</span> <span class="n">page</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">url</span><span class="p">]</span>
 
-http_get = CachedHttpGet()
-# ...
-</code></pre>
+<span class="n">http_get</span> <span class="o">=</span> <span class="n">CachedHttpGet</span><span class="p">()</span>
+<span class="c1"># ...</span>
+</pre></div>
+
 <p>While <code>lru_cache</code> is probably better in this contrived example, I hope this article gives you another tool for your
 toolbox. The <a href="https://docs.python.org/3/reference/datamodel.html#emulating-callable-objects">official docs are here</a>.
 Keep this in mind the next time you're refactoring something; it may be the right choice.</p>
