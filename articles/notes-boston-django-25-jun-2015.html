@@ -24,7 +24,7 @@ Meetup Group. I took some notes and am putting them here so I don't lose them;
 they may or may not be useful to others. Theses notes are not exhaustive.</p>
 <hr />
 <p>Functions that are decorated with <code>@flaskapp.route()</code> should return:</p>
-<ul class="section-content">
+<ul>
 <li>a string</li>
 <li>a tuple of (response, status, headers)</li>
 <li><code>flask.Response</code> / <code>current_app.response_class</code></li>
@@ -49,7 +49,7 @@ they may or may not be useful to others. Theses notes are not exhaustive.</p>
 </li>
 </ul>
 <p>Sessions in Flask are interesting</p>
-<ul class="section-content">
+<ul>
 <li>Session data is serialized to JSON, cryptographically signed, and set in the
   user's browser as a cookie</li>
 <li>Because it's client side, it doesn't matter which datacenter they end up in</li>
@@ -72,7 +72,7 @@ session.modified = True</p>
 </li>
 </ul>
 <p>Blueprints:</p>
-<ul class="section-content">
+<ul>
 <li>Helpful when your app gets bigger</li>
 <li>They're very similar to <code>Flask</code> objects with an additional "namespace"</li>
 <li>
@@ -83,7 +83,7 @@ session.modified = True</p>
 </li>
 </ul>
 <p>Deploying:</p>
-<ul class="section-content">
+<ul>
 <li>gevent, gunicorn, nginx, ansible  </li>
 <li>supervisor  </li>
 <li>pip freeze</li>
