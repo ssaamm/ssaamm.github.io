@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="../static/css/code.css" rel="stylesheet" type="text/css">
+    <title>Monte Carlo Simulation with Categorical Values - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Monte Carlo Simulation with Categorical Values</span>
+<h1>Monte Carlo Simulation with Categorical Values</h1>
+<p>We live in a world of imperfect information. When faced with a lack of data, we can make a guess. This guess could be
+far from the truth; it could be spot on. In Monte Carlo simulation, we repeatedly make guesses of some unknown value
+according to some distribution and are able to report on the results of that simulation to understand a little bit more
+about the unknown. While any one guess may be far from the truth, in aggregate those outliers don't have as much of an
+effect.</p>
+<p>I ran into a situation where I was gathering some data with some level of imperfection. My stakeholder wanted to know
+what the impact of that imperfection on the important metrics would be. I could have made a guess, but instead I turned
+to the data. Initially, I thought to calculate the best case and worst case scenarios. This idea is useful in that it
+gives you a range on what you don't know, but it's also beneficial to know how likely each of those scenarios (and
+things in between) are. That's where Monte Carlo simulation comes in handy.</p>
+<p>For the purposes of context, let's use a contrived example. Suppose I run a car dealership, and a major hail storm
+rolled through last weekend. Some of my cars suffer major damage and will incur a 10% loss in their value, some suffered
+minor damage incurring a 5% loss, and some suffered no damage at all. I don't have enough labor to survey every single
+one of my cars, but I do want to know how much money I can expect to lose. I randomly select 500 of my 1000 cars and see
+how bad the damage was.</p>
+<p>Hypothetically, there's nothing to say that by random chance the cars I didn't inspect weren't in my 500-car warehouse,
+remaining completely undamaged by the hail. That would be the best case scenario, in which case I suffer only the loss
+on the cars I inspected. In the worst case scenario, every car I didn't inspect suffered major damage. For some random
+data I generate below, we know that the amount of damage done to the uninspected cars is somewhere between 0 and around
+$1.75 million dollars. This is a huge range of possibilities!</p>
+<p>We see that looking at the best case and worst case gets us some bounds on how bad the damage could be, but we have no
+idea how probable each of these options are (let alone the probability of the values in the middle). To find out how bad
+the damage is likely to be, we can turn to Monte Carlo simulation.</p>
+<p>First, let's randomly generate our inventory, then inspect half of our cars. While we know the <code>value</code> of each car, we
+think of the <code>damage_pct</code> as an unknown value for the cars we do not inspect.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">N_CARS</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">cars</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">35000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N_CARS</span><span class="p">),</span>
+    <span class="s1">&#39;damage_pct&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N_CARS</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">])</span>
+<span class="p">})</span>
+
+<span class="n">inspected_cars</span> <span class="o">=</span> <span class="n">cars</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">cars</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">uninspected_cars</span> <span class="o">=</span> <span class="n">cars</span><span class="p">[</span><span class="o">~</span><span class="n">cars</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">inspected_cars</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+
+<span class="n">damage_dist</span> <span class="o">=</span> <span class="p">(</span><span class="n">inspected_cars</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;damage_pct&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+               <span class="o">/</span> <span class="n">inspected_cars</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;prob&#39;</span><span class="p">})</span>
+</pre></div>
+
+<p>We can see the distribution of <code>damage_pct</code> among the sampled cars is:</p>
+<table>
+<tr>
+  <th>damage_pct</th>
+  <th>prob</th>
+</tr>
+<tr>
+  <td>-0.1</td>
+  <td>0.096</td>
+</tr>
+<tr>
+  <td>-0.05</td>
+  <td>0.490</td>
+</tr>
+<tr>
+  <td>0.00</td>
+  <td>0.414</td>
+</tr>
+</table>
+
+<p>Because we inspected a random subset of the cars, a reasonable simplifying assumption is that the damage to the
+uninspected cars has the same distribution as that of the inspected cars. With that assumption, we can simulate the
+damage done to the uninspected cars like so:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate_damage</span><span class="p">(</span><span class="n">damage_dist</span><span class="p">,</span> <span class="n">uninspected_cars</span><span class="p">):</span>
+    <span class="n">damage_pct_guess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">damage_dist</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                                        <span class="n">size</span><span class="o">=</span><span class="n">uninspected_cars</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                        <span class="n">p</span><span class="o">=</span><span class="n">damage_dist</span><span class="o">.</span><span class="n">prob</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">damage_pct_guess</span> <span class="o">*</span> <span class="n">uninspected_cars</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">N_SIMULATIONS</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">simulated_damages</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">simulate_damage</span><span class="p">(</span><span class="n">damage_dist</span><span class="p">,</span> <span class="n">uninspected_cars</span><span class="p">)</span>
+                               <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_SIMULATIONS</span><span class="p">)])</span>
+</pre></div>
+
+<p>To make sense of the output of these 1000 simulations, we can calculate some descriptive statistics. It's also helpful
+to look at the CDF of the simulated damage.</p>
+<div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">simulated_damages</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<span class="n">simulated_damages</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">cumulative</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                       <span class="n">title</span><span class="o">=</span><span class="s1">&#39;CDF of estimated damage&#39;</span><span class="p">)</span>
+</pre></div>
+
+<pre><code>count      1000.000000
+mean    -595662.074433
+std       25097.417355
+min     -671499.963571
+25%     -613690.059583
+50%     -595382.298010
+75%     -576089.086686
+max     -524043.037134
+</code></pre>
+<p><img src='/static/img/mcs_cdf.png'></p>
+<p>We can say that in half of our simulations, the damage was somewhere between $671,499.96 and $595,382.30. This range is
+about 4.3% the size of the range between the best and worst case scenarios.</p>
+<p>How'd we do? Because we made up the dataset, we can calculate the true value and put that number on the graph above:</p>
+<div class="highlight"><pre><span></span><span class="n">true_damage</span> <span class="o">=</span> <span class="p">(</span><span class="n">uninspected_cars</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">uninspected_cars</span><span class="o">.</span><span class="n">damage_pct</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">bottom</span><span class="p">,</span> <span class="n">top</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">true_damage</span><span class="p">,</span> <span class="n">top</span><span class="p">),</span> <span class="n">xycoords</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span>
+             <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">true_damage</span><span class="p">,</span> <span class="n">bottom</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;data&#39;</span>
+             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">headlength</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+<p><img src='/static/img/mcs_cdf_wtruth.png'></p>
+<p>In "reality", the true amount of damage done was $607,830.94, which just so happens to be in that window of 50% of our
+simulations.</p>
+<p>We can run this experiment a few more times to see how this method fares:</p>
+<p><img src='/static/img/mcs_many_cdf.png'></p>
+<p>The next time you're trying to reason about some unknown value, consider using Monte Carlo simulation to inform your
+decision-making process.</p>
+  </body>
+</html>
