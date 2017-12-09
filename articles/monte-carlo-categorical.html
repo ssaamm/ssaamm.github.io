@@ -35,11 +35,11 @@ rolled through last weekend. Some of my cars suffer major damage and will incur 
 minor damage incurring a 5% loss, and some suffered no damage at all. I don't have enough labor to survey every single
 one of my cars, but I do want to know how much money I can expect to lose. I randomly select 500 of my 1000 cars and see
 how bad the damage was.</p>
-<p>Hypothetically, there's nothing to say that by random chance the cars I didn't inspect weren't in my 500-car warehouse,
-remaining completely undamaged by the hail. That would be the best case scenario, in which case I suffer only the loss
-on the cars I inspected. In the worst case scenario, every car I didn't inspect suffered major damage. For some random
-data I generate below, we know that the amount of damage done to the uninspected cars is somewhere between 0 and around
-$1.75 million dollars. This is a huge range of possibilities!</p>
+<p>Hypothetically, it's possible that the 500 cars I inspected were the only ones that happened to have been damaged by the
+hail (maybe the rest were safe in my 500-car warehouse). That would be the best case scenario, in which case I suffer
+only the loss on the cars I inspected. In the worst case scenario, every car I didn't inspect suffered major damage. For
+some random data I generate below, we know that the amount of damage done to the uninspected cars is somewhere between 0
+and around $1.75 million dollars. This is a huge range of possibilities!</p>
 <p>We see that looking at the best case and worst case gets us some bounds on how bad the damage could be, but we have no
 idea how probable each of these options are (let alone the probability of the values in the middle). To find out how bad
 the damage is likely to be, we can turn to Monte Carlo simulation.</p>
@@ -62,7 +62,7 @@ think of the <code>damage_pct</code> as an unknown value for the cars we do not 
                <span class="o">/</span> <span class="n">inspected_cars</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;prob&#39;</span><span class="p">})</span>
 </pre></div>
 
-<p>We can see the distribution of <code>damage_pct</code> among the sampled cars is:</p>
+<p>We can see the distribution of <code>damage_pct</code> among the sampled cars is<sup>1</sup>:</p>
 <table>
 <tr>
   <th>damage_pct</th>
@@ -130,5 +130,8 @@ simulations.</p>
 <p><img src='/static/img/mcs_many_cdf.png'></p>
 <p>The next time you're trying to reason about some unknown value, consider using Monte Carlo simulation to inform your
 decision-making process.</p>
+<hr />
+<p>1: While the values for <code>damage_pct</code> look like numerical data, remember that they are representative of the three
+categories of damage sustained (none, minor, or major).</p>
   </body>
 </html>
