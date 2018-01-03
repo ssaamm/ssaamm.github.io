@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Tue, 19 Dec 2017 15:27:00 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Poetry for Software Engineers</title><link>https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;This is a modified transcript of episode 3 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Wed, 03 Jan 2018 12:59:10 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Work-Self Balance</title><link>https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;It's a few months ago. I'm enjoying my job and trying to bring value to my team. A high-visibility project comes up.
+Despite being unfamiliar with the framework we plan to use, I'm excited to work on this project. I set out to "learn by
+doing", implementing a chunk of the project with this framework. After reading some code, writing some new code by trial
+and error, and asking a lot of questions, I'm able to get this chunk finished. More exciting than that, my
+implementation serves as a model for much of the rest of the project. Being that I know the framework well at this
+point, I'm teaching the rest of the team how to use it. I love knowing that I'm bringing so much value to the team!&lt;/p&gt;
+&lt;p&gt;Then, I submit a piece of code for review. One of my team members notices a flaw in it. Immediately, my thoughts rush to
+how I can justify the flaw. Underlying this reaction is the belief that this flaw reveals my own incompetence. I start
+to type a response. But as I write, I realize that my coworker is right. I thought I knew everything there was to know
+about this framework, but clearly I don't. I delete my response and fix the problem instead.&lt;/p&gt;
+&lt;p&gt;Since then, I've found a healthier way to think of my work. Let's examine the origins of and problems with my initial
+belief so that we can find a healthier alternative.&lt;/p&gt;
+&lt;p&gt;The core belief I identify as an issue in the above story is a lack of separation between my work and my self. Creating
+software can be a deeply personal enterprise. When I'm in the zone, it can feel like the code I'm writing somehow
+emanates from my being rather than that I am actively writing it. Given this understanding, criticism of my work is also
+criticism of myself, my character, and my abilities.&lt;/p&gt;
+&lt;p&gt;This belief (though not one I consciously chose) is harmful. If criticism is painful, human nature says to avoid it.
+Unfortunately, avoiding criticism means avoiding learning because the best learning can come from making mistakes and
+fixing them.&lt;/p&gt;
+&lt;p&gt;We can choose a healthier relationship to our work. Specifically, I find it helpful to mentally separate my code from my
+sense of self. In other words, I avoid tying my ego up in my work outputs.&lt;/p&gt;
+&lt;p&gt;This mental model is more true to the realities of software development. On a daily basis, I am faced with countless
+constraints. Perhaps I must complete a task within a given timeframe. Maybe I have to use a specific tool. These
+constraints mean that the work I produce cannot be considered to be solely a reflection of my character or abilities. In
+some way, the work also embodies the constraints I was under while creating it. Given an infinite amount of time and
+resources, I'm sure all of us would create impeccable and beautiful software. However, in a world of constraints, our
+work is less likely to be perfect.&lt;/p&gt;
+&lt;p&gt;How can we rein in our ego? I've noticed that as soon as I am aware that my ego is flaring up, it's easy to see how
+silly I'm being. To this end, I've found two activities helpful: journaling and meditation.  Journaling consists of
+sitting down in the evening a few times per week and writing about what has happened in the preceding few
+days&lt;sup&gt;1&lt;/sup&gt;. By intentionally recalling and reviewing my actions, I'm able to be more objective in my view of
+myself.&lt;/p&gt;
+&lt;p&gt;Meditation also helps foster the lense of an unbiased observer. When I meditate, I get deliberate, intense practice at
+noticing my feelings. Bringing this awareness to the rest of my day becomes easier as I continue this practice. And this
+awareness allows me to notice when my ego acts up so that I can respond accordingly&lt;sup&gt;2&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;When I'm able to separate my work from my self, I can respond more productively to criticism of my work. I can see that
+the criticism isn't aimed at me. Instead, something I produced was found to be lacking in some way. Previously, I might
+waste energy either beating myself up or trying to justify a mistake. But now I can focus on making the necessary
+improvement.&lt;/p&gt;
+&lt;p&gt;I still love bringing value to my team. But I've realized how crucial it is to stay humble and how valuable it is to
+understand that my work is separate from my self. Making a mistake reveals not that I am incompetent, but that I'm
+human. And really, aren't we all?&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;strong&gt;1&lt;/strong&gt;: If you're interested in journaling, I highly recommend Timothy Wilson's
+&lt;a href="https://www.goodreads.com/book/show/11516274-redirect"&gt;&lt;em&gt;Redirect&lt;/em&gt;&lt;/a&gt;, which explores a bunch of interesting research in
+self narrative.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2&lt;/strong&gt;: I'm sure there are other ways of increasing this kind of self-awareness. &lt;a href="mailto:sgt@samueltaylor.org"&gt;Let me
+know&lt;/a&gt; if you have any tips of what has worked for you in the past.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 03 Jan 2018 06:58:11 GMT</pubDate></item><item><title>Poetry for Software Engineers</title><link>https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;This is a modified transcript of episode 3 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src="/static/img/poetry_fountain_pen.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Photo by &lt;a href="https://unsplash.com/photos/hjwKMkehBco"&gt;Álvaro Serrano&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;I am not a poet. But when I was barely three years old, I was sitting at the kitchen table with my mother and older
