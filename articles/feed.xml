@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Wed, 03 Jan 2018 12:59:10 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Work-Self Balance</title><link>https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;It's a few months ago. I'm enjoying my job and trying to bring value to my team. A high-visibility project comes up.
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Fri, 05 Jan 2018 00:56:25 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Work-Self Balance</title><link>https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;It's a few months ago. I'm enjoying my job and trying to bring value to my team. A high-visibility project comes up.
 Despite being unfamiliar with the framework we plan to use, I'm excited to work on this project. I set out to "learn by
 doing", implementing a chunk of the project with this framework. After reading some code, writing some new code by trial
 and error, and asking a lot of questions, I'm able to get this chunk finished. More exciting than that, my
@@ -46,7 +46,7 @@ human. And really, aren't we all?&lt;/p&gt;
 &lt;a href="https://www.goodreads.com/book/show/11516274-redirect"&gt;&lt;em&gt;Redirect&lt;/em&gt;&lt;/a&gt;, which explores a bunch of interesting research in
 self narrative.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;2&lt;/strong&gt;: I'm sure there are other ways of increasing this kind of self-awareness. &lt;a href="mailto:sgt@samueltaylor.org"&gt;Let me
-know&lt;/a&gt; if you have any tips of what has worked for you in the past.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 03 Jan 2018 06:58:11 GMT</pubDate></item><item><title>Poetry for Software Engineers</title><link>https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;This is a modified transcript of episode 3 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+know&lt;/a&gt; if you have any tips of what has worked for you in the past.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 03 Jan 2018 12:58:11 GMT</pubDate></item><item><title>Poetry for Software Engineers</title><link>https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;This is a modified transcript of episode 3 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src="/static/img/poetry_fountain_pen.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Photo by &lt;a href="https://unsplash.com/photos/hjwKMkehBco"&gt;Álvaro Serrano&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;I am not a poet. But when I was barely three years old, I was sitting at the kitchen table with my mother and older
@@ -186,7 +186,7 @@ And I'd say, What?&lt;/p&gt;
 &lt;p&gt;And he'd say, This, sort of looking around.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;Thanks for reading. I would love for you to tweet your favorite poem to me; I'm
-&lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt;. Now get out there and read some poetry!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 10 Dec 2017 16:33:25 GMT</pubDate></item><item><title>Monte Carlo Simulation with Categorical Values</title><link>https://www.samueltaylor.org/articles/monte-carlo-categorical.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;We live in a world of imperfect information. When faced with a lack of data, we can make a guess. This guess could be
+&lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt;. Now get out there and read some poetry!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 10 Dec 2017 22:33:25 GMT</pubDate></item><item><title>Monte Carlo Simulation with Categorical Values</title><link>https://www.samueltaylor.org/articles/monte-carlo-categorical.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;We live in a world of imperfect information. When faced with a lack of data, we can make a guess. This guess could be
 far from the truth; it could be spot on. In Monte Carlo simulation, we repeatedly make guesses of some unknown value
 according to some distribution and are able to report on the results of that simulation to understand a little bit more
 about the unknown. While any one guess may be far from the truth, in aggregate those outliers don't have as much of an
@@ -298,7 +298,7 @@ simulations.&lt;/p&gt;
 decision-making process.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;1: While the values for &lt;code&gt;damage_pct&lt;/code&gt; look like numerical data, remember that they are representative of the three
-categories of damage sustained (none, minor, or major).&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/monte-carlo-categorical.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 03 Dec 2017 09:55:29 GMT</pubDate></item><item><title>Use Machine Learning to Find your Next Job</title><link>https://www.samueltaylor.org/articles/use-machine-learning-to-find-your-next-job.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;div class="embed-responsive"&gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/HR1ptrLMxA0" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
+categories of damage sustained (none, minor, or major).&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/monte-carlo-categorical.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 03 Dec 2017 15:55:29 GMT</pubDate></item><item><title>Use Machine Learning to Find your Next Job</title><link>https://www.samueltaylor.org/articles/use-machine-learning-to-find-your-next-job.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;div class="embed-responsive"&gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/HR1ptrLMxA0" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
 
 &lt;p&gt;Delivered at:&lt;/p&gt;
 &lt;ul&gt;
@@ -540,7 +540,7 @@ very grateful to have them here. I would be remiss not to thank my employer (Ind
 so thanks for that. Other than that I hope that you've gotten something out of today and would love to meet you all
 after. If you have any feedback: if it's negative please email me; I would love to hear what I can do to make this
 better. If you have any positive feedback please tweet it. &lt;/p&gt;
-&lt;p&gt;I hope you've gotten something out of today and are better able to go solve your problems.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/use-machine-learning-to-find-your-next-job.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 11 Nov 2017 19:42:33 GMT</pubDate></item><item><title>To become a great Python developer, quit reading Python books</title><link>https://www.samueltaylor.org/articles/quit-reading-python-books.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Learning is a crucial part of being a software developer. Increases in knowledge and skill can make a significant impact
+&lt;p&gt;I hope you've gotten something out of today and are better able to go solve your problems.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/use-machine-learning-to-find-your-next-job.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 12 Nov 2017 01:42:33 GMT</pubDate></item><item><title>To become a great Python developer, quit reading Python books</title><link>https://www.samueltaylor.org/articles/quit-reading-python-books.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Learning is a crucial part of being a software developer. Increases in knowledge and skill can make a significant impact
 in our work. But in an age where everyone seems to be in a time crunch, we want our learning to be as effective as
 possible. We want to get as much learning out of our books, courses, and videos as we can. Counterintuitively, I believe
 one of the best ways to maximize knowledge gain is by reading books that do not apply easily to technologies or concepts
@@ -567,7 +567,7 @@ better software engineers exist; we shouldn't exclude some simply because of the
 them.&lt;/p&gt;
 &lt;p&gt;Putting ourselves in unfamiliar situations is hard. Because of that difficulty, it also has a huge potential to bring
 about learning and growth. Pick up a book in a language you don't know and thoroughly study it–you may be surprised by
-how much you learn.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/quit-reading-python-books.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 31 Oct 2017 06:47:23 GMT</pubDate></item><item><title>Build a "function with a memory" in Python</title><link>https://www.samueltaylor.org/articles/function-with-memory.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Are you familiar with the &lt;code&gt;__call__&lt;/code&gt; method in Python? By defining this method, an instance of your class can be called
+how much you learn.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/quit-reading-python-books.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 31 Oct 2017 11:47:23 GMT</pubDate></item><item><title>Build a "function with a memory" in Python</title><link>https://www.samueltaylor.org/articles/function-with-memory.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Are you familiar with the &lt;code&gt;__call__&lt;/code&gt; method in Python? By defining this method, an instance of your class can be called
 as though it were a function. Here's a contrived example solely to demonstrate how it works:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Foo&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
@@ -663,7 +663,7 @@ decorate our &lt;code&gt;http_get&lt;/code&gt; function with.&lt;/p&gt;
 
 &lt;p&gt;While &lt;code&gt;lru_cache&lt;/code&gt; is probably better in this contrived example, I hope this article gives you another tool for your
 toolbox. The &lt;a href="https://docs.python.org/3/reference/datamodel.html#emulating-callable-objects"&gt;official docs are here&lt;/a&gt;.
-Keep this in mind the next time you're refactoring something; it may be the right choice.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/function-with-memory.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 28 Oct 2017 11:32:48 GMT</pubDate></item><item><title>How to Attend a Tech Conference</title><link>https://www.samueltaylor.org/articles/how-to-attend-tech-conference.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Conferences can be both fun and valuable, but they can also be a huge waste of time. Here's some things I've learned
+Keep this in mind the next time you're refactoring something; it may be the right choice.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/function-with-memory.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 28 Oct 2017 16:32:48 GMT</pubDate></item><item><title>How to Attend a Tech Conference</title><link>https://www.samueltaylor.org/articles/how-to-attend-tech-conference.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Conferences can be both fun and valuable, but they can also be a huge waste of time. Here's some things I've learned
 that have helped me get the most out of conferences as an attendee.&lt;/p&gt;
 &lt;p&gt;(Prefer to listen? &lt;a href="/podcast.html"&gt;Subscribe to my podcast&lt;/a&gt;) for a narrated version.)&lt;/p&gt;
 &lt;h2&gt;Consider skipping talks&lt;/h2&gt;
@@ -714,7 +714,7 @@ the most interesting talk in each time slot. By doing this, you should be able t
 you could be talking to awesome people.&lt;/p&gt;
 &lt;p&gt;As an aside, this has become one of my favorite use cases for my smart watch (a &lt;a href="https://www.amazon.com/Garmin-Forerunner-230-Black-White/dp/B016PAPI3W"&gt;Garmin
 FR230&lt;/a&gt;). Knowing where you're headed without
-having to pull out your phone is super convenient.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-attend-tech-conference.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 23 Oct 2017 18:33:01 GMT</pubDate></item><item><title>Speed up your Python-based web scraping</title><link>https://www.samueltaylor.org/articles/speed-up-web-scraping.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Sometimes when I'm working on a project that involves web scraping, the actual scraping starts to slow me down. If
+having to pull out your phone is super convenient.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-attend-tech-conference.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 23 Oct 2017 23:33:01 GMT</pubDate></item><item><title>Speed up your Python-based web scraping</title><link>https://www.samueltaylor.org/articles/speed-up-web-scraping.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Sometimes when I'm working on a project that involves web scraping, the actual scraping starts to slow me down. If
 you've ever re-run a script and then sat for a few minutes while your computer re-scraped the data, you know what I'm
 talking about. I've found two simple and practical ways to make this process significantly faster.&lt;/p&gt;
 &lt;p&gt;For the sake of example, say we're crawling two links deep on the front page of the New York Times. A straightforward
@@ -804,7 +804,7 @@ if this technique fits your use case, you should too!&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;0: I say four here because my computer has four cores. When no arguments are passed to the &lt;code&gt;Pool()&lt;/code&gt; constructor, Python
 chooses the amount of processes in the pool to be the result of &lt;code&gt;os.cpu_count()&lt;/code&gt;
-(&lt;a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool"&gt;docs&lt;/a&gt;).&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/speed-up-web-scraping.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 07 May 2017 17:32:17 GMT</pubDate></item><item><title>Income inequality in professional sports</title><link>https://www.samueltaylor.org/articles/sport-salary-inequality.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On his podcast &lt;a href="http://revisionisthistory.com/"&gt;Revisionist History&lt;/a&gt;, Malcolm Gladwell talks about the difference
+(&lt;a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool"&gt;docs&lt;/a&gt;).&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/speed-up-web-scraping.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 07 May 2017 22:32:17 GMT</pubDate></item><item><title>Income inequality in professional sports</title><link>https://www.samueltaylor.org/articles/sport-salary-inequality.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On his podcast &lt;a href="http://revisionisthistory.com/"&gt;Revisionist History&lt;/a&gt;, Malcolm Gladwell talks about the difference
 between "weak link" and "strong link" sports. A "weak link" sport is one in which the worst player's skill level has a
 large impact on the team's success. The example Gladwell gives is soccer, in which a long chain of events must go
 perfectly to score a point. To get the ball from one side of the field to a position in which a team can make a
@@ -848,7 +848,7 @@ that'll have to be another question for another day.&lt;/p&gt;
 &lt;p&gt;0: Daniel Forsyth provides an interesting &lt;a href="http://www.danielforsyth.me/is-basketball-a-weakest-link-sport/"&gt;analysis of this
 claim&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;1: They aren't, at least, they aren't solely compensated according to this factor. The team owner also gets value out of
-selling jerseys and other merchandise, which is easier to do for more famous players.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/sport-salary-inequality.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 30 Apr 2017 17:03:47 GMT</pubDate></item><item><title>Host all your projects on one machine with Docker</title><link>https://www.samueltaylor.org/articles/docker-for-projects.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Like many digital builders/hackers/makers, I have &lt;a href="../projects/index.html"&gt;several
+selling jerseys and other merchandise, which is easier to do for more famous players.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/sport-salary-inequality.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 30 Apr 2017 22:03:47 GMT</pubDate></item><item><title>Host all your projects on one machine with Docker</title><link>https://www.samueltaylor.org/articles/docker-for-projects.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Like many digital builders/hackers/makers, I have &lt;a href="../projects/index.html"&gt;several
 projects&lt;/a&gt; that I want to put on the internet. I don't,
 however, want to have loads of servers to manage. Given that the highest-traffic
 project I maintain only around 100 unique visitors a day, it's feasible for me
@@ -882,13 +882,13 @@ the site at that URL, and that container will know to reverse proxy the request
 to the container you just started. Nifty!&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;Please reach out if you have any questions or want to get in touch! My email
-address is sgt at this domain.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/docker-for-projects.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 18 Feb 2017 08:07:29 GMT</pubDate></item><item><title>The Last 5 Books I Read (as of March 2017)</title><link>https://www.samueltaylor.org/articles/books-mar17.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;The Braindead Megaphone, George Saunders&lt;/h2&gt;
+address is sgt at this domain.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/docker-for-projects.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 18 Feb 2017 14:07:29 GMT</pubDate></item><item><title>The Last 5 Books I Read (as of March 2017)</title><link>https://www.samueltaylor.org/articles/books-mar17.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;The Braindead Megaphone, George Saunders&lt;/h2&gt;
 &lt;p&gt;This collection of nonfiction essays was enjoyable and thought-provoking.
 Saunders writes about the Iraq war, illegal immigration, and Dubai. He presents
 his experiences in a very relatable way.&lt;/p&gt;
 &lt;h2&gt;The Crying of Lot 49, Thomas Pynchon&lt;/h2&gt;
 &lt;p&gt;I didn't like this one. I put it down about halfway through; I just couldn't get
-into it. I didn't find anything about it intriguing in the slightest.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-mar17.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 10 Jan 2017 17:31:12 GMT</pubDate></item><item><title>Wherever you are, be all there</title><link>https://www.samueltaylor.org/articles/be-all-there.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Being present (paying attention to the here and now) and purposeful (taking
+into it. I didn't find anything about it intriguing in the slightest.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-mar17.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 10 Jan 2017 23:31:12 GMT</pubDate></item><item><title>Wherever you are, be all there</title><link>https://www.samueltaylor.org/articles/be-all-there.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Being present (paying attention to the here and now) and purposeful (taking
 actions to achieve some end) helps us to live more fulfilling lives. Jim Elliot
 once said, "wherever you are, be all there." While it is often painted on
 flowery backdrops and put on the walls of suburban homes, this quote holds
@@ -917,7 +917,7 @@ they handle situations you would be uncomfortable in. Beyond the people at your
 company, try to get yourself assigned to projects that stretch your abilities.&lt;/p&gt;
 &lt;p&gt;Life is more rewarding when we live purposefully in the present. By focusing on
 one task at a time and making the most of our resources, we can become better
-people and find more fulfillment.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/be-all-there.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 13 Nov 2016 15:45:23 GMT</pubDate></item><item><title>Experiments with Self-Tracking/Quantified Self</title><link>https://www.samueltaylor.org/articles/quantified-self.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;How many times in a row do I typically sneeze?&lt;/h2&gt;
+people and find more fulfillment.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/be-all-there.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 13 Nov 2016 21:45:23 GMT</pubDate></item><item><title>Experiments with Self-Tracking/Quantified Self</title><link>https://www.samueltaylor.org/articles/quantified-self.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;How many times in a row do I typically sneeze?&lt;/h2&gt;
 &lt;p&gt;Ever since I can remember, I've sneezed atypically. While most people sneeze
 once and are done, I often sneeze 3, 4, or even 8 times in a row. I was curious
 to see how often I sneeze a certain number of times in a row, so I kept track of
@@ -957,7 +957,7 @@ the data looks like this:&lt;/p&gt;
       interpolate: 'linear',
     });
   });
-&lt;/script&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/quantified-self.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 08 Nov 2016 11:35:48 GMT</pubDate></item><item><title>Writing Better Code: Code as Communication</title><link>https://www.samueltaylor.org/articles/better-code-code-as-communication.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;After we compile our code, why do we keep it? The machine is able to interpret
+&lt;/script&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/quantified-self.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 08 Nov 2016 17:35:48 GMT</pubDate></item><item><title>Writing Better Code: Code as Communication</title><link>https://www.samueltaylor.org/articles/better-code-code-as-communication.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;After we compile our code, why do we keep it? The machine is able to interpret
 the compiled code and perform the function we wanted it to, so why keep the
 original code around? Often, the answer to this question is that we may need to
 modify the program in the future. Modifying a bunch of 1's and 0's in a compiled
@@ -1043,7 +1043,7 @@ unintentionally.&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;You should be thoughtful about the code you write because the marginal cost of
 being a bit more thoughtful on writing the code is less than the cost of the
-additional time future developers will have to spend in order to read your code.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/better-code-code-as-communication.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 29 Oct 2016 10:17:05 GMT</pubDate></item><item><title>k-Nearest Neighbors</title><link>https://www.samueltaylor.org/articles/2016-10-18_knn.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 18 Oct 2016, I gave a talk at Austin ACM SIGKDD on the &lt;em&gt;k&lt;/em&gt;-nearest neighbors
+additional time future developers will have to spend in order to read your code.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/better-code-code-as-communication.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 29 Oct 2016 15:17:05 GMT</pubDate></item><item><title>k-Nearest Neighbors</title><link>https://www.samueltaylor.org/articles/2016-10-18_knn.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 18 Oct 2016, I gave a talk at Austin ACM SIGKDD on the &lt;em&gt;k&lt;/em&gt;-nearest neighbors
 algorithm. Topics included some machine learning theory (approximation vs.
 generalization, VC dimension), the algorithm itself, proving the algorithm's
 performance, and some practical concerns around choosing &lt;em&gt;k&lt;/em&gt;.&lt;/p&gt;
@@ -1053,7 +1053,7 @@ functions, high-dimensional spaces, and categorical data.&lt;/p&gt;
 presentation probably won't make a ton of sense from these slides, as they were
 mostly aids to the words I was saying out loud. If you've got any questions,
 feel free to email me; I'd love to chat!&lt;/p&gt;
-&lt;p&gt;Thanks to everyone who came to watch; I appreciated hearing your feedback!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/2016-10-18_knn.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Thu, 27 Oct 2016 08:29:58 GMT</pubDate></item><item><title>Python Puzzlers</title><link>https://www.samueltaylor.org/articles/python-puzzlers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Default arguments&lt;/h2&gt;
+&lt;p&gt;Thanks to everyone who came to watch; I appreciated hearing your feedback!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/2016-10-18_knn.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Thu, 27 Oct 2016 13:29:58 GMT</pubDate></item><item><title>Python Puzzlers</title><link>https://www.samueltaylor.org/articles/python-puzzlers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Default arguments&lt;/h2&gt;
 &lt;p&gt;What is the output of this code?&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;def foo(arg=[]):
     return arg
@@ -1084,7 +1084,7 @@ print(bar())
 &lt;p&gt;If you answered:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;['a', 'a']
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;then you're right!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/python-puzzlers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 28 Sep 2016 19:32:46 GMT</pubDate></item><item><title>The Last 5 Books I Read (October 2016)</title><link>https://www.samueltaylor.org/articles/books-october16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Station Eleven, Emily St. John Mandel&lt;/h2&gt;
+&lt;p&gt;then you're right!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/python-puzzlers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Thu, 29 Sep 2016 00:32:46 GMT</pubDate></item><item><title>The Last 5 Books I Read (October 2016)</title><link>https://www.samueltaylor.org/articles/books-october16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Station Eleven, Emily St. John Mandel&lt;/h2&gt;
 &lt;p&gt;I picked up this book purely for entertainment, and it served that purpose well.
 The pacing is quick (at times excessively so), and the events are interesting. I
 found nothing about it revolutionary, but it was well-written. In particular, I
@@ -1147,7 +1147,7 @@ literary device.&lt;/p&gt;
 everything that will happen will happen, is happening, and has always been
 happening; we are like bugs trapped in the amber of this moment. This belief
 takes away hope and meaning. Without these two things, I'm not sure life is
-worth living.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-october16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 05 Sep 2016 19:07:40 GMT</pubDate></item><item><title>Quotes/thoughts that I like</title><link>https://www.samueltaylor.org/articles/important-quotes.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;ul&gt;
+worth living.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-october16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 06 Sep 2016 00:07:40 GMT</pubDate></item><item><title>Quotes/thoughts that I like</title><link>https://www.samueltaylor.org/articles/important-quotes.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;There are four hard things in life. If you can do these four things, the rest
   comes easy:&lt;/p&gt;
@@ -1173,7 +1173,7 @@ worth living.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPerma
   is nothing left to take away. (Antoine de Saint-Exupery)&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Note: the attributions on these are only a best guess&lt;/em&gt;&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/important-quotes.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 29 Aug 2016 18:52:25 GMT</pubDate></item><item><title>Books I read in June 2015</title><link>https://www.samueltaylor.org/articles/books-june15.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;This month, I read four books:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: the attributions on these are only a best guess&lt;/em&gt;&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/important-quotes.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 29 Aug 2016 23:52:25 GMT</pubDate></item><item><title>Books I read in June 2015</title><link>https://www.samueltaylor.org/articles/books-june15.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;This month, I read four books:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Till We Have Faces, C.S. Lewis&lt;/li&gt;
 &lt;li&gt;A Walk in the Woods, Bill Bryson&lt;/li&gt;
@@ -1209,7 +1209,7 @@ set before me, and then suddenly the ending came. It felt abrupt, and it felt
 sad.&lt;/p&gt;
 &lt;h2&gt;Into the Wild, Jon Krakauer&lt;/h2&gt;
 &lt;p&gt;While I wasn't a fan of how much Krakauer seemed to revere McCandless, I enjoyed
-hearing about McCandless's journey.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-june15.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 26 Jun 2016 11:04:55 GMT</pubDate></item><item><title>The Last 5 Books I Read (June 2016)</title><link>https://www.samueltaylor.org/articles/books-june16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;A View from the Bridge, Arthur Miller&lt;/h2&gt;
+hearing about McCandless's journey.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-june15.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 26 Jun 2016 16:04:55 GMT</pubDate></item><item><title>The Last 5 Books I Read (June 2016)</title><link>https://www.samueltaylor.org/articles/books-june16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;A View from the Bridge, Arthur Miller&lt;/h2&gt;
 &lt;p&gt;This is a script I read for my American Literature class. It was alright. Even
 though it has a distant setting, the characters still feel real. They each have
 their own needs/desires which conflict in certain ways, which causes the
@@ -1280,7 +1280,7 @@ boring...", and then suddenly Wallace would introduce something that hooked me.&
 &lt;p&gt;Second, most (maybe all) of the stories end with a level of ambiguity. Because
 of this, the stories left me thinking about them on and off in the days after
 reading them.&lt;/p&gt;
-&lt;p&gt;Reading this book was well worth my time.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-june16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 26 Jun 2016 11:04:55 GMT</pubDate></item><item><title>The Last 5 Books I Read (February 2016)</title><link>https://www.samueltaylor.org/articles/books-feb.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Redirect, Timothy Wilson&lt;/h2&gt;
+&lt;p&gt;Reading this book was well worth my time.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-june16.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 26 Jun 2016 16:04:55 GMT</pubDate></item><item><title>The Last 5 Books I Read (February 2016)</title><link>https://www.samueltaylor.org/articles/books-feb.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Redirect, Timothy Wilson&lt;/h2&gt;
 &lt;p&gt;A book from a college professor about his (and others') research in "story
 editing" techniques that target the narratives we tell ourselves. I particularly
 appreciated the thoughts on happiness, as those are the most widely applicable.
@@ -1341,7 +1341,7 @@ on to more details, but that feels like more work than I want to put into
 reading this book. I don't mean to be lazy; I would just rather spend my mental
 energy elsewhere. Though I lack a lot of the detail (the geography of the area,
 for instance, is completely lost on me), I feel like I understand the story well
-still, and I still enjoy reading it.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-feb.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 20 Feb 2016 14:13:01 GMT</pubDate></item><item><title>Useful Python language features for interviews</title><link>https://www.samueltaylor.org/articles/python-tools-for-interviews.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;&lt;code&gt;collections.namedtuple&lt;/code&gt;&lt;/h2&gt;
+still, and I still enjoy reading it.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/books-feb.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 20 Feb 2016 20:13:01 GMT</pubDate></item><item><title>Useful Python language features for interviews</title><link>https://www.samueltaylor.org/articles/python-tools-for-interviews.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;&lt;code&gt;collections.namedtuple&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;namedtuple&lt;/code&gt; can make your code a lot more readable. In an interview, that's
 helpful for a few reasons. First, it can help you demonstrate a good
 understanding of some of Python's standard libraries. Second, it helps you show
@@ -1450,7 +1450,7 @@ for i in range(n):
 &lt;pre&gt;&lt;code&gt;visited = [[False for _ in range(n)] for _ in range(n)]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The possibilities with list comprehensions are just about endless, so I'll leave
-it at that!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/python-tools-for-interviews.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 17 Oct 2015 11:03:09 GMT</pubDate></item><item><title>Hackathon report: TAMUHack 2015</title><link>https://www.samueltaylor.org/articles/tamuhack-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
+it at that!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/python-tools-for-interviews.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 17 Oct 2015 18:03:09 GMT</pubDate></item><item><title>Hackathon report: TAMUHack 2015</title><link>https://www.samueltaylor.org/articles/tamuhack-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
 &lt;p&gt;Two weeks ago, &lt;a href="/articles/hacktx-2015.html"&gt;I went to HackTX&lt;/a&gt; and won a Leap
 Motion. While thinking about what things we could build with skeletal tracking
 and gesture recognition, I thought it would be cool to build a language learning
@@ -1507,7 +1507,7 @@ getting to talk about our hack in front of everyone.&lt;/p&gt;
 &lt;p&gt;Apparently the judges also thought it was cool, because Matt and I won second
 place overall!&lt;/p&gt;
 &lt;h2&gt;Thanks&lt;/h2&gt;
-&lt;p&gt;TAMUHack was super fun. Huge thanks to the organizers, volunteers, and judges.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/tamuhack-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 11 Oct 2015 10:39:45 GMT</pubDate></item><item><title>Political implications of BitTorrent</title><link>https://www.samueltaylor.org/articles/bittorrent.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;BitTorrent is an inherently political technology which embodies decentralized
+&lt;p&gt;TAMUHack was super fun. Huge thanks to the organizers, volunteers, and judges.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/tamuhack-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 11 Oct 2015 15:39:45 GMT</pubDate></item><item><title>Political implications of BitTorrent</title><link>https://www.samueltaylor.org/articles/bittorrent.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;BitTorrent is an inherently political technology which embodies decentralized
 political order. Additionally, it broadens the definition of art. Despite the
 negative side effects of the technology, BitTorrent is worth pursuing.&lt;/p&gt;
 &lt;p&gt;What does it mean to say that a technology is political? Winner outlines two
@@ -1660,7 +1660,7 @@ cultures?.” International journal of communication.&lt;/p&gt;
 &lt;p&gt;Stern, Marlow. “Mumford &amp;amp; Sons Diss Jay Zs Tidal.” The Daily Best. 12 April
 2015.&lt;/p&gt;
 &lt;p&gt;Winner, Langdon. “Do Artifacts Have Politics?” Daedalus, Vol. 109, No. 1, Modern
-Technology: Problem or Opportunity? (Winter, 1980), pp. 121-136. &lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/bittorrent.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 07 Oct 2015 20:42:24 GMT</pubDate></item><item><title>Hackathon report: HackTX 2015</title><link>https://www.samueltaylor.org/articles/hacktx-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
+Technology: Problem or Opportunity? (Winter, 1980), pp. 121-136. &lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/bittorrent.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Thu, 08 Oct 2015 01:42:24 GMT</pubDate></item><item><title>Hackathon report: HackTX 2015</title><link>https://www.samueltaylor.org/articles/hacktx-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
 &lt;p&gt;My team and I started thinking of ideas on the drive down to Austin. We ended up
 deciding to do something that would automate the scheduling of meetings.&lt;/p&gt;
 &lt;h2&gt;Project&lt;/h2&gt;
@@ -1715,7 +1715,7 @@ HackTX organizers, Context.IO, Square, Microsoft, and Indeed for all their
 feedback and help. If you've not gone to a hackathon, you should definitely sign
 up! They're super fun!&lt;/p&gt;
 &lt;p&gt;If you want to get in touch for any reason, I can be reached at
-sgt@samueltaylor.org. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hacktx-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 28 Sep 2015 20:36:29 GMT</pubDate></item><item><title>The 10 Best Ingredients for Cheap Cooking</title><link>https://www.samueltaylor.org/articles/best-ingredients-for-cheap-cooking.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;The ten most frequently-used ingredients on &lt;a href="http://budgetbytes.com"&gt;Budget
+sgt@samueltaylor.org. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hacktx-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 29 Sep 2015 01:36:29 GMT</pubDate></item><item><title>The 10 Best Ingredients for Cheap Cooking</title><link>https://www.samueltaylor.org/articles/best-ingredients-for-cheap-cooking.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;The ten most frequently-used ingredients on &lt;a href="http://budgetbytes.com"&gt;Budget
 Bytes&lt;/a&gt; are:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Salt&lt;/li&gt;
@@ -1731,7 +1731,7 @@ Bytes&lt;/a&gt; are:&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;This information was gathered using a &lt;a href="https://github.com/ssaamm/recipe-scraper/"&gt;scraper I
 wrote&lt;/a&gt; with Python 3, BeautifulSoup,
-and Requests.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/best-ingredients-for-cheap-cooking.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 12 Sep 2015 10:51:54 GMT</pubDate></item><item><title>Thoughts on Effective Java</title><link>https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;I'm reading the second edition of &lt;em&gt;Effective Java&lt;/em&gt; in a group at work and
+and Requests.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/best-ingredients-for-cheap-cooking.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 12 Sep 2015 15:51:54 GMT</pubDate></item><item><title>Thoughts on Effective Java</title><link>https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;I'm reading the second edition of &lt;em&gt;Effective Java&lt;/em&gt; in a group at work and
 writing some thoughts/notes about it here.&lt;/p&gt;
 &lt;h2&gt;Chapter 2&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Item 1&lt;/strong&gt; is about static factory methods.&lt;/p&gt;
@@ -1842,7 +1842,7 @@ contrast, a &lt;code&gt;Comparator&amp;lt;&amp;gt;&lt;/code&gt; can have a name 
 information about how the comparison is done. This explicit information is
 probably good.&lt;/p&gt;
 &lt;p&gt;As of Java 7, if you break the general contract for comparisons, an exception
-will be thrown.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 16:44:53 GMT</pubDate></item><item><title>Hackathon report: Hack@Teal 2015</title><link>https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;My friend &lt;a href="http://matttinsley.org/"&gt;Matt Tinsley&lt;/a&gt; and I were both RA's in Teal
+will be thrown.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Hackathon report: Hack@Teal 2015</title><link>https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;My friend &lt;a href="http://matttinsley.org/"&gt;Matt Tinsley&lt;/a&gt; and I were both RA's in Teal
 Resdiential College from Fall 2014 to Spring 2015. We are also both big fans of
 hackathons. Matt had the idea for and led the organization of a hackathon for
 Teal residents. I helped him out with logistics, and we worked on a project in
@@ -1916,7 +1916,7 @@ I'd love to take part in organizing more hackathons. Because it was a small
 event, Matt and I were able to hack on our own project, which was fun and
 educational.&lt;/p&gt;
 &lt;p&gt;If you want more information (especially about other people's projects), please
-see the official website for Hack@Teal 2015, &lt;a href="http://hackteal.me/"&gt;hackteal.me&lt;/a&gt;.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 16:44:53 GMT</pubDate></item><item><title>Hackathon report: HackTX 2014</title><link>https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
+see the official website for Hack@Teal 2015, &lt;a href="http://hackteal.me/"&gt;hackteal.me&lt;/a&gt;.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Hackathon report: HackTX 2014</title><link>https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
 &lt;p&gt;Most college students are aware that registering for classes can be a real pain.
 At Baylor, we don't have a waitlist on many of our classes. If you fail to get
 into a class, you are doomed to logging in several times a day and hoping a seat
@@ -1994,7 +1994,7 @@ won three sponsor awards:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;p&gt;HackTX 2014 was great. We had fun, built a great product, and won some awesome
-prizes.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 16:44:53 GMT</pubDate></item><item><title>How to: get free WiFi at coffee shops</title><link>https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Some coffee shops place time limitations on their WiFi. For example, I recently
+prizes.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>How to: get free WiFi at coffee shops</title><link>https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Some coffee shops place time limitations on their WiFi. For example, I recently
 went to a Panera that had a 30 minute time limit on their WiFi during lunch
 hours.&lt;/p&gt;
 &lt;p&gt;Getting around such limits isn't difficult. I'm not sure how ethical it is to do
@@ -2022,7 +2022,7 @@ ifconfig wlan0 hw ether $1
 ifconfig wlan0 up
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And then run it like &lt;code&gt;./change_mac.sh a1:b2:c3:d4:e5:f6&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;If you want to get in touch, email me at sgt@samueltaylor.org. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 16:44:53 GMT</pubDate></item><item><title>How to: remove Etsy search ads</title><link>https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;ol&gt;
+&lt;p&gt;If you want to get in touch, email me at sgt@samueltaylor.org. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>How to: remove Etsy search ads</title><link>https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;ol&gt;
 &lt;li&gt;Install Greasemonkey or Tampermonkey&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Firefox users:
@@ -2041,7 +2041,7 @@ ifconfig wlan0 up
 &lt;p&gt;Etsy search ads have children with a CSS class of &lt;code&gt;.ad-indicator&lt;/code&gt;. It's
 literally one line to remove those. This was a fun way to figure out how to make
 the web less annoying through using browser dev tools and Greasemonkey.&lt;/p&gt;
-&lt;p&gt;If you have any feedback, please contact me at sgt at this domain. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 16:44:53 GMT</pubDate></item><item><title>Notes: Boston Django Meetup, Intro to Flask, 25 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 25 June 2015, Ned Jackson Lovely spoke about Flask at the Boston Django Users
+&lt;p&gt;If you have any feedback, please contact me at sgt at this domain. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Notes: Boston Django Meetup, Intro to Flask, 25 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 25 June 2015, Ned Jackson Lovely spoke about Flask at the Boston Django Users
 Meetup Group. I took some notes and am putting them here so I don't lose them;
 they may or may not be useful to others. Theses notes are not exhaustive.&lt;/p&gt;
 &lt;hr /&gt;
@@ -2109,7 +2109,7 @@ session.modified = True&lt;/p&gt;
 &lt;li&gt;gevent, gunicorn, nginx, ansible  &lt;/li&gt;
 &lt;li&gt;supervisor  &lt;/li&gt;
 &lt;li&gt;pip freeze&lt;/li&gt;
-&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 16:44:53 GMT</pubDate></item><item><title>Notes: Boston Python User Group, Lightning Talks, 22 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 22 June 2015, the Boston Python User Group had a night of seven lightning
+&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Notes: Boston Python User Group, Lightning Talks, 22 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 22 June 2015, the Boston Python User Group had a night of seven lightning
 talks. These are notes I took for personal use; they're not a perfect re-telling
 of what each talk was about (or even what each talk was called).&lt;/p&gt;
 &lt;h2&gt;#1 Python for making connections in groups&lt;/h2&gt;
@@ -2213,4 +2213,4 @@ observe. I'm not sure what that means.&lt;/p&gt;
 &lt;li&gt;You put a decorator on your test to say what kind of data it takes&lt;/li&gt;
 &lt;li&gt;It works with most testing frameworks&lt;/li&gt;
 &lt;li&gt;You write a small amount of code, but get a big amount of functionality tested&lt;/li&gt;
-&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 16:44:53 GMT</pubDate></item></channel></rss>
+&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item></channel></rss>
