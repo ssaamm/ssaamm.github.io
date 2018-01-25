@@ -8,10 +8,10 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-podgen v1.0.0 https://podgen.readthedocs.org</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 08 Jan 2018 01:22:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jan 2018 19:44:49 +0000</lastBuildDate>
     <itunes:author>Samuel Taylor</itunes:author>
     <managingEditor>podcast@samueltaylor.org (Samuel Taylor)</managingEditor>
-    <pubDate>Sun, 07 Jan 2018 19:14:00 -0600</pubDate>
+    <pubDate>Thu, 25 Jan 2018 13:43:00 -0600</pubDate>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
     </itunes:category>
@@ -21,6 +21,14 @@
       <itunes:email>podcast@samueltaylor.org</itunes:email>
     </itunes:owner>
     <atom:link href="https://www.samueltaylor.org/podcast.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Cooking and Coding</title>
+      <description><![CDATA[I like cooking, and I like coding. By comparing the two, we learn more about both of them.]]></description>
+      <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/5-Cooking_and_Coding.mp3</guid>
+      <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/5-Cooking_and_Coding.mp3" length="3046888" type="audio/mpeg"/>
+      <itunes:duration>06:20</itunes:duration>
+      <pubDate>Thu, 25 Jan 2018 13:43:00 -0600</pubDate>
+    </item>
     <item>
       <title>Work-Self Balance</title>
       <description><![CDATA[We often talk about work-life balance, but what about the balance between our work and our self? Learn about my struggle with defining myself by my work and how I overcame it.]]></description>
