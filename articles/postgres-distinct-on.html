@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="../static/css/code.css" rel="stylesheet" type="text/css">
+    <title>Using `DISTINCT ON` in Postgres - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Using `DISTINCT ON` in Postgres</span>
+<h1>Using <code>DISTINCT ON</code> in Postgres</h1>
+<p>Every once in a while, I'll have a need to do a one-to-many join, but keep only a certain row in the "many" table. For
+instance, say we have a system to track inventory in retail stores:</p>
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">store</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="k">name</span> <span class="nb">TEXT</span>
+<span class="p">);</span>
+
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">inventory</span> <span class="p">(</span>
+    <span class="n">store_id</span> <span class="nb">INTEGER</span> <span class="k">REFERENCES</span> <span class="n">store</span><span class="p">,</span>
+    <span class="n">quantity</span> <span class="nb">INTEGER</span><span class="p">,</span>
+    <span class="n">item_name</span> <span class="nb">TEXT</span><span class="p">,</span>
+    <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">store_id</span><span class="p">,</span> <span class="n">item_name</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">store</span><span class="p">(</span><span class="k">name</span><span class="p">)</span> <span class="k">VALUES</span>
+    <span class="p">(</span><span class="s1">&#39;School Supplies R Us&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;Grocery Mart&#39;</span><span class="p">);</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">inventory</span> <span class="k">VALUES</span>
+    <span class="p">(</span><span class="mf">1</span><span class="p">,</span> <span class="mf">1</span><span class="p">,</span> <span class="s1">&#39;Backpack&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">1</span><span class="p">,</span> <span class="mf">12</span><span class="p">,</span> <span class="s1">&#39;Pencil&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">1</span><span class="p">,</span> <span class="mf">4</span><span class="p">,</span> <span class="s1">&#39;Pen&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">12</span><span class="p">,</span> <span class="s1">&#39;Egg&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="mf">2</span><span class="p">,</span> <span class="mf">1</span><span class="p">,</span> <span class="s1">&#39;Flour (lb.)&#39;</span><span class="p">);</span>
+</pre></div>
+
+<p>We can get the inventory for all stores easily enough.</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">name</span><span class="p">,</span> <span class="n">quantity</span><span class="p">,</span> <span class="n">item_name</span>
+<span class="k">FROM</span> <span class="n">inventory</span>
+<span class="k">JOIN</span> <span class="n">store</span> <span class="k">ON</span> <span class="n">inventory</span><span class="mf">.</span><span class="n">store_id</span> <span class="o">=</span> <span class="n">store</span><span class="mf">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+
+<pre><code>         name         | quantity |  item_name
+----------------------+----------+-------------
+ School Supplies R Us |        1 | Backpack
+ School Supplies R Us |       12 | Pencil
+ School Supplies R Us |        4 | Pen
+ Grocery Mart         |       12 | Egg
+ Grocery Mart         |        1 | Flour (lb.)
+</code></pre>
+<p>But what if we only want to get the item with highest quantity from each store? Fortunately, Postgres has a syntax that
+makes this easy.</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">ON</span><span class="p">(</span><span class="n">store_id</span><span class="p">)</span> <span class="k">name</span><span class="p">,</span> <span class="n">quantity</span><span class="p">,</span> <span class="n">item_name</span>
+<span class="k">FROM</span> <span class="n">inventory</span>
+<span class="k">JOIN</span> <span class="n">store</span> <span class="k">ON</span> <span class="n">inventory</span><span class="mf">.</span><span class="n">store_id</span> <span class="o">=</span> <span class="n">store</span><span class="mf">.</span><span class="n">id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">store_id</span><span class="p">,</span> <span class="n">quantity</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+
+<pre><code>         name         | quantity | item_name
+----------------------+----------+-----------
+ School Supplies R Us |       12 | Pencil
+ Grocery Mart         |       12 | Egg
+</code></pre>
+<p>What does <code>DISTINCT ON</code> do? Well, it selects the first row out of the set of rows whose values match for the given
+columns. The first row is arbitrary unless we pass along an <code>ORDER BY</code> statement. Note that we have to include the
+columns from the <code>ON()</code> clause in our <code>ORDER BY</code>. If we don't, we get a helpful error message:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">ON</span> <span class="p">(</span><span class="n">store_id</span><span class="p">)</span> <span class="k">name</span><span class="p">,</span> <span class="n">quantity</span><span class="p">,</span> <span class="n">item_name</span>
+<span class="k">FROM</span> <span class="n">inventory</span>
+<span class="k">JOIN</span> <span class="n">store</span> <span class="k">ON</span> <span class="n">inventory</span><span class="mf">.</span><span class="n">store_id</span> <span class="o">=</span> <span class="n">store</span><span class="mf">.</span><span class="n">id</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">quantity</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+
+<pre><code>ERROR:  SELECT DISTINCT ON expressions must match initial ORDER BY expressions
+LINE 1: SELECT DISTINCT ON (store_id) name, quantity, item_name
+                            ^
+</code></pre>
+<p>If you run into a situation wherein you need to choose a specific row in a group based on some rules, try using
+<code>DISTINCT ON</code>. For more detail, check out the <a href="https://www.postgresql.org/docs/10/static/sql-select.html#SQL-DISTINCT">Postgres documentation</a>.</p>
+  </body>
+</html>
