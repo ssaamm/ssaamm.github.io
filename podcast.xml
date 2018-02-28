@@ -8,10 +8,10 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-podgen v1.0.0 https://podgen.readthedocs.org</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 25 Jan 2018 19:44:49 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 28 Feb 2018 00:27:19 +0000</lastBuildDate>
     <itunes:author>Samuel Taylor</itunes:author>
     <managingEditor>podcast@samueltaylor.org (Samuel Taylor)</managingEditor>
-    <pubDate>Thu, 25 Jan 2018 13:43:00 -0600</pubDate>
+    <pubDate>Tue, 27 Feb 2018 18:30:00 -0600</pubDate>
     <itunes:category text="Technology">
       <itunes:category text="Software How-To"/>
     </itunes:category>
@@ -21,6 +21,14 @@
       <itunes:email>podcast@samueltaylor.org</itunes:email>
     </itunes:owner>
     <atom:link href="https://www.samueltaylor.org/podcast.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Work Queues in Software and Productivity</title>
+      <description><![CDATA[Work queues are a fascinating idea from software engineering that can also be applied to make our lives more productive.]]></description>
+      <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/6-Work_Queues_in_Software_and_Productivity.mp3</guid>
+      <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/6-Work_Queues_in_Software_and_Productivity.mp3" length="3778779" type="audio/mpeg"/>
+      <itunes:duration>07:52</itunes:duration>
+      <pubDate>Tue, 27 Feb 2018 18:30:00 -0600</pubDate>
+    </item>
     <item>
       <title>Cooking and Coding</title>
       <description><![CDATA[I like cooking, and I like coding. By comparing the two, we learn more about both of them.]]></description>

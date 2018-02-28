@@ -1,5 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Mon, 12 Feb 2018 00:38:14 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Work-Self Balance</title><link>https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;Prefer to listen? This article is also available as episode 4 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Wed, 28 Feb 2018 00:38:03 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Work Queues in Software and Productivity</title><link>https://www.samueltaylor.org/articles/work-queues-software-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;Prefer to listen? This article is also available as episode 6 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;My first job at a real software company was after my sophomore year in college. As you might imagine, I learned a ton
+that summer. I learned about how companies organize themselves. I learned how software teams organize around different
+pieces of the product. I learned specific technical things. I learned how to read code. I learned about navigating large
+codebases. But the thing that that stuck with me most was a specific architectural decision that they had made: to
+use what is called a work queue.&lt;/p&gt;
+&lt;p&gt;In this article, we take a look at work queues in software and productivity. First, we'll examine what they are and look
+into a look into a real world use case. After that, we'll talk about how to know when to use them. Finally, we'll think
+beyond computers and apply them to improve our own personal productivity.&lt;/p&gt;
+&lt;h1&gt;Explanation&lt;/h1&gt;
+&lt;p&gt;To explain what a work queue is, let me give you a nontechnical example. Suppose that you are a high powered executive
+named Alice, and your company has decided that you need an administrative assistant to handle writing emails, scheduling
+calendar events, and other administrative tasks. They assign you an an executive assistant named Bob. You and Bob set up
+a system for communicating what Bob needs to work on. As you're going about your day, when you run into something that
+Bob can work on, you go to a large whiteboard. At the top of it you write, "Schedule meeting with Carol." And then you
+go back to your desk and continue with your work. When something else comes up, you go back to the whiteboard and write,
+"Email Dan to follow up on his project".&lt;/p&gt;
+&lt;p&gt;As you're working at your desk, all Bob has to do in order to figure out what he should do next is look at the top of
+the white board and find the next thing he hasn't completed. While you're writing an important document, Bob will go
+ahead and schedule that meeting with Carol. Once he's done with that, he'll send that email to Dan. If at any point the
+white board is empty when he tries to find a new task, he'll sit around twiddling his thumbs, not doing anything.&lt;/p&gt;
+&lt;p&gt;What we've described here is the core of what a work queue implementation could look like. There would be a few
+differences, obviously. Instead of an executive named Alice, we have a process A. This could be an Android application,
+a Ruby on Rails web app, or what have you. This application hums along serving content to the user, and then
+occasionally it sends out some work to another process. This is just like the way you would write on the white board for
+Bob, but instead of a human person named Bob, we have a "worker process" that we'll call Process B. Process B can handle
+stuff in the background as process A is interacting with the user.&lt;/p&gt;
+&lt;p&gt;The whiteboard in our example essentially &lt;em&gt;is&lt;/em&gt; the work queue itself. The idea is that process A can offload tasks to
+process B.&lt;/p&gt;
+&lt;h1&gt;Use case&lt;/h1&gt;
+&lt;p&gt;Here's a real world example. A lot of times when you sign up for an account on a website, you're interacting with some
+web application that they have running. When you register for an account, you enter a username, a password, and your
+email address and hit a button that says "create account". One of the things that has to happen when you sign up for an
+account is they have to confirm that that's actually your real email address by sending you a confirmation email. One
+way they could do this is to have the application that is handling that sign up form just go ahead and send the email.
+The problem with doing that is that sending email can take a while. If the wep application itself sends the email, it's
+not going to be able to send content to your screen while it's doing that. So you'll be sitting there wondering, "Why is
+this page taking so long to load?". This is a terrible user experience! If we take a step back and think, there's
+nothing essential about sending that email right then as the page loaded. We can really offload that to some other
+process.&lt;/p&gt;
+&lt;p&gt;To improve the user experience, we can use a work queue.  Rather than sending that confirmation email during the page
+rendering process, we could put a piece of work in the queue to send that email. Of course, we'll keep the essential
+application logic of creating a user in the database, but that happens pretty quickly, especially compared with the time
+it takes to send an email.&lt;/p&gt;
+&lt;p&gt;How would we implement such a system? Well, a common way is to have our main process produce messages to some sort of
+message queue. There's lots of options here, but two common choices I've personally used are RabbitMQ and Apache Kafka.
+Then, in our main process, we'll produce messages to that system. The only thing we're missing now is what we've called
+"Process B", or our "worker node". For this, we create a process that reads messages off the queue and does work based
+on those messages. As an aside, if you're using Python, definitely checkout &lt;a href="https://www.celeryproject.org/"&gt;Celery&lt;/a&gt;.&lt;/p&gt;
+&lt;h1&gt;Benefits&lt;/h1&gt;
+&lt;p&gt;So why do I love work queues so much? The first reason is that they give us a chance to decouple things. Because we're
+creating an interface wherein Process A just has to say, "Hey, I would like this thing to happen", that same process
+doesn't have to know anything about the other process. Let's say Process A is a Python application. We probably start
+off with workers written in Python, too. If we're smart about using language-agnostic serialization, we give ourselves
+more flexibility in the future. If we need some library that's only available in Java or have some task that's really
+best suited to Haskell, we can create worker processes in those languages. This gives us a lot of flexibility to choose
+the right tool for the job.&lt;/p&gt;
+&lt;p&gt;The other nice thing about using a work queue is that it can make scaling easy. While we've been calling it process B,
+it doesn't have to be a single process, or even a single server. Say one day a ton of people start signing up for our
+website. Our work queue starts getting longer and longer as Process B isn't able to keep up with all the work it needs
+to do. An easy way to handle this issue is to start up 10 more instances of Process B. One nifty thing we can do is
+dynamically scale the number of workers we have based on how many things are still in the queue. If our workers start to
+fall behind, spin up a few more instances. If the queue is frequently empty, spin a few down.&lt;/p&gt;
+&lt;h1&gt;When to use&lt;/h1&gt;
+&lt;p&gt;Let's talk about when to implement a work queue. The key insight to note is that when we find a piece of work that is
+easily parallelizable, that's a good candidate for this kind of system. In other words, if we encounter a problem where
+we can break apart a large task into a number of similar subtasks, we could likely put those tasks into a queue. For
+example, we might want to scrape a bunch of webpages. To do this, we could create a message that includes the URL of the
+page we want to scrape and says, "Hey, scrape this thing". Then, we have one process spit URL's into the queue, and a
+number of processes reading from that queue, scraping pages, and storing results in the database.&lt;/p&gt;
+&lt;h1&gt;Productivity technique&lt;/h1&gt;
+&lt;p&gt;Beyond being a nifty technical tool, I've been able to find applications for this in my working life.  That example at
+the beginning (where Alice was farming out work to Bob) is actually pretty similar to how I operate day-in and day-out.
+Except instead of farming out work to an administrative assistant, I'm farming out work to future me. Basically, when I
+encounter something that is a little chunk of work that I know I can do later and that is going to knock me off task
+right now, I write it down in a list.  I set a specific time each day to go look at the list and knock out all the
+things I need to do. This technique has helped me be more productive, because batching little tasks like this all
+together means that during the course of my day, I make fewer costly context switches between deep, analytical tasks and
+more administrative tasks.&lt;/p&gt;
+&lt;p&gt;Further, I have found that the amount of context in those analytical tasks is usually much greater than the context for
+an administrative task. That means that if we group the administrative tasks together, switching between them may still
+result in the same number of context switches, but they are each less costly.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;I will forever be grateful to the people I worked with during that summer four years ago. Getting exposure to common
+patterns and concepts has been immensely helpful in my work as a software engineer, and I hope that hearing about this
+idea will help you solve a problem some day.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-queues-software-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 28 Feb 2018 00:37:51 GMT</pubDate></item><item><title>Using `DISTINCT ON` in Postgres</title><link>https://www.samueltaylor.org/articles/postgres-distinct-on.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Every once in a while, I'll have a need to do a one-to-many join, but keep only a certain row in the "many" table. For
+instance, say we have a system to track inventory in retail stores:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="nb"&gt;SERIAL&lt;/span&gt; &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;name&lt;/span&gt; &lt;span class="nb"&gt;TEXT&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;store_id&lt;/span&gt; &lt;span class="nb"&gt;INTEGER&lt;/span&gt; &lt;span class="k"&gt;REFERENCES&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;quantity&lt;/span&gt; &lt;span class="nb"&gt;INTEGER&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;item_name&lt;/span&gt; &lt;span class="nb"&gt;TEXT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;store_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;INSERT&lt;/span&gt; &lt;span class="k"&gt;INTO&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;VALUES&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;School Supplies R Us&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Grocery Mart&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="k"&gt;INSERT&lt;/span&gt; &lt;span class="k"&gt;INTO&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt; &lt;span class="k"&gt;VALUES&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Backpack&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Pencil&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Pen&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;12&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Egg&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Flour (lb.)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We can get the inventory for all stores easily enough.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_name&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt;
+&lt;span class="k"&gt;JOIN&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt; &lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;store_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code&gt;         name         | quantity |  item_name
+----------------------+----------+-------------
+ School Supplies R Us |        1 | Backpack
+ School Supplies R Us |       12 | Pencil
+ School Supplies R Us |        4 | Pen
+ Grocery Mart         |       12 | Egg
+ Grocery Mart         |        1 | Flour (lb.)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But what if we only want to get the item with highest quantity from each store? Fortunately, Postgres has a syntax that
+makes this easy.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;DISTINCT&lt;/span&gt; &lt;span class="k"&gt;ON&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;store_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_name&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt;
+&lt;span class="k"&gt;JOIN&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt; &lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;store_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;
+&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;store_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quantity&lt;/span&gt; &lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code&gt;         name         | quantity | item_name
+----------------------+----------+-----------
+ School Supplies R Us |       12 | Pencil
+ Grocery Mart         |       12 | Egg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What does &lt;code&gt;DISTINCT ON&lt;/code&gt; do? Well, it selects the first row out of the set of rows whose values match for the given
+columns. The first row is arbitrary unless we pass along an &lt;code&gt;ORDER BY&lt;/code&gt; statement. Note that we have to include the
+columns from the &lt;code&gt;ON()&lt;/code&gt; clause in our &lt;code&gt;ORDER BY&lt;/code&gt;. If we don't, we get a helpful error message:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="k"&gt;DISTINCT&lt;/span&gt; &lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;store_id&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;quantity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;item_name&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt;
+&lt;span class="k"&gt;JOIN&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt; &lt;span class="k"&gt;ON&lt;/span&gt; &lt;span class="n"&gt;inventory&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;store_id&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt;&lt;span class="mf"&gt;.&lt;/span&gt;&lt;span class="n"&gt;id&lt;/span&gt;
+&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;quantity&lt;/span&gt; &lt;span class="k"&gt;DESC&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code&gt;ERROR:  SELECT DISTINCT ON expressions must match initial ORDER BY expressions
+LINE 1: SELECT DISTINCT ON (store_id) name, quantity, item_name
+                            ^
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you run into a situation wherein you need to choose a specific row in a group based on some rules, try using
+&lt;code&gt;DISTINCT ON&lt;/code&gt;. For more detail, check out the &lt;a href="https://www.postgresql.org/docs/10/static/sql-select.html#SQL-DISTINCT"&gt;Postgres documentation&lt;/a&gt;.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/postgres-distinct-on.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 12 Feb 2018 00:39:08 GMT</pubDate></item><item><title>Work-Self Balance</title><link>https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;Prefer to listen? This article is also available as episode 4 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;It's a few months ago. I'm enjoying my job and trying to bring value to my team. A high-visibility project comes up.
 Despite being unfamiliar with the framework we plan to use, I'm excited to work on this project. I set out to "learn by
 doing", implementing a chunk of the project with this framework. After reading some code, writing some new code by trial
