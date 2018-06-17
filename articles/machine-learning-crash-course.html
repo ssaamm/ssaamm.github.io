@@ -25,6 +25,422 @@
 <ul>
 <li><a href="https://anacondacon.io/">AnacondaCON</a> on 10 Apr 2018. Slides available <a href="/static/pdf/machine_learning_crash_course_anacondacon_2018.pdf">here</a>. Video embedded above.</li>
 </ul>
-<p>I'll update this page with a transcript once it's available.</p>
+<h2>Transcript</h2>
+<p>Have you ever applied for a credit card? A few weeks ago I was up late at night and apparently my idea of a good time is
+to try to churn some credit card rewards. So I was on a bank's website entering information about myself, and I got to a
+point where I had to hit a submit button to submit my application and I clicked submit and within a split second the
+page loaded and they told me whether I got the credit card, and my mind was just blown by this because I thought,
+"Surely they don't have a squadron of people sitting around reviewing applications. It's 2:00 a.m.. And even if they did
+those people couldn't possibly make a decision that quickly. And I was just very confused by this. But the secret here
+to how they're able to do this lies in machine learning. In other words people can take past examples from history and
+use it to create a formula that allows them to predict future outcomes. I am Samuel Taylor as introduced and today we
+are going to be going through a crash course in machine learning. There are a lot of things that this talk is and
+aspires to be. And chief among them is to introduce y'all to machine learning concepts. If you don't know anything about
+any of this stuff I hope that you are able to come in here and feel like you took something away. </p>
+<p>But if you do have a little bit more experience I hope that this is going to be helpful for you still because you'll be
+able to see some different approaches that you might not have considered before and hopefully that will be beneficial to
+you. I definitely want to orient this toward application because I find that sometimes when we talk about machine
+learning especially at an introductory level it becomes a really weird and hypothetical scenario where you're saying,
+"Oh well if you have this situation then you might want to do this" and it just gets weird to talk about and it's a lot
+more interesting to talk about an application level. That said it is still very respectful of the theory in this field
+because there's a lot of really talented people who've put a lot of really good effort into understanding the way that
+these models work. And if we are able to gain some of that understanding, we'll do better at the application. However,
+you're not going to be a data scientist after this. We have about 45 minutes. This is not going to be an entirely
+comprehensive event here. There is a lot of stuff that I won't be able to cover and a lot of things that we're going to
+have to gloss over because again there's only 45 minutes here. I think that tutorials and detailed code examples are
+really interesting and there's going to be a few code snippets but those are, I think, less applicable in a forum like
+this. </p>
+<p>I'm happy to talk to any of you afterward about specifics and give you links to GitHub repos and stuff if you're
+interested. But for the purposes of this talk we will try to stay a little higher level and talk about what the models
+used were and some of the techniques and try to focus less on the specifics. This is how we're going to be doing all of
+this stuff. We'll start off with a few minutes just on what even is machine learning and then we have sort of a warm up
+use case that is this credit card application example I'm talking about. And then we'll dive into 3 use cases. Basically
+three problems that I ran into and the ways I ended up solving them including what I learned from those. Finally we'll
+just wrap up everything and hopefully tie a nice little intellectually tasty bow on this package. So for those of you
+here in this room if you've heard the phrase machine learning before raise your hand. OK, some of y'all liars because I
+have said it at least three times already, but now I know which ones of you are aren't telling the truth. If you feel
+like you've done something with machine learning that you found significant or just interesting, I'd love to see a hand.
+Awesome. OK. For all of you, I hope you get something out of this for the rest of you, we're so glad you're here, and I
+think that by the end of this you'll be able to try to do something really cool. </p>
+<p>All right. There is a lot of stuff that is machine learning really and a lot of times people break it up into supervised
+and unsupervised problems. Again this isn't comprehensive. Supervised learning is what we're going to talk about for
+most of today and what we'll talk about first. In supervised learning we have a set of data and a set of output data and
+the input data maps to the output data. So we could have, for instance, credit card application data that maps to
+whether or not someone should get the credit card. So let's talk about classification first. In classification we have
+data that looks something like this. This is again for credit card applications, and this is entirely hypothetical data
+that was generated by me drawing some stuff on a graph and then reading the graph. So it's completely fake but it gives
+you an idea of what's happening here. In supervised machine learning we have our features and our output, and here the
+output is whether or not someone is given credit. That's the thing we're trying to predict, and the input (or the
+features) are the age and the net worth. </p>
+<p>So we have some input and we're trying to produce some output. You could take all this data and put it on a graph and we
+say we have seen these six credit card applications in the past from people of various ages of various net worths and we
+want to know whether to give them a credit card, right? And for all of the hype and excitement around machine learning
+this is pretty much just drawing lines. That's all we're going to end up actually doing here. So we're going to do some
+really fancy line drawing today. And we can draw a line through here that separates these data points and then when a
+new data point comes in, we can ask the model, "Hey, should we approve this credit card?" and it can look and say,
+"Well, it's on the 'approve' side of the line so we'll approve this person." </p>
+<p>Regression is very similar to classification in that it has still input data and output data. But instead of predicting
+what kind of thing something is (trying to predict a discrete value with a certain number of outputs), it's trying to
+predict a continuous value. So we're trying to answer the question "how much" of something. To continue in the bank,
+let's say we are trying to give people loans, and someone comes in and they say "My net worth is this, I want a loan.
+How big of a loan are you willing to give me?" And you could have a bunch of data that looks something like this. And we
+could see well we gave this person with a million dollars a very large loan and we gave a person with less money less
+money. And then again all this is is just fancy line drawing. So we draw this line and that's what we call "fitting" the
+model and then we'll want to predict a new customer that walks into our bank and they'll say, "I have $500,000, how much
+of a loan are you willing to give me.?" And you just jog up to the line and then jog over to the Y-axis and say we're
+going to give them sixty thousand dollars. So pretty simple stuff with supervised learning. </p>
+<p>Unsupervised learning: also interesting. One of the biggest areas in it is called clustering. It's probably one of the
+key algorithms to know in this space. With clustering, we don't have any any outputs. We just have inputs pretty much.
+We see we have nine data points and here each data point is a different shape and we might have a table that has the
+number of sides and the color that this shape is but we don't really know what what we're looking for here. With
+clustering we're just trying to uncover some underlying structure in the data. So we might hand this to a computer and
+say hey split this into three groups for me. And it seems like you can split this into three groups a number of ways but
+the computer might just say here's three groups of these things. And it will provide you with those 3 clusters. </p>
+<p>There's a lot of other stuff and this goes back to the non comprehensive aspect of this talk. This looks like a slide.
+It's actually secretly an insurance policy against angry people on Twitter saying that I didn't cover their favorite
+subject. </p>
+<p>So all in all the way that I sort of think about machine learning is that we want to find some function in the world.
+There is a mathematical function that describes whether someone should be approved for a loan whether they are going to
+default on a loan that exists out in the world. The problem is that we can't possibly know that because there are so
+many factors going into it. I mean, if someone comes into an unexpected medical expense they might default on a loan and
+there's all sorts of different factors that affect this. And so it's impossible for us to know all of these things. The
+interesting thing and the thing that gives us hope is that we're able to measure some points from this. We can look at
+the past and see: well, we know that these points aren't a perfect representation of the actual function but we can see
+kind of some area around it and then build something from there. </p>
+<p>So the goal in machine learning especially supervised learning is that we are trying to find some algorithm which will
+give us a G of X to approximate F of X. So we're not going to be able to find the true function, but we want to find
+something close to it. So all that said we're going to be walking through three use cases today and I wanted to just
+have a warm up one so that we can all get used to this. We're going to be walking through five questions for each of
+these cases: What's the problem? What does the data look like? What kind of machine learning problem is this? And then
+we'll dive into some details on the solution, and we'll talk about lessons learned. So in this case for our credit card
+application data the problem is we're trying to decide as a bank whether we should give a consumer a credit card and the
+data we've already seen today. It kind of looks like this. We have some input features we have output. So here is the
+time for all of your beautiful faces to shout at me if you're angry. Get all of your aggression out and tell me, "What
+kind of machine learning problem is this?" Supervised, yes. Yes. Any more specific than supervised? You're going to be
+like a little. Yeah. Classification yes. Y'all are brilliant, this is amazing. Yes, so this is a classification problem,
+and we could solve this by drawing a line because that is what we're doing today. </p>
+<p>There's a library in Python called scikit-learn that implements a lot of these algorithms for you so you don't have to
+waste the time doing that yourself. And basically what you can do is import a model and say, "fit this model to the data
+that I have," and that will do the step of drawing a line and then you say, "predict" on a new data point, and you give
+it the input data, and it will give you the output that it thinks is true. That's sort of what you do. But then we kind
+of ask ourselves what what did we do here? Did we actually accomplish anything? Is this any good? So we want to know how
+accurate this thing is. In this case, obviously this is very contrived data and it's deliberately drawn to be easy. And
+obviously it's going to get 100 percent accuracy on this. But what does that mean, and how can we think about this more
+generally? </p>
+<p>To give you an example I have taken a true function that I made up, and I put it on a graph. You can't see it yet. But
+then I drew some observations from that function to sort of model what happens in the real world and that's all these
+little blue points that you see. And then I fit two different models to them. You can see they do different things.
+Basically one of these is better than the other. I think you might be able to tell. Does anyone think Model B is better
+than model a approximating the true function underlying this? OK. OK is anyone going to be brave and say that model A is
+doing a better job here? </p>
+<p>OK. OK. Some brave souls out there. So in this case the true function is actually definitely modeled better by Model B.
+In usual situations we don't actually know what this green line that I've drawn here which represents a true function is
+we just have observations. And so for a human being we can look at this and say, "OK yeah clearly Model B is better" but
+there's caveats of being able to tell a computer how to do this. So what we end up doing is holding out some data for
+testing and it looks like this is a little bit small on the screen up there. So I will describe that about 20 percent of
+these points are red and the rest of them are blue. And what we've done here is we had some data that came in to us and
+we said, "Some of this we'll call training data and some of this we'll call testing data." And what we can do is
+basically train our model on the training data and then predict the values for the testing data and compare the two.
+Then after that, ideally what we could do is calculate the actual cost of making an error. So if I was designing a
+system that could tell from radar data whether a nuclear warhead was headed toward the United States and I said there
+was one and there actually wasn't one that would be a huge mistake. Probably a lot of people would die. Maybe everybody.
+However if someone is able to fingerprint into my phone that is a much lower cost than literally the destruction of the
+human race. </p>
+<p>It's basically going to be some dank memes are going to get out there and that's not really going to change the world
+that much. So ideally you'd be able to determine what kind of error you're making and how expensive it is and optimize
+your model for that. In the real world it's not always as clear. And so there are some error metrics that you can use to
+try to help you understand how your model is performing. One common metric for regression problems is mean squared
+error. I've drawn a little example up here with some true data and then our predictions. And basically what you do here
+is you subtract the true value and the predicted value and then you square that number and you sum all of that up and
+then divide it by the number of points are predicting for and we can say, "We were off by 80 you know the metric here is
+eighteen point three five" and you try to minimize that error when you're comparing models to each other. </p>
+<p>In other cases like classification you can't use that because it doesn't make as much sense but one common metric that
+makes a lot of intuitive sense is classification error and basically you're just trying to see, "Did I do the right
+thing.?" So if on four of these points I correctly classified that they were a certain class then I would say my error
+was twenty five percent on those points. So in this use case we've learned a few things. The first thing I would say is
+that this stuff is just pretty neat. There's cool things we can do. It's less intimidating than we thought it was; it's
+just drawing lines. And then also that it's important to withhold testing data so that way we can evaluate how our
+models are doing. So in our next use case we are going to talk about teaching a computer a sign language. </p>
+<p>So the problem here is that I don't know sign language, and I want to communicate with deaf people because they have
+valuable things to communicate. And I was trying to think about this problem and a friend and I were going to a
+hackathon when we were in university and we were thinking of what we could do with this little toy that we had. This is
+a thing called the Leap Motion. It's a little sensor that has an IR LED in it, and you can see that in that picture here
+because cameras are weird. I guess I don't know all the the weird camera stuff that makes infrared visible to this
+camera but not to the human eye. When you're actually looking at it in person, you can't see that. But basically what it
+does is it flashes infrared light up on the human hand and can tell basically where hands are in space. So for this
+example someone has a little sensor sitting on their desk or potentially mounted to like a VR headset and they're
+holding their hands kind of like this up to it and you can see what the computer is seeing here. Each of these little
+dots that is connected by the little pipes I guess is a place on the human hand. By and large just joints in the hand
+and then also fingertips. And we were looking at this and thinking OK what if we could do something with this data to
+try to help with this problem with sign language. </p>
+<p>And we only had 24 hours, so we thought, "What if we limit the scope here, and we just try to do something for American
+sign language?" (because there are a lot of dialects of sign language). And also we just tried to do the alphabet. Let's
+start small and see if we can get anything working. So we gathered some data. We took our little device and plugged it
+into the computer and then we made an "A" above it and we said "This is an a, this is an a, this is an a", a bunch of
+times we gave it a bunch of examples of what an A looks like. And then we made a B above it and we said, "This is a B,
+this is a B, This is a B" and we taught it. We gathered data about what these things looked like. You can see here that
+we have x, y, and z coordinates for each of 20 positions in the human hand. And so you end up getting 60 features for
+one output and the outputs here are the letters of the English Alphabet A through Z. So I think y'all know what time it
+is; it's time to shout again. What kind of machine learning problem is this? </p>
+<p>Yes, definitely supervised. I also heard someone say classification over there I forget who it was. But you did a great
+job. So yes this is a classification problem because there are a discrete number of things we're trying to predict.
+There's just 26 things and we know it's one of those 26 things. </p>
+<p>So let's talk about how we went about solving this problem. The first thing we needed to do was choose a model and
+that's something that you'll often need to do when you're doing machine learning stuff. And we were somewhat early in
+our time of doing this kind of stuff so we weren't really sure what we were doing. We just took a bunch of models from
+scikit learn and just said try all of them and then we will evaluate all of them on the test data and pick the one that
+did the best. And that is actually, as I learned a little bit more, that's actually not a bad thing to try. Just try a
+bunch of different things and see what works best. Then once we did that it's not enough to just have a model; we had to
+build some sort of interesting application around it because it's not very cool to walk up to someone to say, "Hey, I
+made this thing that can tell you from handwriting data if you're making a sign for a certain English letter." That
+doesn't mean anything to anybody. And so we thought we would try to make a keyboard, and we were working on it and it
+would read out whether we were making an a, a b or a c or whatever and put those on the screen and we could see oh cool
+we're doing this. </p>
+<p>It turned out that it wasn't quite accurate enough. And we even tried to do some stuff to do some Markov Chain stuff
+which basically takes into account the fact that certain letters are more common after other letters. So for instance
+"U" is way more common after "Q" than after a lot of other letters. Anyway we weren't able to get that to work very well
+and so we decided what if the answer here is to just try and try to make a different application around the same model.
+And we found that we could make a little educational game around this and we basically tried to market it as Rosetta
+Stone but for learning sign language. And this is a little demo that I will play. So it's a little game and it'll tell
+you to make a certain letter with your hand and then you try to make your hand look like that letter and then once you
+get it it gives you some points. At the end you can put your name in on a scoreboard because everybody likes to compete.
+Anyway, that's sort of what we built. And there were a lot of things we learned in this process. </p>
+<p>The first thing that I didn't expect to be useful broadly because I thought oh we're just doing this for a hackathon.
+It's not a big deal. Limiting scope is huge. There are a lot of really huge problems in the world and if you try to
+tackle one you're going to just get lost. So it's really important to find some chunk of a problem that you can actually
+solve. Selecting a model is something that you're going to probably have to do if you're doing something like this. And
+this approach isn't the worst one. There's a lot worse you could do than to just try out a bunch of things and see what
+works best. The final thing I learned is that it's more than just the model. You can have a really interesting model
+that's good enough for a language learning game. And if you were trying to make a keyboard with it it wouldn't work very
+well. This is something that if you're working in a company you'll probably want to work with the product people in your
+company to decide what your users actually need, what they want, and what would be helpful to them. Try to gear your
+model toward that. Because at the end of the day we're all trying to make software for human beings. </p>
+<p>Alright, let us move on to our second use case of the day. This is about forecasting energy load in the state of Texas.
+So the problem here is if we pretend that I am operating a power grid I have to know the demand at various places in
+order to be able to schedule the production of energy. We don't have excellent ways of storing energy for long periods
+of time so you kind of have to get things scheduled to where they'll be used shortly after they're created. </p>
+<p>This isn't an entirely hypothetical problem. There is an organization that is known as the Energy Reliability Council of
+Texas and it is their job to manage the energy market in this state. For those of you who are here from out of town,
+Texas has (in most places) a deregulated energy market where power is generated and then sold on a market. And power
+companies buy it up and then they resell it to consumers. I'm not here to debate the advantages or disadvantages of
+regulation in the energy market. I think that would be a much longer talk if we were here for that. But the gist is that
+in a lot of places (Austin being a notable exception) the energy market is deregulated and you have to know when the
+when the demand is going to happen. </p>
+<p>So ERCOT publishes a lot of data. They published the last at least 10 years of data I think it's 14 on energy load on an
+hourly basis in the various weather zones. So if we look at this, these colored regions are different weather zones
+because it turns out that weather is the biggest factor affecting energy usage because air conditioners are a wonderful
+blessing in my life but are also very expensive to operate. So they break this down on a weather zone by weather zone
+basis and on an hourly basis and then they also provide a sum (but I didn't care about that as much). And you could plot
+this on a graph and see over the last 14 years how much energy has been used on a daily basis in each of these different
+weather zones. It's kind of interesting honestly even at this point just looking at this graph I mean like, oh people
+are using more energy that's kind of an interesting thing to see and you can definitely see the seasonality of when
+summer rolls around in Texas. People use a lot more energy that's kinda interesting. </p>
+<p>I think you are all prepared for what is next. What kind of machine learning problem is this? Regression! Yes,
+wonderful! This side of the room is killing it--y'all need to work on your game. </p>
+<p>So a simple approach here to solve this regression problem is to just find the five nearest days to you and say that
+we'll take the average of those. And that's basically a k-nearest neighbors model where you find the five data points
+closest to a certain data point and average them together and then that is the output. And it turns out that because
+this is a time series we can set the data point value (basically the input) to be the number of day in the year it is.
+So for instance January 1st would be the first day of the year. Today is the hundredth day of the Year. Happy 100 days
+of 2018 everybody. And you can set that to be the input value and then the output value being whatever the energy load
+should be. This is sort of a time series data problem and being able to turn that into a regression problem is
+interesting. There's actually been a lot of study around that and this is a simple approach that is reasonable to go
+with (I think). When you're evaluating time series data there's a lot of things to consider. We obviously can still look
+at the error rates like a simple error rate just take our predictions versus what actually happened and see the absolute
+value of that and divide it by some reasonable-- like divided it by the actual number and then we can see we're off by 3
+percent on average which is fine. I mean it depends on how accurate you're trying to get. </p>
+<p>But another specific thing you'll want to do when you're working with time series data is look at what's called the
+residuals which is each of those individual data points where you take the predicted and the actual and you subtract
+them. And the goal is that there isn't a pattern in there if there's any sort of seasonality and that as you look at it
+you haven't quite fit the data as well as you could. The other thing you want to see is if your residuals resemble a
+normal distribution. If they're skewed one way or the other then you may have made a mistake somewhere. There's a lot of
+things I learned about this. The first thing I learned is that I did this in a very wrong way. You should really do a
+lot of research about this stuff beforehand. There's actually a lot of research on how to do stuff with time series data
+and the approach that I chose is actually not the most unreasonable way to do it but it isn't the best. There's a lot of
+really good tools out there like Facebook has a tool called Profit that is built specifically for predicting time series
+data and is used at Facebook we use it at my company and there's a lot of places that it's used and works really well.
+These libraries do a really good job of taking into account common things that happen in time series data. For instance
+holidays happen and energy usage is going to be way different on a holiday. So that's something to keep in mind.</p>
+<p>The other thing I'll say is scaling the features is important. So for this problem my features were the number of day
+and the year that it was in were there were two input features and then I had my output. But the number of day it was is
+a different scale than the year. The year runs from 2014 to 2018 or whatever. And that's a different range of values
+than 1 to 366 potentially. That can cause problems when you're doing k-nearest neighbors stuff. Specifically, this is a
+similar example. This is actually the credit card application data we were looking at earlier. But just to demonstrate
+the problem when you don't scale your features. If we were trying to predict this yellow point on the left here you can
+see it far to the left and then a little bit above the red X. We're going to be looking at the features around us to try
+to find what point is closest to me that I can say that I'm going to be like that point. When we look at this with our
+human eyes we say obviously the red X underneath it is the closest point. But it turns out that the way that the
+features are scaled the net worth is such a larger number like just a bigger number than the age. </p>
+<p>Age only runs up to 1 to 100 ish. Net worth can be a much larger range and so that has a huge impact on the distance.
+These numbers plotted next to each point on the left is the distance from the yellow point to the point associated
+there. So you see that actually the closest point is this one that's 50000 units away. And so it gets classified-- you
+can see on the right it gets classified as an "approve this application" even though it doesn't quite look like we
+should. What you can do though, there's a thing in scikit-learn called a standard scaler and it will take these things
+and scale them to to where the mean is zero and the standard deviation is one (which is really helpful in a lot of
+circumstances). So when you look at this visually they look the same because they kind of are; it's just the actual
+values have been scaled to a different range. And then when you look at the difference in how that ends up classifying,
+it looks more like what we would expect to happen. So scaling your features is an important thing to do (especially when
+you're doing something like k-nearest neighbors) but is also helpful when you're using other models. </p>
+<p>All right. This is a recent project that I've been working on to use machine learning to find your next job. The problem
+that I ran into about a year ago was that I was passively job hunting.</p>
+<p>Basically, I wasn't out there actively knocking on doors and handing out resumes or anything. And I was reasonably
+satisfied with where I was. But I was interested in hearing if there was a particularly excellent job out there that I
+might want better. I couldn't find something that did exactly what I wanted, and it seemed like I was getting a lot of
+noise coming through from just reading job listings. There were so many things that obviously I didn't want to look
+into. So I was wondering if I could make this a machine learning problem. I ended up doing was scraping a bunch of job
+listings. I would get the title and the company and then a link and then for a long time whenever I was bored I would
+just go to this spreadsheet on my phone, click on the link, read the job description and then come back and say whether
+or not I thought it sounded cool. I gathered a bunch of data like this and if I'm being honest with you I probably spent
+more time reading job descriptions this way than I would have if I didn't build this. But because all of you are here I
+don't think any of you have room to talk about over engineering something. So if I can't talk about my love for this
+here I don't think there's any safe place for me. </p>
+<p>Anyway, you should be familiar with this question by now, what kind of machine learning problem is this? 
+code:2:4</p>
+<p>Classification! Yes, wonderful. Thank y'all. I heard someone say clustering. It's not quite clustering because we do
+have a specific output variable that we're trying to predict. We want to know whether a given job sounds cool or does
+not. </p>
+<p>The way that I ended up solving this is kind of tricky. So if we look at the other problems we've seen today they're all
+numerical data, right? We have a day number and a year. Those are obviously numbers. We have a net worth and a loan
+size; those are numbers. Age is a number; net worth is a number. How do we turn a job title into a number? Computers
+can't deal with text. You can't just throw text at a computer and have it know what to do. You have to find some way to
+turn it into a number. And when I ran into this I was thinking what am I going to do here. I have all this data about
+text but I don't know how to fix that. So I turned to our trusty friend Google and I searched "text representations for
+machine learning" which pretty much is the way that you should learn a lot of stuff is just search search it up. And I
+found this. This is an idea that is a good thing to try first. It's not state of the art by any means, but it's a good
+first pass. It's called a word count  vector, or people will call it a bag of words.</p>
+<p>And basically what you do here is you take all of your job applications, you find every word that occurs in any of the
+job applications, and place those along the columns of a matrix. And then you place each job title along the rows of the
+matrix, and then to fill in each slot in the matrix you look at the job title and the column and say, "Does the word in
+the column appear in the job title on the row?" So for instance this first one: engineer does not occur in that title
+but web does and applications does and senior does. And I'm not going to walk you through filling out this matrix
+because even after 4 I'm a little bit bored of it. And one thing to note though is that while in job titles usually they
+don't repeat words you theoretically could. So I put that last one I don't know who's going to post a job titled "Data
+Data Data Data," but I'd be interested to hear about it. And so you can see where there' multiple occurrences of a word
+it isn't just a one it can be you know four or whatever. So. That's basically how we can turn the text and the boolean
+value into numbers. So that's this highlighted green part it becomes this series of numbers here and the highlighted
+blue part becomes a number there. And then it's really surprisingly simple to do this stuff because a lot of this
+functionality has already been built for us because there are giants upon whose shoulders we can stand and see much
+further. </p>
+<p>So this is a really simple example where we take our rated jobs, pull out the titles, and then pull out whether or not
+it sounded cool, and then scikit-learn has this tool called a count vector which will take text data and turn it into
+those word count vectors I was talking about. And then we can take that data and put it into a model and fit it with the
+preexisting "sounds cool" or "not" data. All we have to do then is just predict on the data, and we get out this array
+that I've highlighted at the bottom that says, "OK the first job in the list you gave me doesn't sound interesting but
+the fourth one does." So that's the model I ended up building. And originally I was just doing this in a Jupyter
+notebook, and I was just running through it and I got a classification error of 19 you know around 20 percent was like
+heck yes, I'm God's gift to data science. This is going to be amazing. And then what I realized was it was just saying
+that everything didn't sound cool. And what I realized is most of the job listings I was reading didn't actually sound
+that interesting. And so I would just rate them as they didn't sound cool and the model picked up on that and it's like,
+"I can do super well if I just say nothing sounds cool." </p>
+<p>So I committed what's called the base rate fallacy. And this is something that's important to understand when you're
+approaching a problem like this is to understand what would happen-- what are the underlying rates in these problems.
+Because I wasn't actually improving on anything. I was just doing as well as literally just guessing zero every time. So
+this is a self-portrait I drew after I discovered that I made this problem. Dealing with imbalanced classes like this is
+fairly common. And so I wanted to provide a little bit of insight into good ways that people do this and the way that I
+ended up doing this. The first thing that you can do is use better error metrics. The only way I realized that I was
+having this problem is because I knew to look for the base rate (and now all of you know to do that). But these are
+metrics that will help you understand your data in a little different way. There's no one metric that's going to be
+perfect for every situation, but having a family of them can help you understand what's going on much better.</p>
+<p>Precision and recall are related concepts. In our case precision means how many of the job titles that I said sounded
+cool actually are cool and recall means of all the job titles that do sound cool. How many am I saying sound cool. These
+give you a better understanding of how you're doing in terms of like false negatives and false positives and stuff.</p>
+<p>The other thing that is useful is to use what's called the confusion matrix which you can see at the bottom here and
+what you do there is you put the predicted values on one axis and the actual values on the other axis. And if I were to
+do something like this I might see well I'm predicting zero-- and, actually, I filled this out wrong-- but I'm
+predicting zero for everything, and I would notice that error much more quickly. </p>
+<p>Other than using better error metrics, one thing you can do is called "under sampling" and this is what I actually ended
+up doing. I had 500 job titles (let's say) and only 100 of them sounded cool. I took all of those and then I took 100
+randomly selected not cool job postings and I made a new dataset out of just those 200 and I trained a model on that and
+that got me a much better accuracy rate for the jobs that did sound cool. Another technique that people do use is called
+oversampling which is kind of the opposite. So if I have those 100 cool job postings I would take those and have four
+copies of each of them, so that would give me 400 cool postings and then 400 not cool postings and I could just train my
+model on all of that. I've never actually used that because I feel weird about doing that but it's something you can do
+if you want to. </p>
+<p>So in the end what I ended up doing was getting this all running in essentially a cron job on a remote computer and it
+will every week email me just a list of the top 10 jobs that sound the most interesting. So this is another thing where
+we talk about how do we want to use this model. If I were to just have it spam me all the jobs it sounded cool that
+would be more than I want to look at. But, because I chose a model that can predict the probability of something.
+Logistic regression is able to tell you how probable it is that a certain job sounds cool, and I could just pick the 10
+that sounded that had the highest probability of sounding cool. That gives me a much shorter list to look over each
+week. </p>
+<p>So some lessons that I learned from this. Obviously the first one is understand the base rate because that can really
+make you sad. The second thing is that doing something simple doesn't mean that it's going to be ineffective. Do any of
+you watch The Office, or have any of you watched the Office? OK, so there's a scene in there where Dwight is talking
+about Michael and Michael is his boss and his boss comes to him and he says, "K I S S keep it simple stupid. It's great
+advice and it hurts my feelings every time." </p>
+<p>And that's kind of how I felt about it. I'm like I want to do something cool, I want to do deep learning, man! But it
+ended up just being good enough, and using a very simple model worked. </p>
+<p>So the approximation generalization tradeoff is a theoretical concept from machine learning that can help us understand
+why this works. And as you might guess from the name it means that if you have more approximation you're going to have
+less generalization; if you have more generalization you're going to have less approximation. Those words don't really
+mean anything so I drew a graph that will help us understand. Again, here I've made up some data. The blue line is the
+truth. And then I sampled some points from it with a little bit of random noise in there to again model the real world.
+What I did was I fit two different models to it. One of them is a simple model, linear regression, which you probably
+learned in a high school algebra or precalc class. And then one of them being a more complicated model which can
+effectively memorize any data set that it wants to. What you see here is that for the points that I'm showing right now,
+the red model is killin' it. It knows every single spot; it has zero error on those. It is approximating the data set
+extremely well. It knows the training data by heart. </p>
+<p>However, what you may notice is that when we add more data to this it does not do as well on those points. What you see
+is the green model doesn't do as well on the input data as the red model does, but it does much better on the out of
+sample data (on the testing data). So we have this tradeoff where more simple models are generally better at
+generalizing even though they're worse at approximating. So that's sort of why it's a good idea to start out with
+something really simple and basic and work up from there. The other good reason to do this is that it's easier.
+scikit-learn is a <code>conda install</code> away versus, I mean in my experience, setting up TensorFlow is hard. And even once you
+get it set up training stuff can be sad and hard and long, and it's just a lot easier to start out with something simple
+that you can iterate on quickly and learn and learn a lot about your problem space before you go into something more
+complicated. </p>
+<p>So we've just talked about a good amount of things. This is sort of a summary that we can view some key concepts from
+each of these use cases we've talked about. For the teaching a computer sign language, what we ended up doing was
+support vector machines (which is a model that is useful). It's built into scikit-learn. In the forecasting energy load
+in Texas data, it was time series data and what we found was using k-nearest neighbors worked really well. 
+code:2:4</p>
+<p>However if you're doing time series data you should probably do some more research and probably use something like
+Profit that's specifically built for time series data. Then the last use case we just talked about. If you run into text
+data, it's at least worth trying Bag of Words. It has its caveats; it has its downsides, but it's a good first step. And
+I ended up using logistic regression and that works really well and I get the email every week and I'm happy with it. So
+it works pretty well. </p>
+<p>So basically there are some takeaways I have here. And then some recommended tools that we'll talk through. The big
+takeaways being (from the very beginning) in supervised learning, we want to use past examples to predict a continuous
+value in the case of regression or a discrete value in the case of classification. And those two correspond with
+questions like "how much of this thing?" or "what kind is this thing?". And then another huge takeaway is to try the
+simplest thing that could possibly work. This is something that my machine learning professor tried to beat into our
+heads and has proven to be very effective in my experience. Once you have that simple thing that is kind of working you
+can always test it out and iterate and maybe try a different model maybe try a different set of features and work from
+there. </p>
+<p>We've been kind of light on recommendations about specific tooling but just if you want a jumping off point Jupyter
+notebook is a great tool that lets you interactively run models and train them on various datasets and see how they look
+kind of. There are some some plotting tools like matplotlib and Bokeh that will let you see into what the data sort of
+looks like and can really help you get a better intuitive understanding for what's happening under the hood. Pandas is a
+great library for manipulating tabular data which, actually, all the data we saw today was all tabular data in that it
+had a set of rows and a set of columns. Pandas does a really good job of handling that kind of data. It can do things
+like read from Excel spreadsheets and read from HTML tables and read from CSVs and whatnot. Obviously I recommend
+scikit-learn. I used it for all of this stuff, and it's nice to not have to reimplement this stuff yourself.</p>
+<p>There's a lot more resources available if you're interested in this stuff. If you're interested in more of the
+theoretical side I highly recommend a book called Learning from Data. It does a really good job of treating machine
+learning theory with respect. A lot of times when we talk about machine learning it feels like we're just pulling stuff
+out of a bag or pulling out a bag of tricks, and it's not really fair to think about it that way and there's a lot more
+to it than that. This does a good job of helping you understand how that works. </p>
+<p>On the opposite side there is a blog called Practical Business Python that talks a lot about how to use these specific
+tools and if you're hungering for more after this talk about how to specifically do stuff. He has a lot of great
+resources about "how do I graph something? How do I read an Excel file?". It's really interesting, really good, solid,
+extremely practical, detailed read there. Then the biggest thing I would say as far as gaining extra experience from
+others is reading the Kaggle blog. They call it no free hunch (which is an adorable name) and they have a specific
+section on it for winners interviews which is where-- there's all these people who compete in machine learning
+competitions and then whoever wins they'll do an interview of them and say what did you do. Reading through those is a
+huge amazing resource that I don't think is being taken advantage of enough because you can learn from some of the best
+data scientists in the world about how they do their job and then apply those in your own work. If you're interested to
+hear a little bit more detail on the sign language or machine learning to find your next job part, these are links, and
+I'll tweet out the slides in just a little bit. </p>
+<p>I have more information on my website, samueltaylor.org, if you're curious about those things. I'm also happy to talk to
+you afterward if you have any things you want to talk about. I do work for Indeed, and I would be remiss not to thank
+them for their support of me doing this kind of work and talking about this stuff in front of people. If you are looking
+for a job please come talk to me. We like data stuff. Beyond that, again I'm Samuel Taylor. I prefer communicating over
+email over pretty much anything else so if you have a question you're obviously welcome to come talk to me right now but
+if maybe you're a little shy or just don't want to talk feel free to email me. I love reading email. I might be the only
+person who loves email like that. And then also I am happy to read people's tweets-- if you have questions I'm happy to
+take those via Twitter as well. I'm @SamuelDataT. Would love to hear from you. </p>
+<p>Thank you so much for letting me talk to you and take this time out of your day. I appreciate it so much. I really hope
+you're able to get something out of this if you have any other questions. We have about 5 minutes that I can take
+questions if you have them or I'm also happy to talk about it after this, but thank you.</p>
   </body>
 </html>
