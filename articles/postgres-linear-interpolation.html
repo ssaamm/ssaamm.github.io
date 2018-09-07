@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="../static/css/code.css" rel="stylesheet" type="text/css">
+    <title>Linear interpolation in Postgres using generate_series - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Linear interpolation in Postgres using generate_series</span>
+<h1>Linear interpolation in Postgres using <code>generate_series</code></h1>
+<p>I like to keep track of how many miles I'm driving in my car. One conceivable way of doing this is to create a table in
+a Postgres database in which I can track this information.</p>
+<div class="highlight"><pre><span></span><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">mileage</span> <span class="p">(</span>
+    <span class="n">observed_date</span> <span class="nb">DATE</span><span class="p">,</span>
+    <span class="n">observed_mileage</span> <span class="nb">INTEGER</span>
+<span class="p">);</span>
+</pre></div>
+
+<p>Unfortunately, I'm not always the most regular data collector. I often collect this data with gaps of days or months
+between each reading.</p>
+<div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">mileage</span><span class="p">(</span><span class="n">observed_date</span><span class="p">,</span> <span class="n">observed_mileage</span><span class="p">)</span> <span class="k">VALUES</span>
+    <span class="p">(</span><span class="s1">&#39;2018-05-21&#39;</span><span class="p">,</span> <span class="mf">84088</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;2018-05-26&#39;</span><span class="p">,</span> <span class="mf">84201</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;2018-06-13&#39;</span><span class="p">,</span> <span class="mf">84910</span><span class="p">);</span>
+</pre></div>
+
+<p>I want to get some sense for how much I'm driving each day, and one reasonable way I might do that is to linearly
+interpolate the mileage between readings. For instance, if I see a reading of 10,000 on August 1st and a reading of
+11,000 on August 10th, I want to see that on average I drove 100 miles each day 1-10 August.</p>
+<p>How can we do this in Postgres? First, we pair the data up:</p>
+<div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_date</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_date</span>
+  <span class="p">,</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_mileage</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_mileage</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_mi</span>
+  <span class="p">,</span> <span class="n">observed_date</span> <span class="k">AS</span> <span class="n">obs_date</span>
+  <span class="p">,</span> <span class="n">observed_mileage</span> <span class="k">AS</span> <span class="n">obs_mi</span>
+<span class="k">FROM</span> <span class="n">mileage</span><span class="p">;</span>
+</pre></div>
+
+<p>which yields result:</p>
+<pre><code>  lag_date  | lag_mi |  obs_date  | obs_mi
+------------+--------+------------+--------
+   |        | 2018-05-21 |  84088
+ 2018-05-21 |  84088 | 2018-05-26 |  84201
+ 2018-05-26 |  84201 | 2018-06-13 |  84910
+</code></pre>
+<p>Then, we generate a series between each pair of dates:</p>
+<div class="highlight"><pre><span></span><span class="k">WITH</span> <span class="n">paired_dates</span> <span class="k">AS</span> <span class="p">(</span>
+  <span class="k">SELECT</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_date</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_date</span>
+    <span class="p">,</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_mileage</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_mileage</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_mi</span>
+    <span class="p">,</span> <span class="n">observed_date</span> <span class="k">AS</span> <span class="n">obs_date</span>
+    <span class="p">,</span> <span class="n">observed_mileage</span> <span class="k">AS</span> <span class="n">obs_mi</span>
+  <span class="k">FROM</span> <span class="n">mileage</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">paired_dates</span>
+  <span class="p">,</span> <span class="n">generate_series</span><span class="p">(</span><span class="n">lag_date</span><span class="p">,</span> <span class="n">obs_date</span><span class="p">,</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1 day&#39;</span><span class="p">)</span> <span class="n">days</span><span class="p">(</span><span class="n">driven_date</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mf">10</span><span class="p">;</span>
+</pre></div>
+
+<p>which yields result:</p>
+<pre><code>  lag_date  | lag_mi |  obs_date  | obs_mi |      driven_date
+------------+--------+------------+--------+------------------------
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-21 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-22 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-23 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-24 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-25 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-26 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-26 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-27 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-28 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-29 00:00:00+00
+</code></pre>
+<p>Note that <code>2018-05-26</code> occurs twice in the <code>driven_date</code> column. We can fix that by stopping our series just before
+getting to the later date:</p>
+<div class="highlight"><pre><span></span><span class="k">WITH</span> <span class="n">paired_dates</span> <span class="k">AS</span> <span class="p">(</span>
+  <span class="k">SELECT</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_date</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_date</span>
+    <span class="p">,</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_mileage</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_mileage</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_mi</span>
+    <span class="p">,</span> <span class="n">observed_date</span> <span class="k">AS</span> <span class="n">obs_date</span>
+    <span class="p">,</span> <span class="n">observed_mileage</span> <span class="k">AS</span> <span class="n">obs_mi</span>
+  <span class="k">FROM</span> <span class="n">mileage</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> <span class="o">*</span>
+<span class="k">FROM</span> <span class="n">paired_dates</span>
+  <span class="p">,</span> <span class="n">generate_series</span><span class="p">(</span><span class="n">lag_date</span><span class="p">,</span> <span class="n">obs_date</span> <span class="o">-</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1 minute&#39;</span><span class="p">,</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1 day&#39;</span><span class="p">)</span> <span class="n">days</span><span class="p">(</span><span class="n">driven_date</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mf">10</span><span class="p">;</span>
+</pre></div>
+
+<p>Anyway, now we need to calculate the actual number of miles driven on the <code>driven_date</code>.</p>
+<div class="highlight"><pre><span></span><span class="k">WITH</span> <span class="n">paired_dates</span> <span class="k">AS</span> <span class="p">(</span>
+  <span class="k">SELECT</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_date</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_date</span>
+    <span class="p">,</span> <span class="n">LAG</span><span class="p">(</span><span class="n">observed_mileage</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">observed_mileage</span><span class="p">)</span> <span class="k">AS</span> <span class="n">lag_mi</span>
+    <span class="p">,</span> <span class="n">observed_date</span> <span class="k">AS</span> <span class="n">obs_date</span>
+    <span class="p">,</span> <span class="n">observed_mileage</span> <span class="k">AS</span> <span class="n">obs_mi</span>
+  <span class="k">FROM</span> <span class="n">mileage</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> <span class="n">driven_date</span>
+  <span class="p">,</span> <span class="p">(</span><span class="n">obs_mi</span> <span class="o">-</span> <span class="n">lag_mi</span><span class="p">)</span><span class="o">::</span><span class="nb">NUMERIC</span> <span class="o">/</span> <span class="p">(</span><span class="n">obs_date</span> <span class="o">-</span> <span class="n">lag_date</span><span class="p">)</span> <span class="k">AS</span> <span class="n">miles_driven</span>
+<span class="k">FROM</span> <span class="n">paired_dates</span>
+  <span class="p">,</span> <span class="n">generate_series</span><span class="p">(</span><span class="n">lag_date</span><span class="p">,</span> <span class="n">obs_date</span> <span class="o">-</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1 minute&#39;</span><span class="p">,</span> <span class="nb">INTERVAL</span> <span class="s1">&#39;1 day&#39;</span><span class="p">)</span> <span class="n">days</span><span class="p">(</span><span class="n">driven_date</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mf">10</span><span class="p">;</span>
+</pre></div>
+
+<p>which yields result:</p>
+<pre><code>     driven_date     |    miles_driven
+---------------------+---------------------
+ 2018-05-21 00:00:00 | 22.6000000000000000
+ 2018-05-22 00:00:00 | 22.6000000000000000
+ 2018-05-23 00:00:00 | 22.6000000000000000
+ 2018-05-24 00:00:00 | 22.6000000000000000
+ 2018-05-25 00:00:00 | 22.6000000000000000
+ 2018-05-26 00:00:00 | 39.3888888888888889
+ 2018-05-27 00:00:00 | 39.3888888888888889
+ 2018-05-28 00:00:00 | 39.3888888888888889
+ 2018-05-29 00:00:00 | 39.3888888888888889
+ 2018-05-30 00:00:00 | 39.3888888888888889
+</code></pre>
+<p>And thus I have achieved the desired result.</p>
+  </body>
+</html>

@@ -1,5 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 17 Jun 2018 23:02:41 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Machine Learning Crash Course</title><link>https://www.samueltaylor.org/articles/machine-learning-crash-course.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;div class="embed-responsive"&gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/n1BMtnBTjGY" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Fri, 07 Sep 2018 20:21:08 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Linear interpolation in Postgres using generate_series</title><link>https://www.samueltaylor.org/articles/postgres-linear-interpolation.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;I like to keep track of how many miles I'm driving in my car. One conceivable way of doing this is to create a table in
+a Postgres database in which I can track this information.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;mileage&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;observed_date&lt;/span&gt; &lt;span class="nb"&gt;DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;observed_mileage&lt;/span&gt; &lt;span class="nb"&gt;INTEGER&lt;/span&gt;
+&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Unfortunately, I'm not always the most regular data collector. I often collect this data with gaps of days or months
+between each reading.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;INSERT&lt;/span&gt; &lt;span class="k"&gt;INTO&lt;/span&gt; &lt;span class="n"&gt;mileage&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;VALUES&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;2018-05-21&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;84088&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;2018-05-26&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;84201&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;2018-06-13&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mf"&gt;84910&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I want to get some sense for how much I'm driving each day, and one reasonable way I might do that is to linearly
+interpolate the mileage between readings. For instance, if I see a reading of 10,000 on August 1st and a reading of
+11,000 on August 10th, I want to see that on average I drove 100 miles each day 1-10 August.&lt;/p&gt;
+&lt;p&gt;How can we do this in Postgres? First, we pair the data up:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_date&lt;/span&gt;
+  &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_mi&lt;/span&gt;
+  &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_date&lt;/span&gt;
+  &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_mi&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;mileage&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;which yields result:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  lag_date  | lag_mi |  obs_date  | obs_mi
+------------+--------+------------+--------
+   |        | 2018-05-21 |  84088
+ 2018-05-21 |  84088 | 2018-05-26 |  84201
+ 2018-05-26 |  84201 | 2018-06-13 |  84910
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, we generate a series between each pair of dates:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;WITH&lt;/span&gt; &lt;span class="n"&gt;paired_dates&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+  &lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_date&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_mi&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_date&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_mi&lt;/span&gt;
+  &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;mileage&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;paired_dates&lt;/span&gt;
+  &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generate_series&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lag_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;obs_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;INTERVAL&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1 day&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;days&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driven_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;LIMIT&lt;/span&gt; &lt;span class="mf"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;which yields result:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  lag_date  | lag_mi |  obs_date  | obs_mi |      driven_date
+------------+--------+------------+--------+------------------------
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-21 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-22 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-23 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-24 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-25 00:00:00+00
+ 2018-05-21 |  84088 | 2018-05-26 |  84201 | 2018-05-26 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-26 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-27 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-28 00:00:00+00
+ 2018-05-26 |  84201 | 2018-06-13 |  84910 | 2018-05-29 00:00:00+00
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note that &lt;code&gt;2018-05-26&lt;/code&gt; occurs twice in the &lt;code&gt;driven_date&lt;/code&gt; column. We can fix that by stopping our series just before
+getting to the later date:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;WITH&lt;/span&gt; &lt;span class="n"&gt;paired_dates&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+  &lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_date&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_mi&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_date&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_mi&lt;/span&gt;
+  &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;mileage&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;paired_dates&lt;/span&gt;
+  &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generate_series&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lag_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;obs_date&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nb"&gt;INTERVAL&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1 minute&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;INTERVAL&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1 day&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;days&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driven_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;LIMIT&lt;/span&gt; &lt;span class="mf"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Anyway, now we need to calculate the actual number of miles driven on the &lt;code&gt;driven_date&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;WITH&lt;/span&gt; &lt;span class="n"&gt;paired_dates&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+  &lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_date&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;LAG&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;OVER&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;ORDER&lt;/span&gt; &lt;span class="k"&gt;BY&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;lag_mi&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_date&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_date&lt;/span&gt;
+    &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;observed_mileage&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;obs_mi&lt;/span&gt;
+  &lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;mileage&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;SELECT&lt;/span&gt; &lt;span class="n"&gt;driven_date&lt;/span&gt;
+  &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obs_mi&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;lag_mi&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="nb"&gt;NUMERIC&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;obs_date&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;lag_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;AS&lt;/span&gt; &lt;span class="n"&gt;miles_driven&lt;/span&gt;
+&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="n"&gt;paired_dates&lt;/span&gt;
+  &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;generate_series&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lag_date&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;obs_date&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nb"&gt;INTERVAL&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1 minute&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;INTERVAL&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;1 day&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;days&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driven_date&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;LIMIT&lt;/span&gt; &lt;span class="mf"&gt;10&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;which yields result:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;     driven_date     |    miles_driven
+---------------------+---------------------
+ 2018-05-21 00:00:00 | 22.6000000000000000
+ 2018-05-22 00:00:00 | 22.6000000000000000
+ 2018-05-23 00:00:00 | 22.6000000000000000
+ 2018-05-24 00:00:00 | 22.6000000000000000
+ 2018-05-25 00:00:00 | 22.6000000000000000
+ 2018-05-26 00:00:00 | 39.3888888888888889
+ 2018-05-27 00:00:00 | 39.3888888888888889
+ 2018-05-28 00:00:00 | 39.3888888888888889
+ 2018-05-29 00:00:00 | 39.3888888888888889
+ 2018-05-30 00:00:00 | 39.3888888888888889
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And thus I have achieved the desired result.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/postgres-linear-interpolation.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Fri, 07 Sep 2018 20:21:04 GMT</pubDate></item><item><title>Machine Learning Crash Course</title><link>https://www.samueltaylor.org/articles/machine-learning-crash-course.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;div class="embed-responsive"&gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/n1BMtnBTjGY" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
 
 &lt;p&gt;Delivered at:&lt;/p&gt;
 &lt;ul&gt;
@@ -506,7 +612,7 @@ result in the same number of context switches, but they are each less costly.&lt
 &lt;hr /&gt;
 &lt;p&gt;I will forever be grateful to the people I worked with during that summer four years ago. Getting exposure to common
 patterns and concepts has been immensely helpful in my work as a software engineer, and I hope that hearing about this
-idea will help you solve a problem some day.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-queues-software-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 28 Feb 2018 00:37:51 GMT</pubDate></item><item><title>Using `DISTINCT ON` in Postgres</title><link>https://www.samueltaylor.org/articles/postgres-distinct-on.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Every once in a while, I'll have a need to do a one-to-many join, but keep only a certain row in the "many" table. For
+idea will help you solve a problem some day.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-queues-software-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 28 Feb 2018 00:37:51 GMT</pubDate></item><item><title>Using DISTINCT ON in Postgres</title><link>https://www.samueltaylor.org/articles/postgres-distinct-on.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Every once in a while, I'll have a need to do a one-to-many join, but keep only a certain row in the "many" table. For
 instance, say we have a system to track inventory in retail stores:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;store&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="nb"&gt;SERIAL&lt;/span&gt; &lt;span class="k"&gt;PRIMARY&lt;/span&gt; &lt;span class="k"&gt;KEY&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -2307,7 +2413,272 @@ Bytes&lt;/a&gt; are:&lt;/p&gt;
 &lt;/ol&gt;
 &lt;p&gt;This information was gathered using a &lt;a href="https://github.com/ssaamm/recipe-scraper/"&gt;scraper I
 wrote&lt;/a&gt; with Python 3, BeautifulSoup,
-and Requests.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/best-ingredients-for-cheap-cooking.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 12 Sep 2015 15:51:54 GMT</pubDate></item><item><title>Thoughts on Effective Java</title><link>https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;I'm reading the second edition of &lt;em&gt;Effective Java&lt;/em&gt; in a group at work and
+and Requests.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/best-ingredients-for-cheap-cooking.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 12 Sep 2015 15:51:54 GMT</pubDate></item><item><title>Notes: Boston Python User Group, Lightning Talks, 22 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 22 June 2015, the Boston Python User Group had a night of seven lightning
+talks. These are notes I took for personal use; they're not a perfect re-telling
+of what each talk was about (or even what each talk was called).&lt;/p&gt;
+&lt;h2&gt;#1 Python for making connections in groups&lt;/h2&gt;
+&lt;h3&gt;Speaker: John Hess&lt;/h3&gt;
+&lt;p&gt;John and a friend distant from him in his social graph each ended up being stood
+up by friends at the same bar. They decided to sit down and solve the world's
+problems. They ended up enjoying their time, so John wanted to find a way to
+automate this sort of process.&lt;/p&gt;
+&lt;p&gt;The idea is something like this:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A group of people sign up on &lt;a href="https://www.mavenbot.com"&gt;Maven&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The service selects a group of about 4-6 people and texts them to see if
+  they're available&lt;/li&gt;
+&lt;li&gt;As people accept or decline invitations to the event, Maven will text more
+  people from the group to get them in on the event&lt;/li&gt;
+&lt;li&gt;Maven then puts everyone into a group message so they can organize the event&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;John found that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Building stuff is easy in Python&lt;/li&gt;
+&lt;li&gt;Python is a Swiss army knife, but it can't do everything (for example, mobile
+  development)&lt;/li&gt;
+&lt;li&gt;While building stuff is easy, building stuff that is user friendly is &lt;em&gt;really
+  hard&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;John kept iterating, putting the product in front of friends, getting
+    feedback, and trying new things&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;#2 Django cloud management&lt;/h2&gt;
+&lt;h3&gt;Speaker: Robert Paul Chase&lt;/h3&gt;
+&lt;p&gt;I was semi-lost on this one. The project was related to genetics somehow, and I
+know nothing about computational genetics.&lt;/p&gt;
+&lt;p&gt;He built a cloud management platform that lets biologists and researchers (read:
+not developers) easily spin up nodes, install necessary software, run their
+code, and kill their cluster when they're done with it.&lt;/p&gt;
+&lt;h2&gt;#3 &lt;code&gt;.format()&lt;/code&gt;ing without tears&lt;/h2&gt;
+&lt;h3&gt;Speaker: Richard Landau&lt;/h3&gt;
+&lt;p&gt;The standard &lt;code&gt;str.format()&lt;/code&gt; method in Python will throw a &lt;code&gt;KeyError&lt;/code&gt; if a name
+isn't found in the dictionary. Rick made his own function to avoid that problem.
+Here's how it works:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses a regex to get the names both with and without braces (e.g. "{foo}" and
+  "foo")&lt;/li&gt;
+&lt;li&gt;Zips those two arrays together (to get &lt;code&gt;('foo', '{foo}'), ('bar', '{bar}'),
+  ('baz', '{baz}')&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Constructs a dictionary from that array (the format of the tuples will work
+  with &lt;code&gt;dict()&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;At first, it seemed to me like another way to implement this behavior would be
+to provide &lt;code&gt;.format()&lt;/code&gt; with a dictionary that, instead of throwing a &lt;code&gt;KeyError&lt;/code&gt;
+when encountering an unknown key, would return a modified version of the key
+which was asked for. I tried to do that, and it turns out that doesn't work&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class FancyDict(object):
+    def __init__(self, dictionary):
+        self.__dictionary = dictionary
+
+    def __getitem__(self, key):
+        try:
+            return self.__dictionary[key]
+        except KeyError:
+            return '{' + key + '}'
+
+    def keys(self):
+        return self.__dictionary.keys()
+
+if __name__ == '__main__':
+    params = { 'foo': 'this is foo', 'bar': 'this is bar', 'baz': 'this is baz' }
+    print '{foo} {bar} {baz}'.format(**params)
+    # this is foo this is bar this is baz
+
+    params = { 'foo': 'this is foo', 'bar': 'this is bar' }
+    print '{foo} {bar} {baz}'.format(**params)
+    # KeyError: 'baz'
+
+    params = FancyDict({ 'foo': 'this is foo', 'bar': 'this is bar' })
+    print '{foo} {bar} {baz}'.format(**params)
+    # KeyError: 'baz'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;str.format()&lt;/code&gt; gets the keys of the dictionary and will throw a &lt;code&gt;KeyError&lt;/code&gt; if
+any of the strings in curly braces are absent.&lt;/p&gt;
+&lt;h2&gt;#4 Test all the data&lt;/h2&gt;
+&lt;h3&gt;Speaker: Eric J Ma&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Testing data is important because you have some assumptions about it that may
+  not always be correct&lt;/li&gt;
+&lt;li&gt;He talked some more about how to do that using PyTest&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;#5 Visualizing Yeast ChIP-Seq data&lt;/h2&gt;
+&lt;h3&gt;Speaker: Luis Soares&lt;/h3&gt;
+&lt;p&gt;I was completely out of my league on the domain of this one, which was something
+related to biology.&lt;/p&gt;
+&lt;p&gt;It looked like a neat web-based visualization project.&lt;/p&gt;
+&lt;h2&gt;#6 Payment reform&lt;/h2&gt;
+&lt;h3&gt;Speaker: James Santucci&lt;/h3&gt;
+&lt;p&gt;I wasn't super familiar with the domain (statistics).&lt;/p&gt;
+&lt;p&gt;The big takeaway was that how we measure value affects how much value we
+observe. I'm not sure what that means.&lt;/p&gt;
+&lt;h2&gt;#7 Hypothesis: property-based testing&lt;/h2&gt;
+&lt;h3&gt;Speaker: Matt Bachmann&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Hypothesis is a Python library inspired by Haskell's QuickCheck&lt;/li&gt;
+&lt;li&gt;You put a decorator on your test to say what kind of data it takes&lt;/li&gt;
+&lt;li&gt;It works with most testing frameworks&lt;/li&gt;
+&lt;li&gt;You write a small amount of code, but get a big amount of functionality tested&lt;/li&gt;
+&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Notes: Boston Django Meetup, Intro to Flask, 25 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 25 June 2015, Ned Jackson Lovely spoke about Flask at the Boston Django Users
+Meetup Group. I took some notes and am putting them here so I don't lose them;
+they may or may not be useful to others. Theses notes are not exhaustive.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Functions that are decorated with &lt;code&gt;@flaskapp.route()&lt;/code&gt; should return:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a string&lt;/li&gt;
+&lt;li&gt;a tuple of (response, status, headers)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;flask.Response&lt;/code&gt; / &lt;code&gt;current_app.response_class&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;a WSGI callable&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In theory, your function could return another Flask app, or spit out a WSGI
+    callable that generated a massive CSV on the fly and streamed it to the user&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;You can do testing:&lt;/p&gt;
+&lt;p&gt;def test_splash():
+    client = app.test_client()
+    response = client.get('/')
+    assert response.status_code == 200
+    assert 'form' in response.data&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;The Werkzeug debugger is awesome&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Defining filters for templates is possible (and ostensibly simple)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sessions in Flask are interesting&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Session data is serialized to JSON, cryptographically signed, and set in the
+  user's browser as a cookie&lt;/li&gt;
+&lt;li&gt;Because it's client side, it doesn't matter which datacenter they end up in&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If you write to a "second level" in &lt;code&gt;session&lt;/code&gt;, you need to set
+  &lt;code&gt;session.modified = True&lt;/code&gt; for the changes to get written out:&lt;/p&gt;
+&lt;p&gt;session['first']['second'] = 'new thing'
+session.modified = True&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Flashing is done with sessions, and is useful for displaying those one-time,
+  web app-y messages like "Your post was submitted"&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;On a general Python note, contexts (&lt;code&gt;with&lt;/code&gt;/&lt;code&gt;as&lt;/code&gt;) are really cool -- you only
+  have to implement two &lt;code&gt;__&lt;/code&gt; methods to get the benefits of them&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Some useful libraries: SQLAlchemy, WTForms&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Blueprints:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Helpful when your app gets bigger&lt;/li&gt;
+&lt;li&gt;They're very similar to &lt;code&gt;Flask&lt;/code&gt; objects with an additional "namespace"&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;app.register_blueprint(bp, url_prefix='/counter')&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To get GET/POST data, use &lt;code&gt;request.values&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Deploying:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;gevent, gunicorn, nginx, ansible  &lt;/li&gt;
+&lt;li&gt;supervisor  &lt;/li&gt;
+&lt;li&gt;pip freeze&lt;/li&gt;
+&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Hackathon report: Hack@Teal 2015</title><link>https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;My friend &lt;a href="http://matttinsley.org/"&gt;Matt Tinsley&lt;/a&gt; and I were both RA's in Teal
+Resdiential College from Fall 2014 to Spring 2015. We are also both big fans of
+hackathons. Matt had the idea for and led the organization of a hackathon for
+Teal residents. I helped him out with logistics, and we worked on a project in
+the time we weren't doing organizer-y things.&lt;/p&gt;
+&lt;p&gt;The first two sections of this article relate to organizing the event, and the
+third is about the project I worked on.&lt;/p&gt;
+&lt;h2&gt;Successes&lt;/h2&gt;
+&lt;p&gt;Lots of things went well.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Learning&lt;/strong&gt; -- Many people during demos said something to the effect of,
+  "I've never done anything like this project before today. I learned so much."
+  Our faculty master was impressed with how much people were able to learn,
+  which was good seeing as he funded much of the event. Education was also a
+  huge reason we wanted to have the event, so it was great to see our efforts
+  pay off.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Team/idea formation&lt;/strong&gt; -- At the beginning of the event, we had some time for
+  individuals who came to the event to find a team. Matt and I stood in a circle
+  with the individuals, and we all went around and said an idea we had. This
+  format worked well; the four people we had formed two teams. I would recommend
+  that organizers bring some simple ideas for people to work on; both of my
+  ideas ended up getting used.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Venue&lt;/strong&gt; -- Teal allowed us to use the media room, which had ample space. We
+  were also able to bring over plenty of tables from a neighboring classroom.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Google forms&lt;/strong&gt; -- good choice for our voting needs. I could imagine that for
+  larger hackathons, there would be too many votes to use Google forms, but it
+  was just what we needed for how many participants we had.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Food&lt;/strong&gt; -- We had ample food, people seemed to like it well enough.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hosting&lt;/strong&gt; -- We had one team who wanted to do some stuff with web
+  technologies, but didn't have much of an idea what they were doing. I spun up
+  a VPS through &lt;a href="https://www.digitalocean.com/?refcode=3dc2cdcca705"&gt;Digital
+  Ocean&lt;/a&gt;, and &lt;a href="http://www.wescossick.com/"&gt;Wes
+  Cossick&lt;/a&gt; explained a few basic things to them.
+  Like that, they were off!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Hardships&lt;/h2&gt;
+&lt;p&gt;A few things were less than perfect.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Staying through the night&lt;/strong&gt; -- I wish more people had chosen to stay through
+  the night. Around 4 or 5 am, the room started to feel dead.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Judging&lt;/strong&gt; -- Our faculty master did a great job of judging, but I think it
+  would have been cool to have gotten a panel of judges rather than just one
+  person.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;My project&lt;/h2&gt;
+&lt;p&gt;Matt and I worked on &lt;a href="https://github.com/ssaamm/emoji-predictor"&gt;Emoji
+Predictor&lt;/a&gt;. If you've ever used a
+smartphone keyboard that suggests words as you type, you'll understand what it
+is. Our project suggests relevant emojis for you to use in your text messages.&lt;/p&gt;
+&lt;p&gt;We started with a database of all Matt's text messages. This would be our
+"corpus", or the body of text we would use to make inferences about which emojis
+should be used with which kinds of messages.&lt;/p&gt;
+&lt;p&gt;While making an iOS keyboard would have been really cool, we wanted to make a
+proof of concept and focus on the part of the project we found interesting:
+getting from a string to the emojis most relevant to it. We decided to make a
+web UI. I whipped up a simple application using Python, Flask, and JavaScript
+(our code can be found on
+&lt;a href="https://github.com/ssaamm/emoji-predictor"&gt;GitHub&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;While I was working on the UI side of things, Matt started working on the
+recommendation engine using Python Natural Language Toolkit. While he worked on
+that, I decided to work on a different implementation of a recommendation
+engine. I loaded all of Matt's sent messages which contained emojis into
+Elasticsearch and ran a query on that index using user input. This basic
+implementation ended up working decently enough.&lt;/p&gt;
+&lt;p&gt;Matt ended up having tons of trouble with Python and unicode, so for demo
+purposes we went with my implementation. I thought our product was pretty neat.&lt;/p&gt;
+&lt;p&gt;Because it relied on Matt's personal information, a live demo unfortunately
+isn't up anywhere.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Despite a few minor problems, Hack@Teal went very well. I was glad to help, and
+I'd love to take part in organizing more hackathons. Because it was a small
+event, Matt and I were able to hack on our own project, which was fun and
+educational.&lt;/p&gt;
+&lt;p&gt;If you want more information (especially about other people's projects), please
+see the official website for Hack@Teal 2015, &lt;a href="http://hackteal.me/"&gt;hackteal.me&lt;/a&gt;.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>How to: remove Etsy search ads</title><link>https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;ol&gt;
+&lt;li&gt;Install Greasemonkey or Tampermonkey&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Firefox users:
+   &lt;a href="https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/"&gt;Greasemonkey&lt;/a&gt;&lt;br /&gt;
+   Chrome users:
+   &lt;a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo"&gt;Tampermonkey&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install Etsy Ad Remover&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a href="https://github.com/ssaamm/greasemonkey-scripts/raw/master/Etsy_Ad_Remover.user.js"&gt;Click this link to
+   install&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This script simply removes ads from search result on Etsy. If you're curious,
+   check out the &lt;a href="https://github.com/ssaamm/greasemonkey-scripts/blob/master/Etsy_Ad_Remover.user.js"&gt;source code on
+   GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Implementation&lt;/h2&gt;
+&lt;p&gt;Etsy search ads have children with a CSS class of &lt;code&gt;.ad-indicator&lt;/code&gt;. It's
+literally one line to remove those. This was a fun way to figure out how to make
+the web less annoying through using browser dev tools and Greasemonkey.&lt;/p&gt;
+&lt;p&gt;If you have any feedback, please contact me at sgt at this domain. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Thoughts on Effective Java</title><link>https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;I'm reading the second edition of &lt;em&gt;Effective Java&lt;/em&gt; in a group at work and
 writing some thoughts/notes about it here.&lt;/p&gt;
 &lt;h2&gt;Chapter 2&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Item 1&lt;/strong&gt; is about static factory methods.&lt;/p&gt;
@@ -2418,81 +2789,35 @@ contrast, a &lt;code&gt;Comparator&amp;lt;&amp;gt;&lt;/code&gt; can have a name 
 information about how the comparison is done. This explicit information is
 probably good.&lt;/p&gt;
 &lt;p&gt;As of Java 7, if you break the general contract for comparisons, an exception
-will be thrown.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Hackathon report: Hack@Teal 2015</title><link>https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;My friend &lt;a href="http://matttinsley.org/"&gt;Matt Tinsley&lt;/a&gt; and I were both RA's in Teal
-Resdiential College from Fall 2014 to Spring 2015. We are also both big fans of
-hackathons. Matt had the idea for and led the organization of a hackathon for
-Teal residents. I helped him out with logistics, and we worked on a project in
-the time we weren't doing organizer-y things.&lt;/p&gt;
-&lt;p&gt;The first two sections of this article relate to organizing the event, and the
-third is about the project I worked on.&lt;/p&gt;
-&lt;h2&gt;Successes&lt;/h2&gt;
-&lt;p&gt;Lots of things went well.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Learning&lt;/strong&gt; -- Many people during demos said something to the effect of,
-  "I've never done anything like this project before today. I learned so much."
-  Our faculty master was impressed with how much people were able to learn,
-  which was good seeing as he funded much of the event. Education was also a
-  huge reason we wanted to have the event, so it was great to see our efforts
-  pay off.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Team/idea formation&lt;/strong&gt; -- At the beginning of the event, we had some time for
-  individuals who came to the event to find a team. Matt and I stood in a circle
-  with the individuals, and we all went around and said an idea we had. This
-  format worked well; the four people we had formed two teams. I would recommend
-  that organizers bring some simple ideas for people to work on; both of my
-  ideas ended up getting used.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Venue&lt;/strong&gt; -- Teal allowed us to use the media room, which had ample space. We
-  were also able to bring over plenty of tables from a neighboring classroom.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Google forms&lt;/strong&gt; -- good choice for our voting needs. I could imagine that for
-  larger hackathons, there would be too many votes to use Google forms, but it
-  was just what we needed for how many participants we had.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Food&lt;/strong&gt; -- We had ample food, people seemed to like it well enough.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Hosting&lt;/strong&gt; -- We had one team who wanted to do some stuff with web
-  technologies, but didn't have much of an idea what they were doing. I spun up
-  a VPS through &lt;a href="https://www.digitalocean.com/?refcode=3dc2cdcca705"&gt;Digital
-  Ocean&lt;/a&gt;, and &lt;a href="http://www.wescossick.com/"&gt;Wes
-  Cossick&lt;/a&gt; explained a few basic things to them.
-  Like that, they were off!&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;Hardships&lt;/h2&gt;
-&lt;p&gt;A few things were less than perfect.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Staying through the night&lt;/strong&gt; -- I wish more people had chosen to stay through
-  the night. Around 4 or 5 am, the room started to feel dead.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Judging&lt;/strong&gt; -- Our faculty master did a great job of judging, but I think it
-  would have been cool to have gotten a panel of judges rather than just one
-  person.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;My project&lt;/h2&gt;
-&lt;p&gt;Matt and I worked on &lt;a href="https://github.com/ssaamm/emoji-predictor"&gt;Emoji
-Predictor&lt;/a&gt;. If you've ever used a
-smartphone keyboard that suggests words as you type, you'll understand what it
-is. Our project suggests relevant emojis for you to use in your text messages.&lt;/p&gt;
-&lt;p&gt;We started with a database of all Matt's text messages. This would be our
-"corpus", or the body of text we would use to make inferences about which emojis
-should be used with which kinds of messages.&lt;/p&gt;
-&lt;p&gt;While making an iOS keyboard would have been really cool, we wanted to make a
-proof of concept and focus on the part of the project we found interesting:
-getting from a string to the emojis most relevant to it. We decided to make a
-web UI. I whipped up a simple application using Python, Flask, and JavaScript
-(our code can be found on
-&lt;a href="https://github.com/ssaamm/emoji-predictor"&gt;GitHub&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;While I was working on the UI side of things, Matt started working on the
-recommendation engine using Python Natural Language Toolkit. While he worked on
-that, I decided to work on a different implementation of a recommendation
-engine. I loaded all of Matt's sent messages which contained emojis into
-Elasticsearch and ran a query on that index using user input. This basic
-implementation ended up working decently enough.&lt;/p&gt;
-&lt;p&gt;Matt ended up having tons of trouble with Python and unicode, so for demo
-purposes we went with my implementation. I thought our product was pretty neat.&lt;/p&gt;
-&lt;p&gt;Because it relied on Matt's personal information, a live demo unfortunately
-isn't up anywhere.&lt;/p&gt;
-&lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Despite a few minor problems, Hack@Teal went very well. I was glad to help, and
-I'd love to take part in organizing more hackathons. Because it was a small
-event, Matt and I were able to hack on our own project, which was fun and
-educational.&lt;/p&gt;
-&lt;p&gt;If you want more information (especially about other people's projects), please
-see the official website for Hack@Teal 2015, &lt;a href="http://hackteal.me/"&gt;hackteal.me&lt;/a&gt;.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hackteal-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Hackathon report: HackTX 2014</title><link>https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
+will be thrown.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/effective-java.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>How to: get free WiFi at coffee shops</title><link>https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Some coffee shops place time limitations on their WiFi. For example, I recently
+went to a Panera that had a 30 minute time limit on their WiFi during lunch
+hours.&lt;/p&gt;
+&lt;p&gt;Getting around such limits isn't difficult. I'm not sure how ethical it is to do
+so, so consider this all merely educational information.&lt;/p&gt;
+&lt;p&gt;It seems these kinds of systems track you based on your MAC address. If your MAC
+address changes, the system thinks of you as a new user. Changing your MAC
+address is easy enough (on Linux):&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Figure out what interface you're using.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Run &lt;code&gt;ifconfig&lt;/code&gt; and look for the one that looks like right. Mine was &lt;code&gt;wlan0&lt;/code&gt;.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Change your MAC address&lt;/p&gt;
+&lt;p&gt;ifconfig wlan0 down
+ifconfig wlan0 hw ether a1:b2:c3:d4:e5:f6
+ifconfig wlan0 up&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For ease of changing, you can make a script that looks something like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+
+ifconfig wlan0 down
+ifconfig wlan0 hw ether $1
+ifconfig wlan0 up
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And then run it like &lt;code&gt;./change_mac.sh a1:b2:c3:d4:e5:f6&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;If you want to get in touch, email me at sgt@samueltaylor.org. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Hackathon report: HackTX 2014</title><link>https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;h2&gt;Idea&lt;/h2&gt;
 &lt;p&gt;Most college students are aware that registering for classes can be a real pain.
 At Baylor, we don't have a waitlist on many of our classes. If you fail to get
 into a class, you are doomed to logging in several times a day and hoping a seat
@@ -2570,223 +2895,4 @@ won three sponsor awards:&lt;/p&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Summary&lt;/h2&gt;
 &lt;p&gt;HackTX 2014 was great. We had fun, built a great product, and won some awesome
-prizes.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>How to: get free WiFi at coffee shops</title><link>https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Some coffee shops place time limitations on their WiFi. For example, I recently
-went to a Panera that had a 30 minute time limit on their WiFi during lunch
-hours.&lt;/p&gt;
-&lt;p&gt;Getting around such limits isn't difficult. I'm not sure how ethical it is to do
-so, so consider this all merely educational information.&lt;/p&gt;
-&lt;p&gt;It seems these kinds of systems track you based on your MAC address. If your MAC
-address changes, the system thinks of you as a new user. Changing your MAC
-address is easy enough (on Linux):&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Figure out what interface you're using.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Run &lt;code&gt;ifconfig&lt;/code&gt; and look for the one that looks like right. Mine was &lt;code&gt;wlan0&lt;/code&gt;.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Change your MAC address&lt;/p&gt;
-&lt;p&gt;ifconfig wlan0 down
-ifconfig wlan0 hw ether a1:b2:c3:d4:e5:f6
-ifconfig wlan0 up&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;For ease of changing, you can make a script that looks something like:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#!/bin/bash
-
-ifconfig wlan0 down
-ifconfig wlan0 hw ether $1
-ifconfig wlan0 up
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And then run it like &lt;code&gt;./change_mac.sh a1:b2:c3:d4:e5:f6&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;If you want to get in touch, email me at sgt@samueltaylor.org. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-get-free-wifi.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>How to: remove Etsy search ads</title><link>https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;ol&gt;
-&lt;li&gt;Install Greasemonkey or Tampermonkey&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Firefox users:
-   &lt;a href="https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/"&gt;Greasemonkey&lt;/a&gt;&lt;br /&gt;
-   Chrome users:
-   &lt;a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo"&gt;Tampermonkey&lt;/a&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Install Etsy Ad Remover&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;a href="https://github.com/ssaamm/greasemonkey-scripts/raw/master/Etsy_Ad_Remover.user.js"&gt;Click this link to
-   install&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;This script simply removes ads from search result on Etsy. If you're curious,
-   check out the &lt;a href="https://github.com/ssaamm/greasemonkey-scripts/blob/master/Etsy_Ad_Remover.user.js"&gt;source code on
-   GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Implementation&lt;/h2&gt;
-&lt;p&gt;Etsy search ads have children with a CSS class of &lt;code&gt;.ad-indicator&lt;/code&gt;. It's
-literally one line to remove those. This was a fun way to figure out how to make
-the web less annoying through using browser dev tools and Greasemonkey.&lt;/p&gt;
-&lt;p&gt;If you have any feedback, please contact me at sgt at this domain. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/how-to-remove-etsy-search-ads.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Notes: Boston Django Meetup, Intro to Flask, 25 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 25 June 2015, Ned Jackson Lovely spoke about Flask at the Boston Django Users
-Meetup Group. I took some notes and am putting them here so I don't lose them;
-they may or may not be useful to others. Theses notes are not exhaustive.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;Functions that are decorated with &lt;code&gt;@flaskapp.route()&lt;/code&gt; should return:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;a string&lt;/li&gt;
-&lt;li&gt;a tuple of (response, status, headers)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;flask.Response&lt;/code&gt; / &lt;code&gt;current_app.response_class&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;a WSGI callable&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;In theory, your function could return another Flask app, or spit out a WSGI
-    callable that generated a massive CSV on the fly and streamed it to the user&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;You can do testing:&lt;/p&gt;
-&lt;p&gt;def test_splash():
-    client = app.test_client()
-    response = client.get('/')
-    assert response.status_code == 200
-    assert 'form' in response.data&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The Werkzeug debugger is awesome&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Defining filters for templates is possible (and ostensibly simple)&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Sessions in Flask are interesting&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Session data is serialized to JSON, cryptographically signed, and set in the
-  user's browser as a cookie&lt;/li&gt;
-&lt;li&gt;Because it's client side, it doesn't matter which datacenter they end up in&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;If you write to a "second level" in &lt;code&gt;session&lt;/code&gt;, you need to set
-  &lt;code&gt;session.modified = True&lt;/code&gt; for the changes to get written out:&lt;/p&gt;
-&lt;p&gt;session['first']['second'] = 'new thing'
-session.modified = True&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Flashing is done with sessions, and is useful for displaying those one-time,
-  web app-y messages like "Your post was submitted"&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;On a general Python note, contexts (&lt;code&gt;with&lt;/code&gt;/&lt;code&gt;as&lt;/code&gt;) are really cool -- you only
-  have to implement two &lt;code&gt;__&lt;/code&gt; methods to get the benefits of them&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Some useful libraries: SQLAlchemy, WTForms&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Blueprints:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Helpful when your app gets bigger&lt;/li&gt;
-&lt;li&gt;They're very similar to &lt;code&gt;Flask&lt;/code&gt; objects with an additional "namespace"&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;app.register_blueprint(bp, url_prefix='/counter')&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;To get GET/POST data, use &lt;code&gt;request.values&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Deploying:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;gevent, gunicorn, nginx, ansible  &lt;/li&gt;
-&lt;li&gt;supervisor  &lt;/li&gt;
-&lt;li&gt;pip freeze&lt;/li&gt;
-&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-django-25-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item><item><title>Notes: Boston Python User Group, Lightning Talks, 22 June 2015</title><link>https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;On 22 June 2015, the Boston Python User Group had a night of seven lightning
-talks. These are notes I took for personal use; they're not a perfect re-telling
-of what each talk was about (or even what each talk was called).&lt;/p&gt;
-&lt;h2&gt;#1 Python for making connections in groups&lt;/h2&gt;
-&lt;h3&gt;Speaker: John Hess&lt;/h3&gt;
-&lt;p&gt;John and a friend distant from him in his social graph each ended up being stood
-up by friends at the same bar. They decided to sit down and solve the world's
-problems. They ended up enjoying their time, so John wanted to find a way to
-automate this sort of process.&lt;/p&gt;
-&lt;p&gt;The idea is something like this:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;A group of people sign up on &lt;a href="https://www.mavenbot.com"&gt;Maven&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;The service selects a group of about 4-6 people and texts them to see if
-  they're available&lt;/li&gt;
-&lt;li&gt;As people accept or decline invitations to the event, Maven will text more
-  people from the group to get them in on the event&lt;/li&gt;
-&lt;li&gt;Maven then puts everyone into a group message so they can organize the event&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;John found that:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Building stuff is easy in Python&lt;/li&gt;
-&lt;li&gt;Python is a Swiss army knife, but it can't do everything (for example, mobile
-  development)&lt;/li&gt;
-&lt;li&gt;While building stuff is easy, building stuff that is user friendly is &lt;em&gt;really
-  hard&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;John kept iterating, putting the product in front of friends, getting
-    feedback, and trying new things&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;#2 Django cloud management&lt;/h2&gt;
-&lt;h3&gt;Speaker: Robert Paul Chase&lt;/h3&gt;
-&lt;p&gt;I was semi-lost on this one. The project was related to genetics somehow, and I
-know nothing about computational genetics.&lt;/p&gt;
-&lt;p&gt;He built a cloud management platform that lets biologists and researchers (read:
-not developers) easily spin up nodes, install necessary software, run their
-code, and kill their cluster when they're done with it.&lt;/p&gt;
-&lt;h2&gt;#3 &lt;code&gt;.format()&lt;/code&gt;ing without tears&lt;/h2&gt;
-&lt;h3&gt;Speaker: Richard Landau&lt;/h3&gt;
-&lt;p&gt;The standard &lt;code&gt;str.format()&lt;/code&gt; method in Python will throw a &lt;code&gt;KeyError&lt;/code&gt; if a name
-isn't found in the dictionary. Rick made his own function to avoid that problem.
-Here's how it works:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Uses a regex to get the names both with and without braces (e.g. "{foo}" and
-  "foo")&lt;/li&gt;
-&lt;li&gt;Zips those two arrays together (to get &lt;code&gt;('foo', '{foo}'), ('bar', '{bar}'),
-  ('baz', '{baz}')&lt;/code&gt;)&lt;/li&gt;
-&lt;li&gt;Constructs a dictionary from that array (the format of the tuples will work
-  with &lt;code&gt;dict()&lt;/code&gt;)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;At first, it seemed to me like another way to implement this behavior would be
-to provide &lt;code&gt;.format()&lt;/code&gt; with a dictionary that, instead of throwing a &lt;code&gt;KeyError&lt;/code&gt;
-when encountering an unknown key, would return a modified version of the key
-which was asked for. I tried to do that, and it turns out that doesn't work&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;class FancyDict(object):
-    def __init__(self, dictionary):
-        self.__dictionary = dictionary
-
-    def __getitem__(self, key):
-        try:
-            return self.__dictionary[key]
-        except KeyError:
-            return '{' + key + '}'
-
-    def keys(self):
-        return self.__dictionary.keys()
-
-if __name__ == '__main__':
-    params = { 'foo': 'this is foo', 'bar': 'this is bar', 'baz': 'this is baz' }
-    print '{foo} {bar} {baz}'.format(**params)
-    # this is foo this is bar this is baz
-
-    params = { 'foo': 'this is foo', 'bar': 'this is bar' }
-    print '{foo} {bar} {baz}'.format(**params)
-    # KeyError: 'baz'
-
-    params = FancyDict({ 'foo': 'this is foo', 'bar': 'this is bar' })
-    print '{foo} {bar} {baz}'.format(**params)
-    # KeyError: 'baz'
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;str.format()&lt;/code&gt; gets the keys of the dictionary and will throw a &lt;code&gt;KeyError&lt;/code&gt; if
-any of the strings in curly braces are absent.&lt;/p&gt;
-&lt;h2&gt;#4 Test all the data&lt;/h2&gt;
-&lt;h3&gt;Speaker: Eric J Ma&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Testing data is important because you have some assumptions about it that may
-  not always be correct&lt;/li&gt;
-&lt;li&gt;He talked some more about how to do that using PyTest&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;#5 Visualizing Yeast ChIP-Seq data&lt;/h2&gt;
-&lt;h3&gt;Speaker: Luis Soares&lt;/h3&gt;
-&lt;p&gt;I was completely out of my league on the domain of this one, which was something
-related to biology.&lt;/p&gt;
-&lt;p&gt;It looked like a neat web-based visualization project.&lt;/p&gt;
-&lt;h2&gt;#6 Payment reform&lt;/h2&gt;
-&lt;h3&gt;Speaker: James Santucci&lt;/h3&gt;
-&lt;p&gt;I wasn't super familiar with the domain (statistics).&lt;/p&gt;
-&lt;p&gt;The big takeaway was that how we measure value affects how much value we
-observe. I'm not sure what that means.&lt;/p&gt;
-&lt;h2&gt;#7 Hypothesis: property-based testing&lt;/h2&gt;
-&lt;h3&gt;Speaker: Matt Bachmann&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Hypothesis is a Python library inspired by Haskell's QuickCheck&lt;/li&gt;
-&lt;li&gt;You put a decorator on your test to say what kind of data it takes&lt;/li&gt;
-&lt;li&gt;It works with most testing frameworks&lt;/li&gt;
-&lt;li&gt;You write a small amount of code, but get a big amount of functionality tested&lt;/li&gt;
-&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/notes-boston-python-22-jun-2015.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item></channel></rss>
+prizes.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/hacktx-2014.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 27 Jun 2015 20:44:53 GMT</pubDate></item></channel></rss>
