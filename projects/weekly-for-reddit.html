@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css"><script src="/static/js/weekly_reddit.js"></script>
+    <title>Weekly RSS for Reddit - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Projects</a> &gt; Weekly RSS for Reddit</span>
+<h1>Weekly RSS for Reddit</h1>
+
+<p>Get the best posts from your favorite subreddits right in your RSS reader.</p>
+
+<p>What subreddit do you want to subscribe to?</p>
+
+<form action="" onsubmit="return false;">
+  <input type="text" placeholder="funny" id="sub" onkeydown="if (event.keyCode == 13) onGetLinkClicked(event);">
+  <input type="button" onclick="onGetLinkClicked(event);" value="Get RSS link" id="get-button">
+</form>
+
+<ul class="section-content">
+<li><a id="feedly" href='https://feedly.com/i/subscription/feed%2Fhttp%3A%2F%2Freddit.project.samueltaylor.org%2Fsub%2Ffunny' target='blank'>Follow on Feedly</a></li>
+<li><a id="direct" href='http://reddit.project.samueltaylor.org/sub/funny'>Direct RSS link</a> (right click -> copy link URL -> paste into your RSS reader)</li>
+</ul>
+
+<p><em>Neither I nor this website are affiliated with Reddit in any capacity</em></p>
+  </body>
+</html>
