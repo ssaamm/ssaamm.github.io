@@ -8,7 +8,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-podgen v1.0.0 https://podgen.readthedocs.org</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 14 May 2019 23:33:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 May 2019 11:17:38 +0000</lastBuildDate>
     <itunes:author>Samuel Taylor</itunes:author>
     <managingEditor>podcast@samueltaylor.org (Samuel Taylor)</managingEditor>
     <pubDate>Tue, 14 May 2019 18:31:00 -0500</pubDate>
@@ -23,9 +23,8 @@
     <atom:link href="https://www.samueltaylor.org/podcast.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>A tool to deal with imbalanced data (Questions Answered #0)</title>
-      <description><![CDATA[Nicolas has a question about dealing with imbalanced data.
-
-References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable/), [Class Imbalanced, Redux](https://ieeexplore.ieee.org/abstract/document/6137280), [SMOTE](https://www.jair.org/index.php/jair/article/view/10302).]]></description>
+      <description><![CDATA[<p>Nicolas has a question about dealing with imbalanced data.</p>
+<p>References: <a href="https://imbalanced-learn.readthedocs.io/en/stable/">imbalanced-learn</a>, <a href="https://ieeexplore.ieee.org/abstract/document/6137280">Class Imbalanced, Redux</a>, <a href="https://www.jair.org/index.php/jair/article/view/10302">SMOTE</a>.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/9-A_tool_to_deal_with_imbalanced_data_Ques.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/9-A_tool_to_deal_with_imbalanced_data_Ques.mp3" length="2015535" type="audio/mpeg"/>
       <itunes:duration>02:31</itunes:duration>
@@ -33,7 +32,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>What High School Debate Teaches us About Performance Management</title>
-      <description><![CDATA[The self evaluation is one of the most important documents employees write. Learn how to make yours effective using tips from a former debater.]]></description>
+      <description><![CDATA[<p>The self evaluation is one of the most important documents employees write. Learn how to make yours effective using tips from a former debater.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/8-What_High_School_Debate_Teaches_us_About.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/8-What_High_School_Debate_Teaches_us_About.mp3" length="5229934" type="audio/mpeg"/>
       <itunes:duration>06:27</itunes:duration>
@@ -41,7 +40,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>Conflict Resolution: A Texan Analogy</title>
-      <description><![CDATA[At my university, I had to take a full course on how to be an RA. I've forgotten almost everything, except for this one tip on conflict resolution.]]></description>
+      <description><![CDATA[<p>At my university, I had to take a full course on how to be an RA. I've forgotten almost everything, except for this one tip on conflict resolution.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/7-Conflict_Resolution_A_Texan_Analogy.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/7-Conflict_Resolution_A_Texan_Analogy.mp3" length="2116553" type="audio/mpeg"/>
       <itunes:duration>02:42</itunes:duration>
@@ -49,7 +48,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>Work Queues in Software and Productivity</title>
-      <description><![CDATA[Work queues are a fascinating idea from software engineering that can also be applied to make our lives more productive.]]></description>
+      <description><![CDATA[<p>Work queues are a fascinating idea from software engineering that can also be applied to make our lives more productive.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/6-Work_Queues_in_Software_and_Productivity.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/6-Work_Queues_in_Software_and_Productivity.mp3" length="6503991" type="audio/mpeg"/>
       <itunes:duration>07:52</itunes:duration>
@@ -57,7 +56,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>Cooking and Coding</title>
-      <description><![CDATA[I like cooking, and I like coding. By comparing the two, we learn more about both of them.]]></description>
+      <description><![CDATA[<p>I like cooking, and I like coding. By comparing the two, we learn more about both of them.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/5-Cooking_and_Coding.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/5-Cooking_and_Coding.mp3" length="4846027" type="audio/mpeg"/>
       <itunes:duration>06:20</itunes:duration>
@@ -65,7 +64,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>Work-Self Balance</title>
-      <description><![CDATA[We often talk about work-life balance, but what about the balance between our work and our self? Learn about my struggle with defining myself by my work and how I overcame it.]]></description>
+      <description><![CDATA[<p>We often talk about work-life balance, but what about the balance between our work and our self? Learn about my struggle with defining myself by my work and how I overcame it.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/4-WorkSelf_Balance.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/4-WorkSelf_Balance.mp3" length="3886799" type="audio/mpeg"/>
       <itunes:duration>04:44</itunes:duration>
@@ -73,7 +72,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>Poetry for Software Engineers</title>
-      <description><![CDATA[While often thought to be entirely different, poetry and software are remarkably similar. Learn how thoughtful consumption of poetry can make you a better software engineer.]]></description>
+      <description><![CDATA[<p>While often thought to be entirely different, poetry and software are remarkably similar. Learn how thoughtful consumption of poetry can make you a better software engineer.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/3-Poetry_for_Software_Engineers.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/3-Poetry_for_Software_Engineers.mp3" length="8586782" type="audio/mpeg"/>
       <itunes:duration>10:55</itunes:duration>
@@ -81,7 +80,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>Use Machine Learning to Find your Next Job</title>
-      <description><![CDATA[Find out how to use machine learning to solve your problems. Recording of a talk I delivered in Huntsville, AL.]]></description>
+      <description><![CDATA[<p>Find out how to use machine learning to solve your problems. Recording of a talk I delivered in Huntsville, AL.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/2-Use_Machine_Learning_to_Find_your_Next_J.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/2-Use_Machine_Learning_to_Find_your_Next_J.mp3" length="17617407" type="audio/mpeg"/>
       <itunes:duration>25:36</itunes:duration>
@@ -89,7 +88,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>To become a great Python dev, quit reading Python books</title>
-      <description><![CDATA[One of the best ways to maximize knowledge gain is by reading books that do not apply easily to technologies or concepts we already understand.]]></description>
+      <description><![CDATA[<p>One of the best ways to maximize knowledge gain is by reading books that do not apply easily to technologies or concepts we already understand.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/1-To_become_a_great_Python_dev_quit_readin.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/1-To_become_a_great_Python_dev_quit_readin.mp3" length="1768066" type="audio/mpeg"/>
       <itunes:duration>02:21</itunes:duration>
@@ -97,7 +96,7 @@ References: [imbalanced-learn](https://imbalanced-learn.readthedocs.io/en/stable
     </item>
     <item>
       <title>How to Attend a Tech Conference</title>
-      <description><![CDATA[Conferences can be both fun and valuable, but they can also be a huge waste of time. Here's some things I've learned that have helped me get the most out of conferences as an attendee.]]></description>
+      <description><![CDATA[<p>Conferences can be both fun and valuable, but they can also be a huge waste of time. Here's some things I've learned that have helped me get the most out of conferences as an attendee.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/0-How_to_Attend_a_Tech_Conference.mp3</guid>
       <enclosure url="https://f001.backblazeb2.com/file/sgt-podcast/0-How_to_Attend_a_Tech_Conference.mp3" length="3062376" type="audio/mpeg"/>
       <itunes:duration>04:29</itunes:duration>
