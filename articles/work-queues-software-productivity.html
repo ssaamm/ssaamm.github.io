@@ -67,7 +67,7 @@ it takes to send an email.</p>
 message queue. There's lots of options here, but two common choices I've personally used are RabbitMQ and Apache Kafka.
 Then, in our main process, we'll produce messages to that system. The only thing we're missing now is what we've called
 "Process B", or our "worker node". For this, we create a process that reads messages off the queue and does work based
-on those messages. As an aside, if you're using Python, definitely checkout <a rel="nofollow" href="https://www.celeryproject.org/">Celery</a>.</p>
+on those messages. As an aside, if you're using Python, definitely checkout <a href="https://www.celeryproject.org/">Celery</a>.</p>
 <h1>Benefits</h1>
 <p>So why do I love work queues so much? The first reason is that they give us a chance to decouple things. Because we're
 creating an interface wherein Process A just has to say, "Hey, I would like this thing to happen", that same process

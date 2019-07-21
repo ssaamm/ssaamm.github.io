@@ -30,10 +30,10 @@ Docker host running an nginx container that would reverse proxy requests to
 other containers (which would be running the aforementioned projects). When I
 started researching how to do this, I found a great project that made it super
 easy.</p>
-<p>Jason Wilder has a <a rel="nofollow" href="http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/">great
+<p>Jason Wilder has a <a href="http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/">great
 post</a>
 that you should read if you want more detail, but the gist is that
-<a rel="nofollow" href="https://hub.docker.com/r/jwilder/nginx-proxy/">jwilder/nginx-proxy</a> is an nginx
+<a href="https://hub.docker.com/r/jwilder/nginx-proxy/">jwilder/nginx-proxy</a> is an nginx
 container that proxies to other containers. It automatically configures nginx
 based on the <code>EXPOSE</code>d ports of the containers you're running, which is almost
 magical.</p>

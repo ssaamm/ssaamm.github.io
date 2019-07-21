@@ -47,7 +47,7 @@ baz initialized
 baz 1
 bar 2
 </code></pre>
-<p>A more interesting use case is <a rel="nofollow" href="https://twitter.com/brandon_rhodes/status/923393090920026114">given by Brandon Rhodes</a>,
+<p>A more interesting use case is <a href="https://twitter.com/brandon_rhodes/status/923393090920026114">given by Brandon Rhodes</a>,
 that of swapping out an <code>http_get(url)</code> method for an object that caches pages. Say for instance that we are maintaining
 a project that includes the following web crawling code:</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib.request</span>
@@ -85,7 +85,7 @@ a project that includes the following web crawling code:</p>
 </pre></div>
 
 <p>Now say we become unsatisfied with the performance of this code and want to stop getting the same page multiple times.
-The standard library provides a <a rel="nofollow" href="https://docs.python.org/3/library/functools.html?highlight=lru_cache#functools.lru_cache">caching
+The standard library provides a <a href="https://docs.python.org/3/library/functools.html?highlight=lru_cache#functools.lru_cache">caching
 mechanism</a> that we could
 decorate our <code>http_get</code> function with.</p>
 <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
@@ -115,7 +115,7 @@ decorate our <code>http_get</code> function with.</p>
 </pre></div>
 
 <p>While <code>lru_cache</code> is probably better in this contrived example, I hope this article gives you another tool for your
-toolbox. The <a rel="nofollow" href="https://docs.python.org/3/reference/datamodel.html#emulating-callable-objects">official docs are here</a>.
+toolbox. The <a href="https://docs.python.org/3/reference/datamodel.html#emulating-callable-objects">official docs are here</a>.
 Keep this in mind the next time you're refactoring something; it may be the right choice.</p>
   </body>
 </html>

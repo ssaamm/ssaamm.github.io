@@ -19,7 +19,7 @@
   <body>
 <span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Income inequality in professional sports</span>
 <h1>Income inequality in professional sports</h1>
-<p>On his podcast <a rel="nofollow" href="http://revisionisthistory.com/">Revisionist History</a>, Malcolm Gladwell talks about the difference
+<p>On his podcast <a href="http://revisionisthistory.com/">Revisionist History</a>, Malcolm Gladwell talks about the difference
 between "weak link" and "strong link" sports. A "weak link" sport is one in which the worst player's skill level has a
 large impact on the team's success. The example Gladwell gives is soccer, in which a long chain of events must go
 perfectly to score a point. To get the ball from one side of the field to a position in which a team can make a
@@ -31,7 +31,7 @@ entirely on his own.</p>
 <p>If this "strong link"/"weak link" hypothesis is true and players are compensated proportionally to their contribution to
 the team's overall success[1], I would expect income inequality to be greater in basketball than in soccer. At this
 point, I went looking for data.</p>
-<p>After some searching, I found <a rel="nofollow" href="http://www.spotrac.com/">Spotrac</a>, which has salary data for the NFL, NBA, MLB, NHL, and
+<p>After some searching, I found <a href="http://www.spotrac.com/">Spotrac</a>, which has salary data for the NFL, NBA, MLB, NHL, and
 MLS. After scraping the site, I had a decent dataset of salaries. First, I looked at a histogram of the salaries:</p>
 <pre><code>fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(16, 10))
 axes[1, 2].set_visible(False)
@@ -43,7 +43,7 @@ for ndx, league in enumerate(df['League'].unique()):
 <p><img src="/static/img/salary_dist.png" alt="Professional sport league salary distribution"></img></p>
 <p>Standard deviation quantifies the variation in the distribution, but comparing the standard deviations across leagues
 doesn't make sense because the mean salary in each league is so different. By dividing the standard deviation by the
-mean, we get the <a rel="nofollow" href="https://en.wikipedia.org/wiki/Coefficient_of_variation">coefficient of variation</a>.</p>
+mean, we get the <a href="https://en.wikipedia.org/wiki/Coefficient_of_variation">coefficient of variation</a>.</p>
 <pre><code>aggregates = df.groupby('League').agg([len, np.mean, np.std, np.median])['Base Salary']
 cv = (aggregates['std'] / aggregates['mean'])
 cv.sort_values().plot(kind='bar', title='std as percent of mean')
@@ -60,7 +60,7 @@ universally believe that basketball and soccer are strong and weak link sports (
 <p>I would be curious to see how these results change if we're looking solely at starters (rather than entire rosters), but
 that'll have to be another question for another day.</p>
 <hr />
-<p>0: Daniel Forsyth provides an interesting <a rel="nofollow" href="http://www.danielforsyth.me/is-basketball-a-weakest-link-sport/">analysis of this
+<p>0: Daniel Forsyth provides an interesting <a href="http://www.danielforsyth.me/is-basketball-a-weakest-link-sport/">analysis of this
 claim</a></p>
 <p>1: They aren't, at least, they aren't solely compensated according to this factor. The team owner also gets value out of
 selling jerseys and other merchandise, which is easier to do for more famous players.</p>
