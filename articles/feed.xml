@@ -1,5 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Tue, 23 Jul 2019 20:47:52 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Linear interpolation in Postgres using generate_series</title><link>https://www.samueltaylor.org/articles/postgres-linear-interpolation.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;I like to keep track of how many miles I'm driving in my car. One conceivable way of doing this is to create a table in
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Tue, 23 Jul 2019 22:37:12 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Model-agnostic feature importance through ablation</title><link>https://www.samueltaylor.org/articles/feature-importance-for-any-model.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;img src="/static/img/selecting_a_record_grande.jpg"&gt;&lt;/img&gt;&lt;/p&gt;
+&lt;p&gt;Feature importances are, well, important. We can use them to provide a
+rudimentary level of interpretability; if a feature has higher importance, it
+has greater impact on the target variable. Some machine learning models have an
+innate way of calculating feature importance (decision trees, for instance).
+Others don't have a way of doing this (for example, support vector machines
+using an RBF kernel). Further, some models result in a set of coefficients (like
+linear regression) that are easy to misinterpret (e.g. if you have two features
+with dramatically different scales).&lt;/p&gt;
+&lt;p&gt;Feature ablation is a technique for calculating feature importances that works
+for all machine learning models. Given a dataset of &lt;em&gt;n&lt;/em&gt; rows and &lt;em&gt;m&lt;/em&gt; features, the
+procedure goes like this:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Train the model on your train set and calculate a score on the test set.  You
+   can pick whatever scoring metric you like.&lt;/li&gt;
+&lt;li&gt;For each of the &lt;em&gt;m&lt;/em&gt; features, remove it from the training data and train the
+   model. Then, calculate the score on the test set.&lt;/li&gt;
+&lt;li&gt;Rank the features by the difference between the original score (from the
+   model with all features) and the score for the model using all features but
+   one.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Example code&lt;/h2&gt;
+&lt;p&gt;Here's an example of how we could actually perform this procedure in Python
+using scikit-learn.&lt;/p&gt;
+&lt;p&gt;First, we import some things we'll need: &lt;code&gt;load_digits&lt;/code&gt; will load in the digits
+dataset. SVC is the model we'll use. &lt;code&gt;train_test_split&lt;/code&gt; is a utility method that
+splits the dataset into training and testing portions. &lt;code&gt;sklearn.metrics&lt;/code&gt; has a lot
+of pre-defined metrics in it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.datasets&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;load_digits&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.svm&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;SVC&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;sklearn.model_selection&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;train_test_split&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sklearn.metrics&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;mx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We load and split the data.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;load_digits&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X_test&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_test&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;train_test_split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;target&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;test_size&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;random_state&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we define a function which will train and score a model for us. Given the
+data, it creates and trains a support vector machine, then returns the accuracy.
+Finally, we store the score of our model with all features into &lt;code&gt;base_score&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;score_model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X_test&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_test&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;clf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SVC&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gamma&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;scale&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rbf&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;clf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_train&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;y_pred&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;clf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;mx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;accuracy_score&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y_test&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_pred&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;base_score&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;score_model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;X_test&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;y_test&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, we iterate through all features, creating an array &lt;code&gt;use_column&lt;/code&gt; which we use
+to select all columns except for the one which we're currently scoring. We store
+the score of a given model in the list &lt;code&gt;scores&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;scores&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]):&lt;/span&gt;
+    &lt;span class="n"&gt;use_column&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ndx&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;ndx&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;shape&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])]&lt;/span&gt;
+    &lt;span class="n"&gt;scores&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;score_model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;X_train&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt; &lt;span class="n"&gt;use_column&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                              &lt;span class="n"&gt;X_test&lt;/span&gt;&lt;span class="p"&gt;[:,&lt;/span&gt; &lt;span class="n"&gt;use_column&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                              &lt;span class="n"&gt;y_train&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                              &lt;span class="n"&gt;y_test&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, we get the top 10 features.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;sorted&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;enumerate&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;base_score&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;scores&lt;/span&gt;&lt;span class="p"&gt;]),&lt;/span&gt;
+       &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;ndx_score&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;ndx_score&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="n"&gt;reverse&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)[:&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;[(12, 0.005555555555555647),&lt;/span&gt;
+&lt;span class="sd"&gt; (21, 0.005555555555555647),&lt;/span&gt;
+&lt;span class="sd"&gt; (5, 0.002777777777777879),&lt;/span&gt;
+&lt;span class="sd"&gt; (10, 0.002777777777777879),&lt;/span&gt;
+&lt;span class="sd"&gt; (17, 0.002777777777777879),&lt;/span&gt;
+&lt;span class="sd"&gt; (18, 0.002777777777777879),&lt;/span&gt;
+&lt;span class="sd"&gt; (20, 0.002777777777777879),&lt;/span&gt;
+&lt;span class="sd"&gt; (34, 0.002777777777777879),&lt;/span&gt;
+&lt;span class="sd"&gt; (37, 0.002777777777777879),&lt;/span&gt;
+&lt;span class="sd"&gt; (46, 0.002777777777777879)]&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Relation to stepwise regression&lt;/h2&gt;
+&lt;p&gt;You may recognize this idea as being similar to &lt;a href="https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches"&gt;backward stepwise
+regression&lt;/a&gt;.
+Wasserman (2005) describes this technique for model selection as "we start with
+the biggest model and drop one variable at a time" (p. 221). We drop variables
+until the score has decreased beyond some acceptable level or until we have
+reached the desired number of features. He notes that this is a greedy search
+and is not "guaranteed to find the model with the best score." If we were to use
+&lt;a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html"&gt;scikit's recursive feature
+elimination&lt;/a&gt;
+in combination with this feature ablation technique, we would be using backward
+stepwise regression.&lt;/p&gt;
+&lt;p&gt;If you do decide to apply stepwise regression, be careful with the test set used
+to evaluate the features. If you choose features that optimize the score on the
+test set, you are overfitting to the test set (and any metrics calculated for
+the test set will be incorrect). If performing stepwise regression, I would
+recommend splitting the training set into 5 folds and performing cross
+validation to select features. After that process, metrics calculated on the
+test set remain valid (because it was not used during training).&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This technique provides a general way to calculate feature importances for any
+classification or regression model (even those that don't natively support
+them). It is also an element of a feature selection technique called stepwise
+regression.&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Wasserman, L. (2005). &lt;em&gt;All of statistics: A concise course in statistical
+  inference&lt;/em&gt;. New York: Springer.&lt;/li&gt;
+&lt;li&gt;Grande, E. &lt;em&gt;Browsing record store shelves&lt;/em&gt;.
+  &lt;a href="https://unsplash.com/photos/0vY082Un2pk"&gt;Unsplash&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/feature-importance-for-any-model.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 23 Jul 2019 20:50:22 GMT</pubDate></item><item><title>Linear interpolation in Postgres using generate_series</title><link>https://www.samueltaylor.org/articles/postgres-linear-interpolation.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;I like to keep track of how many miles I'm driving in my car. One conceivable way of doing this is to create a table in
 a Postgres database in which I can track this information.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;CREATE&lt;/span&gt; &lt;span class="k"&gt;TABLE&lt;/span&gt; &lt;span class="n"&gt;mileage&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="n"&gt;observed_date&lt;/span&gt; &lt;span class="nb"&gt;DATE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;

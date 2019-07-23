@@ -30,12 +30,12 @@ using an RBF kernel). Further, some models result in a set of coefficients (like
 linear regression) that are easy to misinterpret (e.g. if you have two features
 with dramatically different scales).</p>
 <p>Feature ablation is a technique for calculating feature importances that works
-for all machine learning models. Given a dataset of n rows and m features, the
+for all machine learning models. Given a dataset of <em>n</em> rows and <em>m</em> features, the
 procedure goes like this:</p>
 <ol>
 <li>Train the model on your train set and calculate a score on the test set.  You
    can pick whatever scoring metric you like.</li>
-<li>For each of the m features, remove it from the training data and train the
+<li>For each of the <em>m</em> features, remove it from the training data and train the
    model. Then, calculate the score on the test set.</li>
 <li>Rank the features by the difference between the original score (from the
    model with all features) and the score for the model using all features but
