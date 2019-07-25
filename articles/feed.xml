@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Tue, 23 Jul 2019 22:37:12 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Model-agnostic feature importance through ablation</title><link>https://www.samueltaylor.org/articles/feature-importance-for-any-model.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;img src="/static/img/selecting_a_record_grande.jpg"&gt;&lt;/img&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 25 Jul 2019 11:53:15 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Model-agnostic feature importance through ablation</title><link>https://www.samueltaylor.org/articles/feature-importance-for-any-model.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;img src="/static/img/selecting_a_record_grande.jpg"&gt;&lt;/img&gt;&lt;/p&gt;
 &lt;p&gt;Feature importances are, well, important. We can use them to provide a
 rudimentary level of interpretability; if a feature has higher importance, it
 has greater impact on the target variable. Some machine learning models have an
@@ -104,8 +104,12 @@ test set remain valid (because it was not used during training).&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;This technique provides a general way to calculate feature importances for any
 classification or regression model (even those that don't natively support
-them). It is also an element of a feature selection technique called stepwise
+them). It's also an element of a feature selection technique called stepwise
 regression.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Comments? Questions? Concerns? Please tweet me
+&lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt; or email me (sgt at this
+domain). Thanks!&lt;/p&gt;
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Wasserman, L. (2005). &lt;em&gt;All of statistics: A concise course in statistical
