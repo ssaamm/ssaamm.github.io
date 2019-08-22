@@ -1,5 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 25 Jul 2019 11:53:15 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Model-agnostic feature importance through ablation</title><link>https://www.samueltaylor.org/articles/feature-importance-for-any-model.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;img src="/static/img/selecting_a_record_grande.jpg"&gt;&lt;/img&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 22 Aug 2019 11:57:10 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>A five minute meeting shouldn't ruin your productivity</title><link>https://www.samueltaylor.org/articles/a-5min-meeting-shouldnt-ruin-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;As developers, we deplore being interrupted. A stream of Twitter posts lament
+that a five minute meeting can harm productivity for hours. But it doesn't have
+to be like this: we can dramatically decrease the cost of being interrupted with
+a simple technique.  What's more, implementing this technique makes us more
+effective and confident in our work.&lt;/p&gt;
+&lt;h2&gt;Problems with this narrative&lt;/h2&gt;
+&lt;p&gt;I can't talk about this without first critiquing it. The framing of these
+complaints is often adversarial.&lt;/p&gt;
+&lt;blockquote class="twitter-tweet"&gt;&lt;p lang="en" dir="ltr"&gt;That five minute meeting with a developer... &lt;a href="https://t.co/xPgYwDzCnY"&gt;pic.twitter.com/xPgYwDzCnY&lt;/a&gt;&lt;/p&gt;&amp;mdash; Richard Campbell (@richcampbell) &lt;a href="https://twitter.com/richcampbell/status/1142130583998533633?ref_src=twsrc%5Etfw"&gt;June 21, 2019&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;When we create a "developers vs. others" mentality, we decrease the level of
+trust and psychological safety on our teams. Instead, we should seek to
+understand the "other" in our midst; why does our PM have to ask a dev a
+question so often? Is our documentation bad? Are we changing direction too
+quickly?&lt;/p&gt;
+&lt;p&gt;A good working relationship allows both sides to understand each other better.
+If we want to decrease the amount of interruptions we experience, posting
+divisive tweets is a strategy that may actually have the opposite effect in the
+long term. &lt;/p&gt;
+&lt;p&gt;Working alongside every member of our team is a much better strategy for
+creating change than spreading insular, us vs them ideas.&lt;/p&gt;
+&lt;h2&gt;Taking matters into our hands&lt;/h2&gt;
+&lt;p&gt;We aren't helpless here; we can change our own behavior to address this issue.
+Here's what's been most effective for me: taking notes. It's a simple but
+powerful technique. A solid set of notes enables us to change contexts with
+confidence, knowing that returning to a previous context will be easy.&lt;/p&gt;
+&lt;p&gt;Because of the time/effort it takes to gain, well, context on a certain task,
+context switching is hard. Human brains have limited capacity for remembering
+things like "What line was it that was causing that exception?" or "Which
+features were most important in the last training of this model?".
+Conveniently, computers are &lt;em&gt;great&lt;/em&gt; at this kind of thing.&lt;/p&gt;
+&lt;p&gt;While I started taking notes to avoid keeping too much state in my brain, I have
+realized a couple other benefits:
+- &lt;strong&gt;Record of results:&lt;/strong&gt; as a Data Scientist, I do a lot of experiments. For new
+  problems, I'll often try several different things. Seldom do they all work!
+  My notes here function as a sort of "lab notebook", enabling me to review the
+  experiments I've run and reflect on their implications (either by myself or
+  with colleagues).
+- &lt;strong&gt;Multiple projects:&lt;/strong&gt; when I'm blocked on something, it's become much easier
+  to switch to work on another project. Having a few projects at once is much
+  easier to manage when the current state of each project is written down rather
+  than in my head (or on JIRA).&lt;/p&gt;
+&lt;h2&gt;Writing good notes&lt;/h2&gt;
+&lt;p&gt;So how do we take good notes? Here's what works for me. Each project gets a
+document. While working on the project, I append things:
+- Surprising discoveries (for example textual descriptions, drawings, data
+  visualizations)
+- Helpful bits of documentation (StackOverflow questions, company wiki)
+- Descriptions of what I'm trying to do and how I'm trying to do that. Even a
+  few words or a file name and line number are enough to jog my memory.
+- Results of things I've tried. Did a certain test fail? What was the MSE when I
+  include this feature?&lt;/p&gt;
+&lt;p&gt;This is a fractal process, so I find it useful to use bulleted lists with
+multiple levels.&lt;/p&gt;
+&lt;p&gt;The particular medium we use for this isn't important. I use OneNote (because
+its free tier offers everything I need), but there are a slew of other products
+you can use. Digital note apps are convenient because they sync across devices,
+but you could also use plaintext documents, paper notebooks, or even a
+whiteboard if you prefer.&lt;/p&gt;
+&lt;h2&gt;You can do this!&lt;/h2&gt;
+&lt;p&gt;You may think that creating this set of notes is more trouble than it's worth.
+What surprised me when I started doing this was that writing down my progress
+ended up being fairly easy. All in all, it beats the heck out of losing your
+place because someone interrupts you.&lt;/p&gt;
+&lt;p&gt;Of course, this isn't a panacea. Being interrupted still can cause us to lose
+track of things we haven't quite written down yet. And we do have to build the
+habit of making good notes. But the costs are worth it.&lt;/p&gt;
+&lt;h2&gt;You &lt;em&gt;should&lt;/em&gt; do this&lt;/h2&gt;
+&lt;p&gt;A written log of work gives us confidence that we can execute on our projects.
+Because we track state for each project, we can stop worrying about forgetting
+something valuable. Every time we step up to a task, we have a helpful record of
+what our goal is and the ways we've tried to achieve it. We free up space in our
+brain for more useful tasks.&lt;/p&gt;
+&lt;p&gt;A five minute meeting doesn't have to ruin your productivity. By letting
+computers do what they're good at, we free our brains to do the difficult,
+valuable intellectual work that most fulfills us. Take notes as you work--it's
+your new superpower.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/a-5min-meeting-shouldnt-ruin-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Thu, 22 Aug 2019 11:53:02 GMT</pubDate></item><item><title>Model-agnostic feature importance through ablation</title><link>https://www.samueltaylor.org/articles/feature-importance-for-any-model.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;img src="/static/img/selecting_a_record_grande.jpg"&gt;&lt;/img&gt;&lt;/p&gt;
 &lt;p&gt;Feature importances are, well, important. We can use them to provide a
 rudimentary level of interpretability; if a feature has higher importance, it
 has greater impact on the target variable. Some machine learning models have an
