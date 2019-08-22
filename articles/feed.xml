@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 22 Aug 2019 11:57:10 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>A five minute meeting shouldn't ruin your productivity</title><link>https://www.samueltaylor.org/articles/a-5min-meeting-shouldnt-ruin-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;As developers, we deplore being interrupted. A stream of Twitter posts lament
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 22 Aug 2019 12:05:05 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>A five minute meeting shouldn't ruin your productivity</title><link>https://www.samueltaylor.org/articles/a-5min-meeting-shouldnt-ruin-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;As developers, we deplore being interrupted. A stream of Twitter posts lament
 that a five minute meeting can harm productivity for hours. But it doesn't have
 to be like this: we can dramatically decrease the cost of being interrupted with
 a simple technique.  What's more, implementing this technique makes us more
@@ -32,26 +32,30 @@ things like "What line was it that was causing that exception?" or "Which
 features were most important in the last training of this model?".
 Conveniently, computers are &lt;em&gt;great&lt;/em&gt; at this kind of thing.&lt;/p&gt;
 &lt;p&gt;While I started taking notes to avoid keeping too much state in my brain, I have
-realized a couple other benefits:
-- &lt;strong&gt;Record of results:&lt;/strong&gt; as a Data Scientist, I do a lot of experiments. For new
+realized a couple other benefits:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Record of results:&lt;/strong&gt; as a Data Scientist, I do a lot of experiments. For new
   problems, I'll often try several different things. Seldom do they all work!
   My notes here function as a sort of "lab notebook", enabling me to review the
   experiments I've run and reflect on their implications (either by myself or
-  with colleagues).
-- &lt;strong&gt;Multiple projects:&lt;/strong&gt; when I'm blocked on something, it's become much easier
+  with colleagues).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Multiple projects:&lt;/strong&gt; when I'm blocked on something, it's become much easier
   to switch to work on another project. Having a few projects at once is much
   easier to manage when the current state of each project is written down rather
-  than in my head (or on JIRA).&lt;/p&gt;
+  than in my head (or on JIRA).&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;Writing good notes&lt;/h2&gt;
 &lt;p&gt;So how do we take good notes? Here's what works for me. Each project gets a
-document. While working on the project, I append things:
-- Surprising discoveries (for example textual descriptions, drawings, data
-  visualizations)
-- Helpful bits of documentation (StackOverflow questions, company wiki)
-- Descriptions of what I'm trying to do and how I'm trying to do that. Even a
-  few words or a file name and line number are enough to jog my memory.
-- Results of things I've tried. Did a certain test fail? What was the MSE when I
-  include this feature?&lt;/p&gt;
+document. While working on the project, I append things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Surprising discoveries (for example textual descriptions, drawings, data
+  visualizations)&lt;/li&gt;
+&lt;li&gt;Helpful bits of documentation (StackOverflow questions, company wiki)&lt;/li&gt;
+&lt;li&gt;Descriptions of what I'm trying to do and how I'm trying to do that. Even a
+  few words or a file name and line number are enough to jog my memory.&lt;/li&gt;
+&lt;li&gt;Results of things I've tried. Did a certain test fail? What was the MSE when I
+  include this feature?&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;This is a fractal process, so I find it useful to use bulleted lists with
 multiple levels.&lt;/p&gt;
 &lt;p&gt;The particular medium we use for this isn't important. I use OneNote (because
