@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 22 Aug 2019 12:08:22 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>A five minute meeting shouldn't ruin your productivity</title><link>https://www.samueltaylor.org/articles/a-5min-meeting-shouldnt-ruin-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;As developers, we deplore being interrupted. A stream of Twitter posts lament
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 29 Aug 2019 14:15:22 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Don't try to sound smart when giving a presentation</title><link>https://www.samueltaylor.org/articles/dont-try-to-sound-smart.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Think about the last time you gave a presentation. Were you nervous? Excited?
+Scared to look stupid in front of your boss? Confident in your ability to wow
+the others in the room? These emotions reveal that at our core, our biggest
+desire when presenting is to make ourselves look good. This desire is
+antithetical to a good presentation and harmful if not addressed directly.&lt;/p&gt;
+&lt;p&gt;Our first priority must be the audience. They're giving us their attention, and
+we have the responsibility to use that precious resource wisely. If we waste it,
+they'll be less likely to give us this attention in the future. While we may
+think we're being clever with our sales pitch, people are smart enough to see
+right through us (even if what we're selling is our own self image).&lt;/p&gt;
+&lt;p&gt;Prioritizing the audience requires us to adapt our message to them. This doesn't
+mean dumbing it down. As an example, consider presenting some interesting result
+to two audiences: a coworker and the CEO. The CEO of your company will require
+more context than your coworker. This does not mean that the CEO is somehow
+dumb; it means that she isn't as familiar with your work (for obvious reasons).&lt;/p&gt;
+&lt;p&gt;Instead of prioritizing the audience, we often prioritize ourselves (typically
+without even realizing it). We want to appear smart, competent, and confident in
+front of others. Subconsciously, this leads us to present in ways that obfuscate
+the truth in order to make ourselves appear intelligent. If our audience leaves
+a presentation thinking that we are a genius, we have probably failed to explain
+our idea in a way that they can understand.&lt;/p&gt;
+&lt;p&gt;We should go into presentations hoping our audience finds what we say to be
+"common sense". If they agree with what we've said without much questioning, we
+have likely guided them through our ideas in a way that is easy to understand.&lt;/p&gt;
+&lt;p&gt;If you've never given thought to the specific people that are in your room, try
+it out. Do research to understand what they know and how they best digest
+information. If you already do this, consider doubling the amount of time you
+spend here.&lt;/p&gt;
+&lt;p&gt;When we go into presentations seeking to look like a genius, we end up confusing
+rather than enlightening. Those who try to look impressive ultimately fail to do
+so, but (paradoxically) those who give up on impressing do.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/dont-try-to-sound-smart.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Thu, 29 Aug 2019 14:15:15 GMT</pubDate></item><item><title>A five minute meeting shouldn't ruin your productivity</title><link>https://www.samueltaylor.org/articles/a-5min-meeting-shouldnt-ruin-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;As developers, we deplore being interrupted. A stream of Twitter posts lament
 that a five minute meeting can harm productivity for hours. But it doesn't have
 to be like this: we can dramatically decrease the cost of being interrupted with
 a simple technique.  What's more, implementing this technique makes us more
