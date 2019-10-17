@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 29 Aug 2019 14:15:22 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Don't try to sound smart when giving a presentation</title><link>https://www.samueltaylor.org/articles/dont-try-to-sound-smart.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Think about the last time you gave a presentation. Were you nervous? Excited?
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 17 Oct 2019 13:06:01 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Using Open Source Tools for Machine Learning</title><link>https://www.samueltaylor.org/articles/open-source-machine-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Slides available &lt;a href="/static/pdf/open_source_ml.pdf"&gt;here&lt;/a&gt;. Delivered at &lt;a href="https://allthingsopen.org/talk/using-open-source-tools-for-machine-learning/"&gt;All Things Open 2019&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Find me on Twitter &lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Transcript&lt;/h2&gt;
+&lt;p&gt;Coming soon!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/open-source-machine-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 13 Oct 2019 21:07:55 GMT</pubDate></item><item><title>Don't try to sound smart when giving a presentation</title><link>https://www.samueltaylor.org/articles/dont-try-to-sound-smart.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Think about the last time you gave a presentation. Were you nervous? Excited?
 Scared to look stupid in front of your boss? Confident in your ability to wow
 the others in the room? These emotions reveal that at our core, our biggest
 desire when presenting is to make ourselves look good. This desire is
@@ -609,8 +612,7 @@ or not I thought it sounded cool. I gathered a bunch of data like this and if I'
 more time reading job descriptions this way than I would have if I didn't build this. But because all of you are here I
 don't think any of you have room to talk about over engineering something. So if I can't talk about my love for this
 here I don't think there's any safe place for me. &lt;/p&gt;
-&lt;p&gt;Anyway, you should be familiar with this question by now, what kind of machine learning problem is this? 
-code:2:4&lt;/p&gt;
+&lt;p&gt;Anyway, you should be familiar with this question by now, what kind of machine learning problem is this? &lt;/p&gt;
 &lt;p&gt;Classification! Yes, wonderful. Thank y'all. I heard someone say clustering. It's not quite clustering because we do
 have a specific output variable that we're trying to predict. We want to know whether a given job sounds cool or does
 not. &lt;/p&gt;
