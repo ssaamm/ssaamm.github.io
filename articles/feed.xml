@@ -1,5 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 17 Oct 2019 14:25:28 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Using Open Source Tools for Machine Learning</title><link>https://www.samueltaylor.org/articles/open-source-machine-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Slides available &lt;a href="/static/pdf/open_source_ml.pdf"&gt;here&lt;/a&gt;. Delivered at &lt;a href="https://allthingsopen.org/talk/using-open-source-tools-for-machine-learning/"&gt;All
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 20 Oct 2019 14:04:44 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Thinking in Bets for Data Scientists</title><link>https://www.samueltaylor.org/articles/thinking-in-bets-data-scientists.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Data scientists are uniquely positioned to provide leadership on their teams
+around risk and uncertainty. We are trusted by our coworkers to have an
+understanding of experimentation and data-driven decision making. This trust can
+be leveraged to improve processes, decisions, and (ultimately) the output of our
+teams.&lt;/p&gt;
+&lt;p&gt;In Thinking in Bets, Annie Duke describes how to make good decisions, informed
+by her time as a professional poker player. Life (she argues) and data science
+(I argue) are like a game of poker. In some games, like chess, each player has
+perfect information. They know where all the pieces are, what moves those pieces
+can make, and the conditions for winning. But poker is a game of imperfect
+information. Each player knows only the cards in their own hand. While they can
+intuit things from the body language or play style of other players, that
+intuition is not perfect. Some players are really good at bluffing. Some
+behaviors are easy to misread.&lt;/p&gt;
+&lt;p&gt;Poker, thus, requires players to make decisions in a system with imperfect
+information (often with high dollar amounts on the line). Doesn't this sound
+like life? The stakes are high, and we don't know what the future holds, but we
+have to make some decision. By Duke's definition, that's what a bet is: "a
+decision about an uncertain future".&lt;/p&gt;
+&lt;p&gt;In the face of uncertainty, we data scientists resort to experimentation. We can
+determine the best color for a button or the best copy on a page or any number
+of other things by running a well-designed experiment. While this is valuable
+work, it only scratches the surface in terms of where we can apply good decision
+making.&lt;/p&gt;
+&lt;p&gt;Running experiments is only useful insofar as they help us unlock real value
+(i.e. moving our OKR's or KPI's). Think about it like driving a car. When you
+press the accelerator, the tachometer shows an increase in the RPM at which your
+engine is turning. This turning is then put through a system of gears and
+eventually spins the wheels &lt;a href="#fn0"&gt;[0]&lt;/a&gt;. The ability to run experiments quickly
+is akin to being able to turn the engine quickly. Without a good system for
+choosing the right experiments and leveraging their results, we limit our
+ability to impact the business. When we view decision making as a process of
+choosing the right bet, we can choose strategies that help us make better
+decisions and have greater impact.&lt;/p&gt;
+&lt;h2&gt;Red Teams&lt;/h2&gt;
+&lt;p&gt;The strategy from Duke's book that I found most directly applicable to
+my work as a data scientist is Red Teaming. Established after 9/11, these teams
+have as their express goal "arguing against the intelligence community's
+conventional wisdom" &lt;a href="#fn1"&gt;[1]&lt;/a&gt;.
+By "spotting flaws in logic and analysis," red teams help drive intelligence
+agencies closer to both the truth and a proper understanding of the uncertainty
+in analyses &lt;a href="#fn2"&gt;[2]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Within weeks of reading this book, my team and I happened to be working on
+understanding our KPI's better, which involved some new analysis. This seemed
+like a perfect time to apply a "red team" strategy -- as someone would posit a
+result, I would see if I could disprove it. Whether I could or couldn't, I
+reported on both. And then other members of the team would try to prove or
+disprove my result! By this collaborative process, we came to understand the
+truth of the situation where we could have easily misled ourselves.&lt;/p&gt;
+&lt;p&gt;If you want to try this out, here's a few techniques I've found useful:
+1. Explicitly try to disprove an analysis. If you have sufficient time, working
+   to show how an analysis is wrong can be really valuable, even if it
+   withstands scruitiny. You will likely find some small issues in the way
+   something is calculated, some ambiguous terms or metrics that could be
+   misunderstood, or an invalid assumption. These findings can lead to further
+   quantification of their impact on the original analysis. In this way, we can
+   gain a better understanding of how confident we should be in said analysis.
+2. Try to reproduce an analysis. Avoiding looking at the code for the original
+   analysis, try to get the same result via a slightly different pathway. If the
+   original author used raw log data, see if you can answer the question using
+   the data warehouse. Come up with new metrics that should move in the same
+   direction as those used in the first analysis. If two people come to the same
+   conclusion independently, we gain confidence in that conclusion.&lt;/p&gt;
+&lt;p&gt;You've got to be careful with this one! Knowing the hypothesis that is being
+   tested can skew the analysis you do (even unconsciously) [[3]]](#fn3).
+3. Answer an adjacent question. Sometimes there just isn't enough time to fully
+   reproduce or disprove an analysis. In these cases, we can test an upstream
+   cause or a downstream effect instead.&lt;/p&gt;
+&lt;p&gt;For instance, if our analysis finds that sales of trucks decrease when gas
+   prices are high, we could look up years in which gas prices were high and see
+   if truck sales were down.&lt;/p&gt;
+&lt;p&gt;While these techniques are most effective when applied by a separate person who
+hasn't been influenced by the same process/data as the original author, I have
+found value in explicitly shifting my perspective to "red team" myself. Working
+specifically to disprove my own analysis, I end up understanding the results in
+greater depth.&lt;/p&gt;
+&lt;h2&gt;Be humble&lt;/h2&gt;
+&lt;p&gt;Humility is a key element of truth-seeking. We must remember that the point of
+our work is not to prove to our teammates that we are geniuses; we're trying to
+produce some positive result for our employer. We are more likely to find the
+truth when we seek it rather than pursuing our own glory.&lt;/p&gt;
+&lt;p&gt;I believe that sometimes our drive to compete gets in the way of our humility. I
+am not a particularly competitive person by nature, but if you're reading this
+and you are competitive, Duke has some advice for you:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Keep the reward of feeling like we are doing well compared to our peers, but
+change the features by which we compare ourselves: be a better credit-giver than
+your peers, more willing than others to admit mistakes, more willing to explore
+possible reasons for an outcome with an open mind, even, and especially, if that
+might cast you in a bad light or shine a good light on someone else. In this way
+we can feel that we are doing well by comparison because we are doing something
+unusual and hard that most people don’t do.  That makes us feel exceptional.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;When red-teaming my own analysis, I sometimes find things that cast doubt on it.
+Sharing my results, I'm tempted to leave these observations out. The desire to
+present my findings in the best light possible is (I believe) a natural one, yet
+one I must work against. Duke writes that "if we have an urge to leave out a
+detail because it makes us uncomfortable… [it is] exactly the detail we must
+share."&lt;/p&gt;
+&lt;p&gt;Bringing reasons to doubt to the table along with the analysis itself helps know
+what information we need to get. Sometimes a little bit of additional analysis
+can alleviate the doubt. Sometimes the concern will turn out to reflect a small
+enough risk that we don't need to address it. And sometimes the only way to get
+more information is through an experiment. The important thing is bringing
+uncertainty to the table so we can address it directly.&lt;/p&gt;
+&lt;h2&gt;Communicating uncertainty&lt;/h2&gt;
+&lt;p&gt;We communicate about uncertainty all the time. When asked if we're going to an
+after-work social event, for instance, we say that we "might go" (which
+typically means we are definitely not going) or that we will "probably go" (it's
+a bit of a tossup). These phrases are examples of words of estimative
+probability, or WEP's. In colloquial usage, these casual WEP's are just fine,
+but they are less helpful when we're trying to make a good decision.&lt;/p&gt;
+&lt;p&gt;For one, different words mean different things to different people. Andrew
+Mauboussin's research shows that words like "maybe", "probably", and "usually"
+are interpreted to correspond with wide ranges of probabilities depending on the
+audience. For instance, when someone says that an event "might happen", her or
+his audience could interpret that as an event with probability between 25% and
+55%. That's a huge range!&lt;/p&gt;
+&lt;p&gt;By using WEP's in communication, we run the risk that our audience will
+misinterpret the likelihood we think a certain event has. But there are ways to
+overcome this. Mauboussin advocates for explicitly giving a percentage alongside
+words of estimative probability. This approach is used in the medical research
+field, where institutional review boards require researchers to inform people of
+the risks in treatments using WEP's &lt;a href="#fn4"&gt;[4]&lt;/a&gt;. These words should be
+accompanied by a percentage; for instance, a researcher might inform a
+participant using language like, "This side effect is rare (will happen to less
+than 1% of subjects)".&lt;/p&gt;
+&lt;h2&gt;Parting words&lt;/h2&gt;
+&lt;p&gt;Certainty is alluring. But as data scientists, we should know better! The world
+is filled with uncertainty, and only by defining and quantifying it can we drive
+toward an accurate understanding of reality. This understanding, then, enables
+us to make higher quality decisions. And this improvement in decision-making
+doesn't have to stop at the individual; we can bring this idea to our teams,
+departments, and companies.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Footnotes:&lt;/p&gt;
+&lt;ol start="0"&gt;
+&lt;li id="fn0"&gt;I think this is how it works; I'm really not much of a car person.&lt;/li&gt;
+&lt;li id="fn1"&gt;Neal K. Katyal. 1 July 2016. "Washington Needs More Dissent Channels", &lt;a href="https://www.nytimes.com/2016/07/02/opinion/washington-needs-more-dissent-channels.html"&gt;The New York Times&lt;/a&gt;&lt;/li&gt;
+&lt;li id="fn2"&gt;Ibid.&lt;/li&gt;
+&lt;li id="fn3"&gt;Duke here references Richard Feynman, but I can't find a direct citation. Still, this seems to jive with my own experience.&lt;/li&gt;
+&lt;li id="fn4"&gt;&lt;a href="https://web.archive.org/web/20130527211344/http://www.utc.edu/Administration/InstitutionalReviewBoard/faq.php"&gt;University of Tennessee, Chattanooga.&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/thinking-in-bets-data-scientists.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 20 Oct 2019 14:03:36 GMT</pubDate></item><item><title>Using Open Source Tools for Machine Learning</title><link>https://www.samueltaylor.org/articles/open-source-machine-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Slides available &lt;a href="/static/pdf/open_source_ml.pdf"&gt;here&lt;/a&gt;. Delivered at &lt;a href="https://allthingsopen.org/talk/using-open-source-tools-for-machine-learning/"&gt;All
 Things Open
 2019&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Find me on Twitter &lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt;.&lt;/p&gt;

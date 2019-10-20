@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Thinking in Bets for Data Scientists - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Thinking in Bets for Data Scientists</span>
+<h1>Thinking in Bets for Data Scientists</h1>
+<p>Data scientists are uniquely positioned to provide leadership on their teams
+around risk and uncertainty. We are trusted by our coworkers to have an
+understanding of experimentation and data-driven decision making. This trust can
+be leveraged to improve processes, decisions, and (ultimately) the output of our
+teams.</p>
+<p>In Thinking in Bets, Annie Duke describes how to make good decisions, informed
+by her time as a professional poker player. Life (she argues) and data science
+(I argue) are like a game of poker. In some games, like chess, each player has
+perfect information. They know where all the pieces are, what moves those pieces
+can make, and the conditions for winning. But poker is a game of imperfect
+information. Each player knows only the cards in their own hand. While they can
+intuit things from the body language or play style of other players, that
+intuition is not perfect. Some players are really good at bluffing. Some
+behaviors are easy to misread.</p>
+<p>Poker, thus, requires players to make decisions in a system with imperfect
+information (often with high dollar amounts on the line). Doesn't this sound
+like life? The stakes are high, and we don't know what the future holds, but we
+have to make some decision. By Duke's definition, that's what a bet is: "a
+decision about an uncertain future".</p>
+<p>In the face of uncertainty, we data scientists resort to experimentation. We can
+determine the best color for a button or the best copy on a page or any number
+of other things by running a well-designed experiment. While this is valuable
+work, it only scratches the surface in terms of where we can apply good decision
+making.</p>
+<p>Running experiments is only useful insofar as they help us unlock real value
+(i.e. moving our OKR's or KPI's). Think about it like driving a car. When you
+press the accelerator, the tachometer shows an increase in the RPM at which your
+engine is turning. This turning is then put through a system of gears and
+eventually spins the wheels <a href="#fn0">[0]</a>. The ability to run experiments quickly
+is akin to being able to turn the engine quickly. Without a good system for
+choosing the right experiments and leveraging their results, we limit our
+ability to impact the business. When we view decision making as a process of
+choosing the right bet, we can choose strategies that help us make better
+decisions and have greater impact.</p>
+<h2>Red Teams</h2>
+<p>The strategy from Duke's book that I found most directly applicable to
+my work as a data scientist is Red Teaming. Established after 9/11, these teams
+have as their express goal "arguing against the intelligence community's
+conventional wisdom" <a href="#fn1">[1]</a>.
+By "spotting flaws in logic and analysis," red teams help drive intelligence
+agencies closer to both the truth and a proper understanding of the uncertainty
+in analyses <a href="#fn2">[2]</a>.</p>
+<p>Within weeks of reading this book, my team and I happened to be working on
+understanding our KPI's better, which involved some new analysis. This seemed
+like a perfect time to apply a "red team" strategy -- as someone would posit a
+result, I would see if I could disprove it. Whether I could or couldn't, I
+reported on both. And then other members of the team would try to prove or
+disprove my result! By this collaborative process, we came to understand the
+truth of the situation where we could have easily misled ourselves.</p>
+<p>If you want to try this out, here's a few techniques I've found useful:
+1. Explicitly try to disprove an analysis. If you have sufficient time, working
+   to show how an analysis is wrong can be really valuable, even if it
+   withstands scruitiny. You will likely find some small issues in the way
+   something is calculated, some ambiguous terms or metrics that could be
+   misunderstood, or an invalid assumption. These findings can lead to further
+   quantification of their impact on the original analysis. In this way, we can
+   gain a better understanding of how confident we should be in said analysis.
+2. Try to reproduce an analysis. Avoiding looking at the code for the original
+   analysis, try to get the same result via a slightly different pathway. If the
+   original author used raw log data, see if you can answer the question using
+   the data warehouse. Come up with new metrics that should move in the same
+   direction as those used in the first analysis. If two people come to the same
+   conclusion independently, we gain confidence in that conclusion.</p>
+<p>You've got to be careful with this one! Knowing the hypothesis that is being
+   tested can skew the analysis you do (even unconsciously) [[3]]](#fn3).
+3. Answer an adjacent question. Sometimes there just isn't enough time to fully
+   reproduce or disprove an analysis. In these cases, we can test an upstream
+   cause or a downstream effect instead.</p>
+<p>For instance, if our analysis finds that sales of trucks decrease when gas
+   prices are high, we could look up years in which gas prices were high and see
+   if truck sales were down.</p>
+<p>While these techniques are most effective when applied by a separate person who
+hasn't been influenced by the same process/data as the original author, I have
+found value in explicitly shifting my perspective to "red team" myself. Working
+specifically to disprove my own analysis, I end up understanding the results in
+greater depth.</p>
+<h2>Be humble</h2>
+<p>Humility is a key element of truth-seeking. We must remember that the point of
+our work is not to prove to our teammates that we are geniuses; we're trying to
+produce some positive result for our employer. We are more likely to find the
+truth when we seek it rather than pursuing our own glory.</p>
+<p>I believe that sometimes our drive to compete gets in the way of our humility. I
+am not a particularly competitive person by nature, but if you're reading this
+and you are competitive, Duke has some advice for you:</p>
+<blockquote>
+<p>Keep the reward of feeling like we are doing well compared to our peers, but
+change the features by which we compare ourselves: be a better credit-giver than
+your peers, more willing than others to admit mistakes, more willing to explore
+possible reasons for an outcome with an open mind, even, and especially, if that
+might cast you in a bad light or shine a good light on someone else. In this way
+we can feel that we are doing well by comparison because we are doing something
+unusual and hard that most people don’t do.  That makes us feel exceptional.</p>
+</blockquote>
+<p>When red-teaming my own analysis, I sometimes find things that cast doubt on it.
+Sharing my results, I'm tempted to leave these observations out. The desire to
+present my findings in the best light possible is (I believe) a natural one, yet
+one I must work against. Duke writes that "if we have an urge to leave out a
+detail because it makes us uncomfortable… [it is] exactly the detail we must
+share."</p>
+<p>Bringing reasons to doubt to the table along with the analysis itself helps know
+what information we need to get. Sometimes a little bit of additional analysis
+can alleviate the doubt. Sometimes the concern will turn out to reflect a small
+enough risk that we don't need to address it. And sometimes the only way to get
+more information is through an experiment. The important thing is bringing
+uncertainty to the table so we can address it directly.</p>
+<h2>Communicating uncertainty</h2>
+<p>We communicate about uncertainty all the time. When asked if we're going to an
+after-work social event, for instance, we say that we "might go" (which
+typically means we are definitely not going) or that we will "probably go" (it's
+a bit of a tossup). These phrases are examples of words of estimative
+probability, or WEP's. In colloquial usage, these casual WEP's are just fine,
+but they are less helpful when we're trying to make a good decision.</p>
+<p>For one, different words mean different things to different people. Andrew
+Mauboussin's research shows that words like "maybe", "probably", and "usually"
+are interpreted to correspond with wide ranges of probabilities depending on the
+audience. For instance, when someone says that an event "might happen", her or
+his audience could interpret that as an event with probability between 25% and
+55%. That's a huge range!</p>
+<p>By using WEP's in communication, we run the risk that our audience will
+misinterpret the likelihood we think a certain event has. But there are ways to
+overcome this. Mauboussin advocates for explicitly giving a percentage alongside
+words of estimative probability. This approach is used in the medical research
+field, where institutional review boards require researchers to inform people of
+the risks in treatments using WEP's <a href="#fn4">[4]</a>. These words should be
+accompanied by a percentage; for instance, a researcher might inform a
+participant using language like, "This side effect is rare (will happen to less
+than 1% of subjects)".</p>
+<h2>Parting words</h2>
+<p>Certainty is alluring. But as data scientists, we should know better! The world
+is filled with uncertainty, and only by defining and quantifying it can we drive
+toward an accurate understanding of reality. This understanding, then, enables
+us to make higher quality decisions. And this improvement in decision-making
+doesn't have to stop at the individual; we can bring this idea to our teams,
+departments, and companies.</p>
+<hr />
+<p>Footnotes:</p>
+<ol start="0">
+<li id="fn0">I think this is how it works; I'm really not much of a car person.</li>
+<li id="fn1">Neal K. Katyal. 1 July 2016. "Washington Needs More Dissent Channels", <a rel="nofollow" href="https://www.nytimes.com/2016/07/02/opinion/washington-needs-more-dissent-channels.html">The New York Times</a></li>
+<li id="fn2">Ibid.</li>
+<li id="fn3">Duke here references Richard Feynman, but I can't find a direct citation. Still, this seems to jive with my own experience.</li>
+<li id="fn4"><a rel="nofollow" href="https://web.archive.org/web/20130527211344/http://www.utc.edu/Administration/InstitutionalReviewBoard/faq.php">University of Tennessee, Chattanooga.</a></li>
+</ol>
+  </body>
+</html>
