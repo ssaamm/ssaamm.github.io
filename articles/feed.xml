@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 20 Oct 2019 14:04:44 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Thinking in Bets for Data Scientists</title><link>https://www.samueltaylor.org/articles/thinking-in-bets-data-scientists.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Data scientists are uniquely positioned to provide leadership on their teams
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 27 Oct 2019 15:38:35 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Thinking in Bets for Data Scientists</title><link>https://www.samueltaylor.org/articles/thinking-in-bets-data-scientists.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Data scientists are uniquely positioned to provide leadership on their teams
 around risk and uncertainty. We are trusted by our coworkers to have an
 understanding of experimentation and data-driven decision making. This trust can
 be leveraged to improve processes, decisions, and (ultimately) the output of our
@@ -48,28 +48,36 @@ result, I would see if I could disprove it. Whether I could or couldn't, I
 reported on both. And then other members of the team would try to prove or
 disprove my result! By this collaborative process, we came to understand the
 truth of the situation where we could have easily misled ourselves.&lt;/p&gt;
-&lt;p&gt;If you want to try this out, here's a few techniques I've found useful:
-1. Explicitly try to disprove an analysis. If you have sufficient time, working
+&lt;p&gt;If you want to try this out, here's a few techniques I've found useful:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Explicitly try to disprove an analysis. If you have sufficient time, working
    to show how an analysis is wrong can be really valuable, even if it
    withstands scruitiny. You will likely find some small issues in the way
    something is calculated, some ambiguous terms or metrics that could be
    misunderstood, or an invalid assumption. These findings can lead to further
    quantification of their impact on the original analysis. In this way, we can
-   gain a better understanding of how confident we should be in said analysis.
-2. Try to reproduce an analysis. Avoiding looking at the code for the original
+   gain a better understanding of how confident we should be in said analysis.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Try to reproduce an analysis. Avoiding looking at the code for the original
    analysis, try to get the same result via a slightly different pathway. If the
    original author used raw log data, see if you can answer the question using
    the data warehouse. Come up with new metrics that should move in the same
    direction as those used in the first analysis. If two people come to the same
-   conclusion independently, we gain confidence in that conclusion.&lt;/p&gt;
-&lt;p&gt;You've got to be careful with this one! Knowing the hypothesis that is being
-   tested can skew the analysis you do (even unconsciously) [[3]]](#fn3).
-3. Answer an adjacent question. Sometimes there just isn't enough time to fully
+   conclusion independently, we gain confidence in that conclusion.&lt;br /&gt;
+   You've got to be careful with this one! Knowing the hypothesis that is being
+   tested can skew the analysis you do (even unconsciously) &lt;a href="#fn3"&gt;[3]&lt;/a&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Answer an adjacent question. Sometimes there just isn't enough time to fully
    reproduce or disprove an analysis. In these cases, we can test an upstream
-   cause or a downstream effect instead.&lt;/p&gt;
-&lt;p&gt;For instance, if our analysis finds that sales of trucks decrease when gas
+   cause or a downstream effect instead.&lt;br /&gt;
+   For instance, if our analysis finds that sales of trucks decrease when gas
    prices are high, we could look up years in which gas prices were high and see
    if truck sales were down.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;p&gt;While these techniques are most effective when applied by a separate person who
 hasn't been influenced by the same process/data as the original author, I have
 found value in explicitly shifting my perspective to "red team" myself. Working
@@ -141,7 +149,9 @@ departments, and companies.&lt;/p&gt;
 &lt;li id="fn2"&gt;Ibid.&lt;/li&gt;
 &lt;li id="fn3"&gt;Duke here references Richard Feynman, but I can't find a direct citation. Still, this seems to jive with my own experience.&lt;/li&gt;
 &lt;li id="fn4"&gt;&lt;a href="https://web.archive.org/web/20130527211344/http://www.utc.edu/Administration/InstitutionalReviewBoard/faq.php"&gt;University of Tennessee, Chattanooga.&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/thinking-in-bets-data-scientists.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 20 Oct 2019 14:03:36 GMT</pubDate></item><item><title>Using Open Source Tools for Machine Learning</title><link>https://www.samueltaylor.org/articles/open-source-machine-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Slides available &lt;a href="/static/pdf/open_source_ml.pdf"&gt;here&lt;/a&gt;. Delivered at &lt;a href="https://allthingsopen.org/talk/using-open-source-tools-for-machine-learning/"&gt;All
+&lt;/ol&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/thinking-in-bets-data-scientists.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 20 Oct 2019 14:03:36 GMT</pubDate></item><item><title>Using Open Source Tools for Machine Learning</title><link>https://www.samueltaylor.org/articles/open-source-machine-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;div class="embed-responsive"&gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/V1Czgw_vxj8" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
+
+&lt;p&gt;Slides available &lt;a href="/static/pdf/open_source_ml.pdf"&gt;here&lt;/a&gt;. Delivered at &lt;a href="https://allthingsopen.org/talk/using-open-source-tools-for-machine-learning/"&gt;All
 Things Open
 2019&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Find me on Twitter &lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt;.&lt;/p&gt;

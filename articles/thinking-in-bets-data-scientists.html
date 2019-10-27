@@ -68,28 +68,36 @@ result, I would see if I could disprove it. Whether I could or couldn't, I
 reported on both. And then other members of the team would try to prove or
 disprove my result! By this collaborative process, we came to understand the
 truth of the situation where we could have easily misled ourselves.</p>
-<p>If you want to try this out, here's a few techniques I've found useful:
-1. Explicitly try to disprove an analysis. If you have sufficient time, working
+<p>If you want to try this out, here's a few techniques I've found useful:</p>
+<ol>
+<li>
+<p>Explicitly try to disprove an analysis. If you have sufficient time, working
    to show how an analysis is wrong can be really valuable, even if it
    withstands scruitiny. You will likely find some small issues in the way
    something is calculated, some ambiguous terms or metrics that could be
    misunderstood, or an invalid assumption. These findings can lead to further
    quantification of their impact on the original analysis. In this way, we can
-   gain a better understanding of how confident we should be in said analysis.
-2. Try to reproduce an analysis. Avoiding looking at the code for the original
+   gain a better understanding of how confident we should be in said analysis.</p>
+</li>
+<li>
+<p>Try to reproduce an analysis. Avoiding looking at the code for the original
    analysis, try to get the same result via a slightly different pathway. If the
    original author used raw log data, see if you can answer the question using
    the data warehouse. Come up with new metrics that should move in the same
    direction as those used in the first analysis. If two people come to the same
-   conclusion independently, we gain confidence in that conclusion.</p>
-<p>You've got to be careful with this one! Knowing the hypothesis that is being
-   tested can skew the analysis you do (even unconsciously) [[3]]](#fn3).
-3. Answer an adjacent question. Sometimes there just isn't enough time to fully
+   conclusion independently, we gain confidence in that conclusion.<br />
+   You've got to be careful with this one! Knowing the hypothesis that is being
+   tested can skew the analysis you do (even unconsciously) <a href="#fn3">[3]</a>.</p>
+</li>
+<li>
+<p>Answer an adjacent question. Sometimes there just isn't enough time to fully
    reproduce or disprove an analysis. In these cases, we can test an upstream
-   cause or a downstream effect instead.</p>
-<p>For instance, if our analysis finds that sales of trucks decrease when gas
+   cause or a downstream effect instead.<br />
+   For instance, if our analysis finds that sales of trucks decrease when gas
    prices are high, we could look up years in which gas prices were high and see
    if truck sales were down.</p>
+</li>
+</ol>
 <p>While these techniques are most effective when applied by a separate person who
 hasn't been influenced by the same process/data as the original author, I have
 found value in explicitly shifting my perspective to "red team" myself. Working
