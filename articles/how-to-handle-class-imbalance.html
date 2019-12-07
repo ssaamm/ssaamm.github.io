@@ -24,10 +24,333 @@
 <ul>
 <li><a rel="nofollow" href="https://odsc.com/training/portfolio/help-my-classes-are-imbalanced/">ODSC West 2019</a>. Slides available <a rel="nofollow" href="/static/pdf/class_imbalance.pdf">here</a>.</li>
 <li><a rel="nofollow" href="https://developerweekaustin2019.sched.com/event/XC6I">DeveloperWeek Austin 2019</a>. Audio available <a rel="nofollow" href="https://files.samueltaylor.org/imbalance_devweek.mp3">here</a>.</li>
-<li><a rel="nofollow" href="https://www.meetup.com/Aspiring-Data-Scientist-Community/events/266436999/">Aspiring Data Scientist Community</a>. Audio available <a rel="nofollow" href="https://files.samueltaylor.org/imbalance_adsc.mp3">here</a>.</li>
+<li><a rel="nofollow" href="https://www.meetup.com/Aspiring-Data-Scientist-Community/events/266436999/">Aspiring Data Scientist Community</a>. Audio available <a rel="nofollow" href="https://files.samueltaylor.org/imbalance_adsc.mp3">here</a>. Transcript below.</li>
 </ul>
 <p>Find me on Twitter <a rel="nofollow" href="https://twitter.com/SamuelDataT">@SamuelDataT</a>.</p>
 <h2>Transcript</h2>
-<p>Coming soon!</p>
+<p>The start of this story is that at one point I was in undergrad, and I was in this machine learning class (the first
+machine learning class I'd ever taken). And I was working on this Last.FM dataset trying to build a recommender system,
+because I've always thought it would be really cool to build a computer algorithm that can help you overcome information
+overload. And I thought this would be a cool way to try that. I started working on this little handwritten thing, and I
+was feeling pretty good about it. And then I walked into my professor's office and I said, "Hey, you're not gonna
+believe this. I have a 99% accuracy rating already, and I've barely even started."</p>
+<p>And he doesn't react like I wanted to. I wanted him to be like, "Wow, you are a prodigy. This is amazing!" But what he
+actually says is, "OK, well, tell me a little bit more. What's the base rate of your problem?" And I say, "What was
+that?" And he says, "What would happen if you just predicted the most common class for everything? What if you just said
+nobody listens to anything?" So I tried that, and it turned out that that's exactly what the algorithm was doing. It was
+just saying nobody listens to anything. And we're getting 99% accuracy because there's so many artists in the world and
+there are so many people in the world that the intersection of that is going to be pretty small. So I was very sad about
+this. And eventually, I found a solution.</p>
+<p>But the frustrating part about it was I kept running into this over and over and over again, this problem of class
+imbalance. So this is a talk that I wish I had when I was in undergraduate school before I walked into my professor's
+office and made myself look really stupid. I wish that I could have seen this.</p>
+<p>Before we get started, I do work for Indeed.
+Every indeed presentation has this slide in it that says "We help people get jobs." If you like the idea of
+helping people get jobs, come talk to me. Today we're going to talk about class imbalance. This is the way in which
+we're going to do that:</p>
+<ul>
+<li>We will start off with what it is</li>
+<li>then we'll move on to how to figure out what is happening</li>
+<li>then talk about some solutions for it.</li>
+<li>And then at the end, I have some recommendations that sum everything up and try to tie a nice, intellectually tasty
+  bow on this package, because there's gonna be a bunch of stuff.</li>
+</ul>
+<p>So let's start off with what is class imbalance. Class imbalance happens when you have certain values of your target
+variable that are way more common than other values. For instance, this is a wine classification dataset. You may
+notice that there are orange points and there are blue points on this graph. And the orange points are way outnumbered
+by the blue points. We can say that this dataset exhibits class imbalance because there are way more blue points
+than there are orange points. There's a lot of things that can cause imbalance, and we're just going to walk through
+them because understanding them will help us understand the solutions there.</p>
+<p>The first thing is there's just a lack of data. So this is a made up graph I have drawn. And let's say you have two
+features. One of them is on the x axis and one is on the y axis here. And then you have some points that are orange and
+some points that are blue. It's difficult to know -- where is the true blue region? Is it defined by an ellipse that
+covers both of these? Is it defined by a rectangle that covers that? Are there two separate ellipses? I don't know,
+there's just not a lot of data to really be able to infer that from what we have here. So that's part of the problem
+with this.</p>
+<p>Another thing that can be problematic is overlapping. And this is from a paper I believe by Batista, where he and his
+co-authors talk about the fact that sometimes even if you have heavy degree of class imbalance. If you look at sort of
+the bottom right of this screen, there is an imbalance here -- you have way more blue points than orange
+points, but you can still draw a linear separator between these two things. So the problem isn't actually that bad.
+Really, because you can still separate them just fine. The problem only becomes worse when you start overlapping. And
+that's when you start to see these things more toward the top left. These points would be difficult to determine or
+distinguish one of them.</p>
+<p>Noise is another important factor in why this happens. You can imagine that we have some blue region that is some set of
+points. And in the real world, you don't observe these regions, but for pedagogical reasons, go with me. So we have the
+blue region and orange region, we got some points, way more blue points and orange points. And just by the the sad law
+of large numbers, or our instruments being off or something, we measure these ones noisily. We accidentally think that
+these points are way higher than they actually are. And that means that we are going to incorrectly think that this is
+part of the majority class region (the blue region), when in truth it is part of the orange region. Because there were
+so many more blue points that we saw. We had a much better shot of reading some points. And they just got overwhelmed.</p>
+<p>The one that I think is the most well theoretically justified is this idea of biased estimators. This comes from a paper
+that I have linked at the end of the slides by Wallace, Small, Brodley, and Trikalinos. It's called <em>Class Imbalance,
+Redux</em>.  And it's just like, this really beautiful theory that they present. The crux of their argument is in this
+figure. Here they display a binary classification problem in two dimensions. So just along the x axis here will say
+that's our one feature. And then if it's an X, it's a minority class pointing. If it's a square, it's a majority class
+point, we can see there's a lot more squares and exits. And what they find is that you have, you don't actually have one
+distribution that you're drawing all the points from, you have two different distributions that you're driving From and
+you happen to see some from majority class a lot more often. So you're sampling a lot more out of this orange
+distribution than you are out of the blue pen. And ideally, in the greatest world or you can see where these
+distributions live, we could draw this beautiful idea of separating line and would perfectly to the best of our ability
+to separate these two areas. But because we have a class imbalance problem, the line gets biased toward the minority
+class it gets pushed in the direction the minority class and that means that we're going to accidentally cut off some of
+that region that should be part of the minority class and incorrectly allocated to be part of the majority class. So
+those are those are causes listed signee breath Okay, how do you recognize it the first thing just look for it like
+called on value counts, just know that it's happening because like, first time I ever ran this, it would think the check
+for I just assumed stuff, so don't make assumptions bad idea. The next thing you should do is compare stuff. This is a
+trick question. Everybody 97% accuracy. Is that good? Does anybody think? Anybody? If you Yeah, yeah, it's, I mean, when
+you compare it to this, like 97% for our fancy classifier, but 94% for a really dumb classifier, then it looks a little
+bit less impressive. It's like, Oh, we actually had an improvement of 3%. So one thing that that you can do, and that,
+like psychic learn provides is this API for a dummy classifier. And you can have to do a bunch of stuff, you can have a
+predict the most common class or just predict something at random. But I highly, highly recommend that when you run into
+a class imbalance problem. We're really whenever you run into a problem trying to stupid classifier that you can use to
+compare metrics and just sort of sanity check yourself. And this is like just just look at the next to each other and
+you'll realize oh, 97 isn't good, because 94 you can get by guessing.</p>
+<p>This is the code for how to do that.</p>
+<p>Basically, you just like import this stuff. And then you call fit and predict just like anything else, and you can look
+at the numbers and see for yourself how you're doing. So part of the problem with class imbalance. So far, all we really
+talked about is accuracy. And that is a huge part of the problem that we have is is accuracy just assumes that every
+area is the same, which is often not true. So let's use a medical example to really make this concrete, you can imagine
+that we might be scanning someone's brain for cancer, and we have images of malignant tumors and benign tumors. And we
+can make a mistake on either one. If we make a mistake on a benign tumor, that means we tell the patient Hey, we think
+your tumor might be cancerous,</p>
+<p>we're</p>
+<p>going to need you to come in for some additional tests. And there is a cost associated with that, like they are going to
+be worried and their families probably going to be worried and they're going to have to pay more for the extra tests and
+your staff is going to have to run the extra tests like there is a real cost there. But it is very different from the
+cost of making a mistake in the Molina case if we see in the limit And we accidentally say that it is benign. We're
+going to send someone with cancer home and say, Oh, you're good, don't worry about it. And then they're probably going
+to die because they didn't get initial screening. That's obviously terrible. So what this means is that if you use
+accuracy, you are implicitly saying that the death of a human person is exactly as bad as cold calling someone in
+traditional tests. And that's obviously absurd that you have a question you both can be correct. Yeah, yeah. You can be
+incorrect in like both ways. Totally. Yep. So one set of metrics that people will often like to use is precision and
+recall. So on this little diagram, here, we have some false negatives and true negatives. What this means in our medical
+example is that for precision, what we're saying is, of all the tumors that I see, that I say are malignant, how many of
+those actually turned out to be malignant and then recall it saying All of those malignant tumors in the world, how
+many? Am I actually correctly identifying, as I recall sort of a way of knowing like, Am I pulling back out? Am I
+recalling the points that I particularly care about? Another set of metrics that you should use rather than accuracy is
+the receiver operating characteristic curve. And the gist of how you do this is you. Most classifiers can give you some
+sort of probability or decision function. And then you can vary a threshold from zero to one, and then calculate surely
+false positive rates and you put them on this curve. This is nice because it lets you sort of think about how good is
+this model for various levels of a threshold and it sort of tells you implicitly about how well your model is ranking
+points against each other. And this is a method recommended by CNET in May and their paper about our seniors, and they
+find that when you don't know how bad the two alternatives are It's really good to use an rz curve because it sort of,
+you aren't required to know those things in advance. So for instance, if you don't know, is it worse for a user to see a
+job that they don't want to apply to? Or is it worse for a user to not see a job that they do want to apply to, like,
+kind of hard to figure out like one of those is twice as bad as the other, and as you don't know, is often a good place
+to use the area. And of course, the last thing I'll note on metrics when your accountability metrics and hope
+depression, by the you know, a way to fix that, if you do know the cause, yes, we will talk about that in a little bit.
+If you do know the cost, there are techniques that you can use for sure. And we'll talk about those in a second. So the
+last thing I'll mention on metrics is to be really careful with the way that you do your training and testing splits. So
+there's this really interesting paper that I didn't have time to put into this because it came out this year. But it's
+by like, the lead author is a person named Luke. UQ up and is like the slides. And they do some really rigorous research
+on the way that various metrics are affected by imbalance and changes in the balance.</p>
+<p>And the gist is</p>
+<p>that a lot of the metrics that you care about are probably going to be very different just based on the prevalence of
+the minority class. So if you just by random happenstance happen to get a test split, where there's 5% of the minority
+class versus woman 10% of the minority class, you're going to see dramatically different error numbers for those two
+different things. And that's not necessarily reflective of some sort of underlying truth. It's more of a reflection of
+the bias inherent in certain metrics. So would you want to what I would highly recommend you do is when you're doing
+training, interesting splits do a stratified split, where you make sure that you have a very similar prevalence of the
+minority class in each area in each slit. Okay, a lot of stuff. We'll talk about how to solve this problem. There's a
+lot of different things you can do. The first thing you can do is kind of like eat your vegetables like everyone knows
+it's a good idea to your vegetables. I'm like, I was eating tamales, you know, I, I know that I need to eat more
+spinach. And I know that it's good for me, it's gonna make me Make me last longer in life. And that's kind of what this
+is gathering more data is kind of the your vegetables like this is going to help you. It's it's good, but it kind of
+sucks. So if you can't do that, or if you don't want to do that there's a bunch of other techniques that will actually
+be the bulk of this discussion. This is sort of a taxonomy that is described in this really good survey paper by branko,
+torgo and Ribera, where they talk about three different ways that the research has kind of thought about addressing this
+problem. Those three being pre processing, special purpose learners, and prediction, post processing. So we'll go
+through each of those in this little chunk here. First pre processing. When we talk about pre processing, we are
+basically talking about taking our data set and either making more points or making fewer points, like changing the
+district Of these things versus each other.</p>
+<p>So we're going to talk about oversampling. First,</p>
+<p>in oversampling, what you do is you take the data that you have, and you make more minority class points, you can do
+that in a number of ways. The first way that I have up here is random, you just you just like take some points, and you
+just duplicate them in your data set. It's difficult to see that that's happening, because these points are all on top
+of each other. And this is in two dimensions. We don't have our fancy 3d glasses that are, you know, zoom into this. But
+in the other examples, you can see more clearly what's going on. Where in smoke for instance, they're creating new
+minority class points.</p>
+<p>So smote is a technique that is used for</p>
+<p>over sampling of the minority class. And this is sort of the algorithm of how do you do that? What you do, you take some
+minority class point, and then you find its k nearest neighbors, which you can, you know, hyper parameters or just
+figure out what the optimal value for K is. And then you pick a point is some percentage of the way between those
+points. So your interpolating points to making new points is the</p>
+<p>idea, you keep doing this until you reach the level of balance that you want.</p>
+<p>The way that you choose the point the the way that you choose which of your neighbors to interpolate between matters,
+and that's an area that has been researched further, the original paper just did it randomly. And that's what this smoke
+diagram he's here. But there's been like updates and further research on this where people tend to find that nadesan is
+a really good alternative, where instead of just picking randomly, you try to pick points that are closer to the
+decision boundary. And so you can kind of see that there's a lot of points on this smoke diagram towards the bottom. And
+like, we already know that the bottom is blue on this diagram, where we might need more help is when you're getting
+closer to those orange points up for the top, and that's what a disinterested do. You can also go the other way. So
+that's a oversampling idea. And that was your question. Yeah. So the whole Sunday is right. Good morning. Oh, that's
+automatically class. So how is it really gonna affect the decision? Because the team about this mistake as it is because
+they're just really morning for the minority class? Yeah, I have, I have some diagrams that I can use to explain this in
+a sec. And the gist is that, that thing really can't earlier with the two sort of lines in line getting pushed toward
+the minority class, when you have more of those minority class points that are able to sort of fight back and push the
+point that that separating boundary away from that, and then there are some diagrams I can show you in a second.</p>
+<p>So,</p>
+<p>so understanding is the other way you can go.</p>
+<p>And coming back to our idea of noisy here. I want to remind you that if we zoom in on this little section, we're going
+to see these two points next to each other. And the insight of this particular technique is to say that if we have two
+points right next to each other, that are different classes, we probably measured one with noise and this I'm gonna be
+honest with you is a total Life here is like not a bad thing. It's just like probably, you know, probably. So in
+automatically when you're using them as an understanding technique, you just take the one for the minor from the
+majority class and throw it away, you're just like, Yeah, that one's probably not legit, let's just not care about it.
+And so that's an idea that you can do. The other thing you can do is way simpler, just randomly throw a points out the
+majority class until you get to some closer and some closer approximation of balance. And that's actually what the
+that's what the Wallace paper argues for. They find that these green lines here are sort of what happens when you when
+you under sample to get to a balance point. And you can do that in a number of different ways. And you can see that you
+get a lot of different planes like if you happen to throw a certain point it could draw, you could end up drying your
+plane in a different spot. And so that can lead to different amounts of error in each For each plane, but the nice thing
+is that all of these planes are less biased than the original one that we, that we inferred. So like this purple line
+that I had here was our original biased estimator. And all these green ones are at least less biased than that. Now it
+does suck that the error metrics are going to be different for all of them. And in the face of this variance, the
+authors just suck it up. And they're like, All right, here's what we're going to do, we're going to bag things together
+because value is a great way to trade off bias and variance. So we're just going to like, you know, sell some sell some
+bias and gains, you know, gain a little bit on our various strengths. So you can take your data set and understand play
+it under sampling in a bunch of different ways, and then diving classifiers further and get a more performance model. If
+you're gonna do any of this, I highly recommend this. And if you are using Python, then use imbalance learn because they
+implement a lot of this stuff for you. Okay, now, the deep breath pre processing Great, and it's not so great. So let's
+talk about when it's good when it's bad. It's great because the libraries already exists for a lot of this stuff, which
+is nice. It also kind of like gets the model closer to what you're looking for, it undoes some of that bias that we see
+from the, the sort of Wallace paper. Now, this isn't really a good or bad thing, but it does change the cost of training
+your model. So if you imagine that you have so much data that you can barely fit on your computer. If you're going to
+start oversampling, that data, you're going to have too much data and you won't be able to train your model or even,
+it's just going to make your model train longer. By contrast, if you are under sampling data, you're probably going to
+have faster model train times because you have less data. So that's not really good or bad things just need to be aware
+of when you're doing this technique. Now, it can be kind of difficult to apply this because you don't always know what
+level of balance you want to get to, like should I go to, you know, where it's instead of 1% it's percentages, I try to
+go straight to balance, it's not always clear. And you kind of have to explore that and experiment with that to figure
+out what the right thing is a second way this can be difficult to apply. If you think back to that smoked example, that
+was kind of dealing with real valued or floating point numbers, you can imagine if we had categorical data, it would be
+kind of difficult to do that. And that's when like, if you're doing the word count vectors or something, like what does
+it even mean to have point seven of the word apple in a documents like What does that even mean? So there are things to
+try to there are sort of adaptations of the algorithm to deal with categorical data. But their lesson, I'll say, Okay,
+next up on terms of various solutions to this problem, special purpose learners. You've probably already seen this, if
+you haven't looked at the documentation for any of your libraries. I just went through and found some of my favorite
+algorithms and copied the sort of doc string or the doc mutation and the highlighted a bunch of these have a way to sort
+of specify a class week. And what this is doing is depends, you know, it various models who do different things. So in
+three models, so this is going to affect is first of all the impurity calculations. So when you're going through and
+trying to figure out what feature Should I split on the impurity calculations, we get weighted based on the waiting
+nice, that's fine. And the other thing it'll affect is voting time at prediction. So if, for instance, you say that our
+minority class should count for</p>
+<p>twice of the majority class, then if you get to the bottom of your, your tree, and you get to a leaf, and there is one
+majority class point and one minority class point, the minority class, by the way, because it has two votes, and the
+majority class one only has one vote. You know, it's different in different places, for SVM, so what this kind of does
+is push the hyperplane that it learns away from the minority class and this is cool because it kind of does the same
+thing of undoing Be undoing that bias that the walls paper talks about. And they find actually that doing this week,
+this week based minimization is very similar to doing like an over sampling technique, and does the same thing, it will
+just regression where it just sort of wins back some points for the minority class. In k nearest neighbors, it changes
+the distance metric. And then like whatever else that changes whatever else, like every different algorithm waiting the
+way in the minority class is going to do something different. And that's, that's, you know, cool because there's all
+sorts of interesting things you can go off and learn about, but it also sucks because it means there's all sorts of
+interesting things that you could go off and learn about. So instead of talking about every single different thing that
+that class waiting does was talking about when this works and when it doesn't. That way. If you're in into this
+situation, you can think okay, should I do last week? So, the research that I have read finds that when you have a
+really highly recommended Waiting is less effective. This is from that Wallace paper and they basically just say like
+when we have a lot more imbalance the chance that using this waiting technique is going to work is just less effective
+and it's going to be more effective with more data this is where the whole feature spinach thing comes back in because
+more data is always going to make this better. And they they have a like actual like really good theory backs like
+equation theory of imbalance that they draw this reasoning friend and I highly recommend you very if you're gonna read
+one of these papers is the last one in my opinion, because they haven't really interesting stuff to say. So good things
+bad things on special purpose is very sort of two thirds of the way through these right now. Jim Christian Yes. Yeah,
+that was so fun, more data. Data is embedded so is waiting because Let me see if it is effective for Right. Yeah. Yeah,
+so the question the question sort of being, if I have a lot of data and I had my main balance, like, what what do I
+like? Is it going to be good or not? And I think, like, well, this doesn't really make an argument for what happens in
+both cases, it just says for a fixed value, they say that for a fixed value</p>
+<p>of imbalance, so let's</p>
+<p>say you have a dataset where only 1% is in the minority class, if you just get more points class rating will start to
+become more effective. And then it will also say that if you ever given data set size, and one day is that happens to
+have 10% versus 1%, the 10% that is that is going to have better results from using class waiting. Okay, good things,
+bad things, good things. It directly addresses the issue. Bad things you have to still know like, what is your cost
+benefit here? Which points do you care about more and how much do you care about certain points at other points, it's
+nice that this works when you have a lot of data or when you are a little bit closer to balance. But if you don't
+already have this class waiting idea in the algorithm, it's going to suck, you're going to have to really get a deep
+understanding of the algorithm. Maybe write your own implementation of it and figure out like, Okay, what part of this
+algorithm is suffering from bias? And how can I do that? And that's difficult to do? Sometimes. Okay, so the last kind
+of group of techniques that they talked about is prediction post processing. And there's two things I want to talk about
+here. First, is threshold selection. So oftentimes, when I ran into a class imbalance problem, my first thought is, can
+I just turn this into a ranking problem and not have to have to worry about this so much? Where you might think of
+something like I want to send an email that has 10 jobs to a user, the 10 jobs I think they are most likely to like in
+that case, you know, the user probably We'd only likes point 1% of the jobs that you know about because they work in an
+industry. But you don't really need to worry about that too much if you can rank the jobs against each other. And if one
+has a, you know, point 05 percent chance of them liking it, and that will rank above a lot of the other stuff. And so
+you can pick the top 10 in terms of whatever criteria you have. If you can't do that, though, it is foolish to just use
+the default threshold that's like it gives you so you should very specifically choose the threshold that you want to use
+to optimize your metrics. So if you have to specifically pick that number of like, what percentage chance do I need to
+choose where above that point, I'm going to call someone back for their cancer screening. You need to pick that number
+really carefully. The gist of how you would do this is you would get the probability output of your model, and then
+figure out what metrics you care about. I put precision and recall on the screen Because we talked about them earlier,
+but you can use whatever it is the metric that you haven't they care about. And you want to vary that threshold and
+measure the various metrics that you care about. And you can then look at this and make an informed human decision on
+what you want to do. So we imagine, in this grain cancer case, we are probably willing to sacrifice precision for
+recall, we are willing to accidentally call some people back that are just fine, because we would rather do that then
+let someone who has cancer go on No. But there's other cases where it's exactly the opposite. Like, if I am trying to
+like, like fingerprint into my phone, the the, the cost of me missing it is like I get a little annoyed that the cost of
+someone you know, getting into my phone, and that not being actually me is there's a lot because they're going to get in
+there and they're going to read my memes and tell me they're not funny and that's gonna hurt my feelings. I'm gonna have
+to go with their first one last night on this. Don't use your head. Set to do this, like do some sort of like crash
+validation thingy over your training set, but don't use your tests that are also overfit your test set. And that'll be
+really sad. And the other post processing technique that people talk about is an idea of cost based classification, this
+more directly gets to this idea of there being direct costs for a false positive and a false negative. There's a couple
+papers here, we're just going to talk about the senior and a paper where what they essentially find is when you have an
+RFC curve, each point on that will correspond with some sort of threshold like that's the threshold for, you know, point
+six, four, if there's a 64% chance of this person having a having cancer will call them back right. And we have a true
+positive rate and a false positive rate. We can use that to calculate costs with this formula. It's not as scary as it
+looks. The gist is we take the probability of it being in a negative class and multiply that by the cost of a false
+positive and then multiply that by a number we can read off with our secret</p>
+<p>And then we read, basically we do the same thing, but for the positive class. So we figure out how big is the positive
+class, what is the cost of making a false negative, and then read this number off of the RFC curve. So then we can sort
+of add all this stuff together, read these numbers off. And the sort of these orange numbers here I have put into
+signify we have a case where the minority class is 10% of the data set. And then I have had these blue numbers in here
+to say that a false positive is five times as bad as a false negative, I happen to know that my priority I can plug
+these numbers in, we can calculate these these values of cost or different thresholds and then choose the one that is
+the best one, and in this case, 3.6, for that. So going back to that equation really quick, in my correct understanding
+that the costs if they can be expressed in relative terms, any set of integers or floats that have that, that how that
+relationship works. So you don't necessarily need to express the costs in real life. You can just say A false positive
+versus false negative is x is x times worth more or less costly? Yes, yes, you're exactly correct that before. So this
+formula doesn't like these don't need to be real life costs. They could be if you happen to know that a false positive
+costs your company's $7, and the false name cause it to you could use that. But if you do, you can also just like, come
+up with some thing. I'm gonna say this is five times it's worse than five times a bad or whatever. And those can be
+whatever numbers you want. Yeah. Anyway, so then you pick the one with the lowest cost. And that's the threshold to us.
+I want to point out this is different from the idea of special purpose learners. And so the first couple times I did
+this, this is a little confusing, and I realized, because I didn't talk about it, so they're different. The idea of
+special purpose learners is that you're modifying the algorithm to have this idea of waiting built into it in cost base
+conservation when we're trying to choose the right threshold. We're doing this after we've already changed the
+algorithm. raft regarding training model. And because of that, this means that we can use it out of the box of almost
+any model as long as it provides some sort of probability output or some sort of decision function, which is very nice
+and means you don't have to go fiddling about with the interior of every single model that doesn't have this bacon. So
+good things, bad things for prediction, post processing, is pretty straightforward. It's just like, pick the threshold.
+That's the best one. It's, it's a, it's a simple idea to explain. And it kind of gets at what we're looking for, which
+is to try to optimize our metrics for some value. And it is also nice that you can use it with almost anything because
+most models provide some sort of position function. A problem is that you is that this is not really studied a whole lot
+in specifically imbalanced domains. Like the the survey paper that I am referencing for a lot of this, they only found
+two papers that even talked about this and neither of those were specifically about class of balance issues. So, a lot
+of things, right like let's talk about just some some highlights here, hit some some recommendations. Well, I think
+based on what I read and what I have done in my life, and here's some some things I think about. I kind of think about
+this like a Maslow's hierarchy of needs, like you need to have like clean air and water before you start worrying about
+food. And then once you can worry about foods and not worry about shelter, like eventually you get a runs up and you
+start caring about, you know, your therapists, calming you down from having bad names. So the the first level here I
+would say is just establish some sort of baseline like a train that dummy classifier, train something stupid, and
+compare it to your actual metrics. Unless you have a good reason otherwise, which you very well night. If you don't know
+what to use, I would recommend using the area under the RF seeker because it is unbiased in these situations for a very
+specific meaning of law biased. The next thing up from that is if you can try using classmates like just try it Saying
+that your minority class is a certain amount more important. If your model if your algorithm supports that. And then
+from there, I would recommend picking your threshold smart. Like don't just use point five. That's probably not the
+right answer. It might be, but it probably isn't. Once you get to that, like if you're trying to eat more performance
+out, or you're trying to address something else, I would say at this point, start using a random sampling technique. We
+talked about fancy methods, we talked about smoke, we talked about Tomek links.</p>
+<p>The research did not bear those out as being super great.</p>
+<p>So the Wallace paper actually, they make a really strong recommendations that in almost all inbound scenarios,
+practitioners should bag classifiers ever induced or unbalanced bootstrap samples. And then there's another paper by
+Battista proxy and modar, where they find that random oversampling is really competitive to these really more complex
+over sampling techniques like smoke. Which these kind of seem to disagree because one says always understand one the
+other says always oversample my way of justifying this to myself is that the Battista paper doesn't take into account
+this bagging element they just do under sampling. It's I think there's a lot of variance in what they're seeing, because
+they're not doing this bagging. Yeah. So But either way, just try the random methods first, because they're probably
+good enough. And only once you've tried doing that, do I think it makes any sense to start worrying about smoke or any
+of these really complicated techniques? Because really, at that point, you probably have a bigger problem that can be
+solved by just some fancy algorithm. It's, it's you need to go find more data. You need to figure something else out.</p>
   </body>
 </html>
