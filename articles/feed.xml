@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sat, 07 Dec 2019 22:46:05 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>How to Handle Class Imbalance</title><link>https://www.samueltaylor.org/articles/how-to-handle-class-imbalance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Alternate title: &lt;em&gt;Help! My Classes are Imbalanced!&lt;/em&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 05 Jan 2020 13:26:48 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>How to Handle Class Imbalance</title><link>https://www.samueltaylor.org/articles/how-to-handle-class-imbalance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Alternate title: &lt;em&gt;Help! My Classes are Imbalanced!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Delivered at:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://odsc.com/training/portfolio/help-my-classes-are-imbalanced/"&gt;ODSC West 2019&lt;/a&gt;. Slides available &lt;a href="/static/pdf/class_imbalance.pdf"&gt;here&lt;/a&gt;.&lt;/li&gt;
@@ -488,7 +488,7 @@ departments, and companies.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://allthingsopen.org/talk/using-open-source-tools-for-machine-learning/"&gt;All Things Open 2019&lt;/a&gt;.
   Slides available &lt;a href="/static/pdf/open_source_ml.pdf"&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://pydata.org/austin2019/schedule/presentation/2/machine-learning-crash-course/"&gt;PyData Austin 2019&lt;/a&gt;.
-  Audio available &lt;a href="https://files.samueltaylor.org/mlcc_pydata_atx_2019.mp3"&gt;here&lt;/a&gt;.&lt;/li&gt;
+  Recording available &lt;a href="https://www.youtube.com/watch?v=pRX1sLG_6cw"&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Find me on Twitter &lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt;.&lt;/p&gt;
 &lt;h2&gt;Transcript&lt;/h2&gt;
