@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 29 Mar 2020 12:32:11 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Effective Learning (a review of Ultralearning)</title><link>https://www.samueltaylor.org/articles/better-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Everyone advises being a "lifelong learner," but not all learning is created
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 29 Mar 2020 12:34:52 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Effective Learning (a review of Ultralearning)</title><link>https://www.samueltaylor.org/articles/better-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Everyone advises being a "lifelong learner," but not all learning is created
 equal. Many effective techniques are underutilized, and many common techniques
 are useless.&lt;/p&gt;
 &lt;p&gt;We buy a book or attend a conference. If we're really dedicated, we may even jot
 a few notes down in the process. But rarely do we take a step back and ask what
 the most effective way is to develop the skills we care about. Jeopardy great
 Robert Craig says, "You can practice haphazardly, or you can practice
-efficiently" [0]. Unfortunately, most of us are practicing haphazardly.&lt;/p&gt;
+efficiently"
+(&lt;a href="https://www.npr.org/2011/11/20/142569472/how-one-man-played-moneyball-with-jeopardy"&gt;NPR&lt;/a&gt;).
+Unfortunately, most of us are practicing haphazardly.&lt;/p&gt;
 &lt;p&gt;Fortunately, skill development is well studied. Two recent reads cover it well:
 &lt;em&gt;Peak&lt;/em&gt; (by Anders Ericsson and Robert Pool; also covered in my &lt;a href="/articles/how-to-train-employees.html"&gt;last
 post&lt;/a&gt;) and &lt;em&gt;Ultralearning&lt;/em&gt; (by Scott
