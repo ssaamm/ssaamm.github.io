@@ -8,7 +8,7 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-podgen v1.0.0 https://podgen.readthedocs.org</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 03 May 2020 11:31:44 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2020 11:36:02 +0000</lastBuildDate>
     <itunes:author>Samuel Taylor</itunes:author>
     <managingEditor>podcast@samueltaylor.org (Samuel Taylor)</managingEditor>
     <pubDate>Sat, 02 May 2020 20:15:00 -0500</pubDate>
@@ -24,8 +24,8 @@
     <item>
       <title>Why your brain loves exercise, even if you don't</title>
       <description><![CDATA[<p>One of the best things you can do for your brain health (and productivity) is regular exercise. Learn <em>why</em> and <em>how</em> physical activity super-charges your brain.</p>]]></description>
-      <guid isPermaLink="false">https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/10-Why_your_brain_loves_exercise_even_if_yo.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/10-Why_your_brain_loves_exercise_even_if_yo.mp3" length="4303485" type="audio/mpeg"/>
+      <guid isPermaLink="false">https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/10-Why_your_brain_loves_exercise_even_if_yo.mp3</guid>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/10-Why_your_brain_loves_exercise_even_if_yo.mp3" length="4303485" type="audio/mpeg"/>
       <itunes:duration>05:45</itunes:duration>
       <pubDate>Sat, 02 May 2020 20:15:00 -0500</pubDate>
     </item>
@@ -34,7 +34,7 @@
       <description><![CDATA[<p>Nicolas has a question about dealing with imbalanced data.</p>
 <p>References: <a href="https://imbalanced-learn.readthedocs.io/en/stable/">imbalanced-learn</a>, <a href="https://ieeexplore.ieee.org/abstract/document/6137280">Class Imbalanced, Redux</a>, <a href="https://www.jair.org/index.php/jair/article/view/10302">SMOTE</a>.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/9-A_tool_to_deal_with_imbalanced_data_Ques.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/9-A_tool_to_deal_with_imbalanced_data_Ques.mp3" length="2015535" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/9-A_tool_to_deal_with_imbalanced_data_Ques.mp3" length="2015535" type="audio/mpeg"/>
       <itunes:duration>02:31</itunes:duration>
       <pubDate>Tue, 14 May 2019 18:31:00 -0500</pubDate>
     </item>
@@ -42,7 +42,7 @@
       <title>What High School Debate Teaches us About Performance Management</title>
       <description><![CDATA[<p>The self evaluation is one of the most important documents employees write. Learn how to make yours effective using tips from a former debater.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/8-What_High_School_Debate_Teaches_us_About.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/8-What_High_School_Debate_Teaches_us_About.mp3" length="5229934" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/8-What_High_School_Debate_Teaches_us_About.mp3" length="5229934" type="audio/mpeg"/>
       <itunes:duration>06:27</itunes:duration>
       <pubDate>Fri, 05 Apr 2019 16:31:00 -0500</pubDate>
     </item>
@@ -50,7 +50,7 @@
       <title>Conflict Resolution: A Texan Analogy</title>
       <description><![CDATA[<p>At my university, I had to take a full course on how to be an RA. I've forgotten almost everything, except for this one tip on conflict resolution.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/7-Conflict_Resolution_A_Texan_Analogy.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/7-Conflict_Resolution_A_Texan_Analogy.mp3" length="2116553" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/7-Conflict_Resolution_A_Texan_Analogy.mp3" length="2116553" type="audio/mpeg"/>
       <itunes:duration>02:42</itunes:duration>
       <pubDate>Tue, 20 Mar 2018 20:09:00 -0500</pubDate>
     </item>
@@ -58,7 +58,7 @@
       <title>Work Queues in Software and Productivity</title>
       <description><![CDATA[<p>Work queues are a fascinating idea from software engineering that can also be applied to make our lives more productive.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/6-Work_Queues_in_Software_and_Productivity.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/6-Work_Queues_in_Software_and_Productivity.mp3" length="6503991" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/6-Work_Queues_in_Software_and_Productivity.mp3" length="6503991" type="audio/mpeg"/>
       <itunes:duration>07:52</itunes:duration>
       <pubDate>Tue, 27 Feb 2018 18:30:00 -0600</pubDate>
     </item>
@@ -66,7 +66,7 @@
       <title>Cooking and Coding</title>
       <description><![CDATA[<p>I like cooking, and I like coding. By comparing the two, we learn more about both of them.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/5-Cooking_and_Coding.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/5-Cooking_and_Coding.mp3" length="4846027" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/5-Cooking_and_Coding.mp3" length="4846027" type="audio/mpeg"/>
       <itunes:duration>06:20</itunes:duration>
       <pubDate>Thu, 25 Jan 2018 13:43:00 -0600</pubDate>
     </item>
@@ -74,7 +74,7 @@
       <title>Work-Self Balance</title>
       <description><![CDATA[<p>We often talk about work-life balance, but what about the balance between our work and our self? Learn about my struggle with defining myself by my work and how I overcame it.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/4-WorkSelf_Balance.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/4-WorkSelf_Balance.mp3" length="3886799" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/4-WorkSelf_Balance.mp3" length="3886799" type="audio/mpeg"/>
       <itunes:duration>04:44</itunes:duration>
       <pubDate>Sun, 07 Jan 2018 19:14:00 -0600</pubDate>
     </item>
@@ -82,7 +82,7 @@
       <title>Poetry for Software Engineers</title>
       <description><![CDATA[<p>While often thought to be entirely different, poetry and software are remarkably similar. Learn how thoughtful consumption of poetry can make you a better software engineer.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/3-Poetry_for_Software_Engineers.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/3-Poetry_for_Software_Engineers.mp3" length="8586782" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/3-Poetry_for_Software_Engineers.mp3" length="8586782" type="audio/mpeg"/>
       <itunes:duration>10:55</itunes:duration>
       <pubDate>Sun, 10 Dec 2017 16:00:00 -0600</pubDate>
     </item>
@@ -90,7 +90,7 @@
       <title>Use Machine Learning to Find your Next Job</title>
       <description><![CDATA[<p>Find out how to use machine learning to solve your problems. Recording of a talk I delivered in Huntsville, AL.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/2-Use_Machine_Learning_to_Find_your_Next_J.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/2-Use_Machine_Learning_to_Find_your_Next_J.mp3" length="17617407" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/2-Use_Machine_Learning_to_Find_your_Next_J.mp3" length="17617407" type="audio/mpeg"/>
       <itunes:duration>25:36</itunes:duration>
       <pubDate>Sat, 11 Nov 2017 19:45:00 -0600</pubDate>
     </item>
@@ -98,7 +98,7 @@
       <title>To become a great Python dev, quit reading Python books</title>
       <description><![CDATA[<p>One of the best ways to maximize knowledge gain is by reading books that do not apply easily to technologies or concepts we already understand.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/1-To_become_a_great_Python_dev_quit_readin.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/1-To_become_a_great_Python_dev_quit_readin.mp3" length="1768066" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/1-To_become_a_great_Python_dev_quit_readin.mp3" length="1768066" type="audio/mpeg"/>
       <itunes:duration>02:21</itunes:duration>
       <pubDate>Mon, 06 Nov 2017 08:05:00 -0600</pubDate>
     </item>
@@ -106,7 +106,7 @@
       <title>How to Attend a Tech Conference</title>
       <description><![CDATA[<p>Conferences can be both fun and valuable, but they can also be a huge waste of time. Here's some things I've learned that have helped me get the most out of conferences as an attendee.</p>]]></description>
       <guid isPermaLink="false">https://f001.backblazeb2.com/file/sgt-podcast/0-How_to_Attend_a_Tech_Conference.mp3</guid>
-      <enclosure url="https://dts.podtrac.com/redirect.mp3/https://files.samueltaylor.org/0-How_to_Attend_a_Tech_Conference.mp3" length="3062376" type="audio/mpeg"/>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/0-How_to_Attend_a_Tech_Conference.mp3" length="3062376" type="audio/mpeg"/>
       <itunes:duration>04:29</itunes:duration>
       <pubDate>Tue, 24 Oct 2017 19:30:00 -0500</pubDate>
     </item>
