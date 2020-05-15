@@ -1,5 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Fri, 17 Apr 2020 22:16:21 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Your brain loves exercise, even if you don't</title><link>https://code2college.org/wellness-wednesday-building-strength-why-your-brain-loves-exercise-even-if-you-hate-it/</link><description></description><author>Samuel Taylor</author><guid isPermaLink="true">https://code2college.org/wellness-wednesday-building-strength-why-your-brain-loves-exercise-even-if-you-hate-it/</guid><pubDate>Wed, 15 Apr 2020 05:00:00 GMT</pubDate></item><item><title>Effective Learning (a review of Ultralearning)</title><link>https://www.samueltaylor.org/articles/better-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Everyone advises being a "lifelong learner," but not all learning is created
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Fri, 15 May 2020 22:32:28 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Building Trustworthy Models</title><link>https://www.samueltaylor.org/articles/trustworthy-models.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Machine learning has a trust problem. Discussions about the role that algorithms
+play in our lives have become national (if not global), with some raising
+important and legitimate questions about the biases inherent in these
+algorithms. In this environment, we wonder: what would it take for a model to be
+worthy of our trust?&lt;/p&gt;
+&lt;p&gt;I recently read an illuminating piece by David Spiegelhalter called "Should We
+Trust Algorithms?". In it, he identifies the difference between trustworthy
+claims about a system and trustworthy claims made by a system. His article
+spends more time on the former than the latter, so I've written this article to
+elaborate on ways our models can make more trustworthy claims.&lt;/p&gt;
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Building trust with users is essential for a few reasons. First, we want our
+products to be used. If a user doesn't trust the predictions made by my model,
+she is less likely to follow its advice. Worse, without adequately communicating
+uncertainty, we may actively anger her. Suppose a model predicts this user's
+house will sell for $300,000, but it ends up selling for $290,000. It's
+difficult to fault her for being upset at this $10,000 difference.&lt;/p&gt;
+&lt;p&gt;By contrast, if we predicted a range of possible sale values, the user would
+have better expectations going in and a better experience with our product.&lt;/p&gt;
+&lt;p&gt;Ethics provide a second reason that building trust is paramount. It is unethical
+to present estimates without a sense for their uncertainty. A common machine
+learning approach is to build some classification or regression model for a
+problem. These models typically output a single predicted value: "this flower is
+a setosa", "this house is worth $300K", or "this image has an airplane in it".
+These statements imply a level of certainty that may be unwarranted by the data,
+and we must be very careful to place them into context to avoid dishonesty.&lt;/p&gt;
+&lt;p&gt;Finally, trustworthy models are just good business. If we hide uncertainty with
+overly-precise point estimates, we are likely to make bad decisions. Annie Duke
+writes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A great decision is the result of a good process, and that process must
+include an attempt to accurately represent our own state of knowledge. That
+state of knowledge, in turn, is some variation of “I’m not sure.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Trustworthy models in practice&lt;/h2&gt;
+&lt;p&gt;But building trust is hard. We cannot simply tell our users to "trust the
+algorithm" and expect them to do so. Instead, Spiegelhalter argues, we should
+put our efforts into building models that are worthy of trust. When we relate to
+other humans, we understand that we must demonstrate that we are worthy of trust
+before we will be trusted. The same holds true for models.&lt;/p&gt;
+&lt;p&gt;A coworker of mine once asserted that trustworthy models provide at least three
+things:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Prediction -- An estimate for some unknown value&lt;/li&gt;
+&lt;li&gt;Confidence -- A description of how uncertain the model is about the
+   prediction&lt;/li&gt;
+&lt;li&gt;Explanation -- The reasoning for which a model made its prediction&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As an example, consider a doctor. If your doctor told you that your arm needed
+to be amputated, you'd never let them do it just based on that recommendation!
+You would ask for some justification first. She would explain that an infection
+in your arm could be lethal if it spreads. In this way, she builds trust with
+you.&lt;/p&gt;
+&lt;p&gt;These techniques which come as second nature to humans are not as automatic for
+machines. We often stop short of developing models that are truly worthy of our
+users' trust.&lt;/p&gt;
+&lt;p&gt;Here's an example of what the output of a trustworthy model could look like:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Prediction: My best guess at the sale price of this home is $324,000&lt;/li&gt;
+&lt;li&gt;Confidence: A 95% confidence interval on that number is ($315K, $333K)&lt;/li&gt;
+&lt;li&gt;Explanation: The home is large, but the fact that it's on a corner brings its
+   value down.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is a massive improvement over a single number! Not only is this a more
+honest statement to make, it helps users understand why the model gave its
+prediction. In turn, this helps users gain trust in the system and leads to
+better outcomes.&lt;/p&gt;
+&lt;p&gt;We have a responsibility as model builders to represent our work with integrity.
+Shipping a model that is implicitly overconfident is bad for our users and our
+businesses. Instead, we should develop models that are truly worthy of trust.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;Sources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Duke, A. (2019). &lt;em&gt;Thinking in Bets&lt;/em&gt;. New York, NY: Portfolio/Penguin.&lt;/li&gt;
+&lt;li&gt;Spiegelhalter, D. (2020). Should We Trust Algorithms? . &lt;em&gt;Harvard Data Science
+  Review&lt;/em&gt;, 2(1). https://doi.org/10.1162/99608f92.cb91a35a&lt;/li&gt;
+&lt;/ul&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/trustworthy-models.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Fri, 15 May 2020 22:26:30 GMT</pubDate></item><item><title>Your brain loves exercise, even if you don't</title><link>https://code2college.org/wellness-wednesday-building-strength-why-your-brain-loves-exercise-even-if-you-hate-it/</link><description></description><author>Samuel Taylor</author><guid isPermaLink="true">https://code2college.org/wellness-wednesday-building-strength-why-your-brain-loves-exercise-even-if-you-hate-it/</guid><pubDate>Wed, 15 Apr 2020 05:00:00 GMT</pubDate></item><item><title>Effective Learning (a review of Ultralearning)</title><link>https://www.samueltaylor.org/articles/better-learning.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Everyone advises being a "lifelong learner," but not all learning is created
 equal. Many effective techniques are underutilized, and many common techniques
 are useless.&lt;/p&gt;
 &lt;p&gt;We buy a book or attend a conference. If we're really dedicated, we may even jot
