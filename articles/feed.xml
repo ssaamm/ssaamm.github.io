@@ -1,5 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Fri, 15 May 2020 22:32:28 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Building Trustworthy Models</title><link>https://www.samueltaylor.org/articles/trustworthy-models.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Machine learning has a trust problem. Discussions about the role that algorithms
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sun, 14 Jun 2020 21:07:16 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Trustworthy Models in Practice: a Simple Linear Approach</title><link>https://www.samueltaylor.org/articles/trustworthy-linear-models.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Last time, we began to talk about how to build models worthy of our users'
+trust. As a refresher, we said that trustworthy models require at least three
+things:&lt;/p&gt;
+&lt;!-- TODO add CSS for blockquotes --&gt;
+
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;Prediction -- An estimate for some unknown value&lt;/li&gt;
+&lt;li&gt;Confidence -- A description of how uncertain the model is about the prediction&lt;/li&gt;
+&lt;li&gt;Explanation -- The reasoning for which a model made its prediction&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Today, we'll take a pass at actually implementing such a model.&lt;/p&gt;
+&lt;h2&gt;Dataset&lt;/h2&gt;
+&lt;p&gt;For pedagogical reasons, we're using a &lt;a href="https://www.kaggle.com/aungpyaeap/fish-market"&gt;dataset on
+fish&lt;/a&gt; that were sold at a fish
+market. Here's a few rows from the dataset:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;| Species | Weight | Length1 | Length2 | Length3 | Height  | Width  |
+|---------|--------|---------|---------|---------|---------|--------|
+| Perch   | 250.0  | 25.9    | 28.0    | 29.4    | 7.8204  | 4.2042 |
+| Bream   | 714.0  | 32.7    | 36.0    | 41.5    | 16.517  | 5.8515 |
+| Perch   | 145.0  | 22.0    | 24.0    | 25.5    | 6.375   | 3.825  |
+| Perch   | 145.0  | 20.7    | 22.7    | 24.2    | 5.9532  | 3.63   |
+| Bream   | 975.0  | 37.4    | 41.0    | 45.9    | 18.6354 | 6.7473 |
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The first step, of course, is to load it up!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="n"&gt;fish&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_csv&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;expanduser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~/Downloads/Fish.csv&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Building a model&lt;/h2&gt;
+&lt;p&gt;For our exercise today, let's see if we can predict &lt;code&gt;Weight&lt;/code&gt; given the values of
+the other columns. We're going to use &lt;code&gt;statsmodels&lt;/code&gt; to build a simple linear
+model.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;statsmodels.formula.api&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;smf&lt;/span&gt;
+
+&lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;smf&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ols&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;formula&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Weight ~ C(Species) + Length2 + Length2 + Length3 + Height + Width&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;fish&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fit&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you've never used &lt;code&gt;statsmodels&lt;/code&gt; before, think of this as fitting a linear
+model, with &lt;code&gt;Species&lt;/code&gt; being one-hot encoded. &lt;code&gt;statsmodels&lt;/code&gt; has a nice way of
+getting basic information about the model:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;summary&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code&gt;                            OLS Regression Results
+==============================================================================
+Dep. Variable:                 Weight   R-squared:                       0.936
+Model:                            OLS   Adj. R-squared:                  0.931
+Method:                 Least Squares   F-statistic:                     195.7
+Date:                Sun, 14 Jun 2020   Prob (F-statistic):           6.85e-82
+Time:                        15:00:23   Log-Likelihood:                -941.46
+No. Observations:                 159   AIC:                             1907.
+Df Residuals:                     147   BIC:                             1944.
+Df Model:                          11
+Covariance Type:            nonrobust
+===========================================================================================
+                              coef    std err          t      P&amp;gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                -918.3321    127.083     -7.226      0.000   -1169.478    -667.186
+C(Species)[T.Parkki]      164.7227     75.699      2.176      0.031      15.123     314.322
+C(Species)[T.Perch]       137.9489    120.314      1.147      0.253     -99.819     375.717
+C(Species)[T.Pike]       -208.4294    135.306     -1.540      0.126    -475.826      58.968
+C(Species)[T.Roach]       103.0400     91.308      1.128      0.261     -77.407     283.487
+C(Species)[T.Smelt]       446.0733    119.430      3.735      0.000     210.051     682.095
+C(Species)[T.Whitefish]    93.8742     96.658      0.971      0.333     -97.145     284.893
+Length1                   -80.3030     36.279     -2.214      0.028    -151.998      -8.608
+Length2                    79.8886     45.718      1.747      0.083     -10.461     170.238
+Length3                    32.5354     29.300      1.110      0.269     -25.369      90.439
+Height                      5.2510     13.056      0.402      0.688     -20.551      31.053
+Width                      -0.5154     23.913     -0.022      0.983     -47.773      46.742
+==============================================================================
+Omnibus:                       43.558   Durbin-Watson:                   0.973
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               97.422
+Skew:                           1.184   Prob(JB):                     7.00e-22
+Kurtosis:                       6.016   Cond. No.                     2.03e+03
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 2.03e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At this point, we can achieve our first objective: to provide a prediction!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;new_fish&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;Species&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Bream&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;Weight&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;Length1&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;31.3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;Length2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;34&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;Length3&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;39.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;Height&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;15.1285&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="s2"&gt;&amp;quot;Width&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;5.5695&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;predict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_fish&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This model predicts this fish weighs about 646 grams.&lt;/p&gt;
+&lt;h2&gt;Providing uncertainty&lt;/h2&gt;
+&lt;p&gt;The main reason I've chosen to use statsmodels (rather thank scikit-learn) is
+that it provides built-in support for &lt;a href="https://en.wikipedia.org/wiki/Prediction_interval"&gt;prediction
+intervals&lt;/a&gt;. Take a look:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;frame&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_prediction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_fish&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;summary_frame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;alpha&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.95&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;frame&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code&gt;| mean   | mean_se | mean_ci_lower | mean_ci_upper | obs_ci_lower | obs_ci_upper |
+|--------|---------|---------------|---------------|--------------|--------------|
+| 646.12 | 18.32   | 644.96        | 647.27        | 640.11       | 652.12      |
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;mean&lt;/code&gt; here is the prediction, and a 95% prediction interval is provided by
+&lt;code&gt;obs_ci_lower&lt;/code&gt; and &lt;code&gt;obs_ci_upper&lt;/code&gt;. In other words, our model thinks the weight
+of this fish is between 640 and 652 grams with 95% probability.&lt;/p&gt;
+&lt;p&gt;We're two thirds of the way there!&lt;/p&gt;
+&lt;h2&gt;Providing an explanation&lt;/h2&gt;
+&lt;p&gt;We can use the structure of the model to provide an explanation. The prediction is equal to:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  -918          (the intercept)
+-   80.3 * 31.3 (Length1)
++   79.9 * 34   (Length2)
++   32.5 * 39.5 (Length3)
++    5.3 * 15.1 (Height)
+-    0.5 *  5.6 (Width)
+   ------------
+   646.12
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A way we might display how the various features contribute to the overall
+prediction is this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;fish_to_feats&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a_fish&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;feats&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a_fish&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;feats&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Intercept&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;species_feat&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;species_feat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C(Species)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="k"&gt;continue&lt;/span&gt;
+        &lt;span class="n"&gt;species&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;species_feat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;.&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;]&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# This is ugly&lt;/span&gt;
+        &lt;span class="n"&gt;feats&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;species_feat&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;feats&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Species&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;species&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;astype&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;del&lt;/span&gt; &lt;span class="n"&gt;feats&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Species&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;feats&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+
+&lt;span class="n"&gt;contributions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fish_to_feats&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;new_fish&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;sorted&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;contributions&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iteritems&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;1e-3&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;amount&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="mf"&gt;1e3&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;continue&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;{name}: {amount[0]}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Which provides the following output:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Length2: 2716.2&lt;br /&gt;
+Length1: -2513.5&lt;br /&gt;
+Length3: 1285.1&lt;br /&gt;
+Intercept: -918.3&lt;br /&gt;
+Width: -2.9&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This could certainly be made more user friendly, but it does give some kind of
+explanation for why the model believes this fish to weigh 646 grams.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;We've built a model that can provide trustworthy predictions. For example:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;My best guess at the weight of this Bream is 646g.&lt;/li&gt;
+&lt;li&gt;With 95% probability, the weight is between 640g and 652g.&lt;/li&gt;
+&lt;li&gt;The biggest contributors to this prediction are &lt;code&gt;Length2&lt;/code&gt; (pushes the
+   prediction higher), &lt;code&gt;Length1&lt;/code&gt; (pushes it lower), and &lt;code&gt;Length3&lt;/code&gt; (pushes it
+   higher).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I highly recommend attacking machine learning problems by starting with an
+incredibly simple model first. Implementing that end-to-end enables focus on the
+truly difficult parts of machine learning (i.e. &lt;em&gt;not&lt;/em&gt; the ML bits). For some use
+cases, this post provides yet another reason to love linear models: they are
+trustworthy by default!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Comments? Questions? Concerns? Please tweet me
+&lt;a href="https://twitter.com/SamuelDataT"&gt;@SamuelDataT&lt;/a&gt; or email me. Thanks!&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/trustworthy-linear-models.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sun, 14 Jun 2020 21:07:07 GMT</pubDate></item><item><title>Building Trustworthy Models</title><link>https://www.samueltaylor.org/articles/trustworthy-models.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Machine learning has a trust problem. Discussions about the role that algorithms
 play in our lives have become national (if not global), with some raising
 important and legitimate questions about the biases inherent in these
 algorithms. In this environment, we wonder: what would it take for a model to be

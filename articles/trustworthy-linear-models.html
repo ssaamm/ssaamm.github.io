@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="../static/css/code.css" rel="stylesheet" type="text/css">
+    <title>Trustworthy Models in Practice: a Simple Linear Approach - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Trustworthy Models in Practice: a Simple Linear Approach</span>
+<h1>Trustworthy Models in Practice: a Simple Linear Approach</h1>
+<p>Last time, we began to talk about how to build models worthy of our users'
+trust. As a refresher, we said that trustworthy models require at least three
+things:</p>
+<!-- TODO add CSS for blockquotes -->
+
+<blockquote>
+<ol>
+<li>Prediction -- An estimate for some unknown value</li>
+<li>Confidence -- A description of how uncertain the model is about the prediction</li>
+<li>Explanation -- The reasoning for which a model made its prediction</li>
+</ol>
+</blockquote>
+<p>Today, we'll take a pass at actually implementing such a model.</p>
+<h2>Dataset</h2>
+<p>For pedagogical reasons, we're using a <a rel="nofollow" href="https://www.kaggle.com/aungpyaeap/fish-market">dataset on
+fish</a> that were sold at a fish
+market. Here's a few rows from the dataset:</p>
+<pre><code>| Species | Weight | Length1 | Length2 | Length3 | Height  | Width  |
+|---------|--------|---------|---------|---------|---------|--------|
+| Perch   | 250.0  | 25.9    | 28.0    | 29.4    | 7.8204  | 4.2042 |
+| Bream   | 714.0  | 32.7    | 36.0    | 41.5    | 16.517  | 5.8515 |
+| Perch   | 145.0  | 22.0    | 24.0    | 25.5    | 6.375   | 3.825  |
+| Perch   | 145.0  | 20.7    | 22.7    | 24.2    | 5.9532  | 3.63   |
+| Bream   | 975.0  | 37.4    | 41.0    | 45.9    | 18.6354 | 6.7473 |
+</code></pre>
+<p>The first step, of course, is to load it up!</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="n">fish</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/Downloads/Fish.csv&quot;</span><span class="p">))</span>
+</pre></div>
+
+<h2>Building a model</h2>
+<p>For our exercise today, let's see if we can predict <code>Weight</code> given the values of
+the other columns. We're going to use <code>statsmodels</code> to build a simple linear
+model.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">as</span> <span class="nn">smf</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span>
+    <span class="n">formula</span><span class="o">=</span><span class="s2">&quot;Weight ~ C(Species) + Length2 + Length2 + Length3 + Height + Width&quot;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">fish</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+
+<p>If you've never used <code>statsmodels</code> before, think of this as fitting a linear
+model, with <code>Species</code> being one-hot encoded. <code>statsmodels</code> has a nice way of
+getting basic information about the model:</p>
+<div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+
+<pre><code>                            OLS Regression Results
+==============================================================================
+Dep. Variable:                 Weight   R-squared:                       0.936
+Model:                            OLS   Adj. R-squared:                  0.931
+Method:                 Least Squares   F-statistic:                     195.7
+Date:                Sun, 14 Jun 2020   Prob (F-statistic):           6.85e-82
+Time:                        15:00:23   Log-Likelihood:                -941.46
+No. Observations:                 159   AIC:                             1907.
+Df Residuals:                     147   BIC:                             1944.
+Df Model:                          11
+Covariance Type:            nonrobust
+===========================================================================================
+                              coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                -918.3321    127.083     -7.226      0.000   -1169.478    -667.186
+C(Species)[T.Parkki]      164.7227     75.699      2.176      0.031      15.123     314.322
+C(Species)[T.Perch]       137.9489    120.314      1.147      0.253     -99.819     375.717
+C(Species)[T.Pike]       -208.4294    135.306     -1.540      0.126    -475.826      58.968
+C(Species)[T.Roach]       103.0400     91.308      1.128      0.261     -77.407     283.487
+C(Species)[T.Smelt]       446.0733    119.430      3.735      0.000     210.051     682.095
+C(Species)[T.Whitefish]    93.8742     96.658      0.971      0.333     -97.145     284.893
+Length1                   -80.3030     36.279     -2.214      0.028    -151.998      -8.608
+Length2                    79.8886     45.718      1.747      0.083     -10.461     170.238
+Length3                    32.5354     29.300      1.110      0.269     -25.369      90.439
+Height                      5.2510     13.056      0.402      0.688     -20.551      31.053
+Width                      -0.5154     23.913     -0.022      0.983     -47.773      46.742
+==============================================================================
+Omnibus:                       43.558   Durbin-Watson:                   0.973
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               97.422
+Skew:                           1.184   Prob(JB):                     7.00e-22
+Kurtosis:                       6.016   Cond. No.                     2.03e+03
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 2.03e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</code></pre>
+<p>At this point, we can achieve our first objective: to provide a prediction!</p>
+<div class="highlight"><pre><span></span><span class="n">new_fish</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Species&quot;</span><span class="p">:</span> <span class="s2">&quot;Bream&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Weight&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;Length1&quot;</span><span class="p">:</span> <span class="mf">31.3</span><span class="p">,</span>
+            <span class="s2">&quot;Length2&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+            <span class="s2">&quot;Length3&quot;</span><span class="p">:</span> <span class="mf">39.5</span><span class="p">,</span>
+            <span class="s2">&quot;Height&quot;</span><span class="p">:</span> <span class="mf">15.1285</span><span class="p">,</span>
+            <span class="s2">&quot;Width&quot;</span><span class="p">:</span> <span class="mf">5.5695</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_fish</span><span class="p">)</span>
+</pre></div>
+
+<p>This model predicts this fish weighs about 646 grams.</p>
+<h2>Providing uncertainty</h2>
+<p>The main reason I've chosen to use statsmodels (rather thank scikit-learn) is
+that it provides built-in support for <a rel="nofollow" href="https://en.wikipedia.org/wiki/Prediction_interval">prediction
+intervals</a>. Take a look:</p>
+<div class="highlight"><pre><span></span><span class="n">frame</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_prediction</span><span class="p">(</span><span class="n">new_fish</span><span class="p">)</span><span class="o">.</span><span class="n">summary_frame</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+<pre><code>| mean   | mean_se | mean_ci_lower | mean_ci_upper | obs_ci_lower | obs_ci_upper |
+|--------|---------|---------------|---------------|--------------|--------------|
+| 646.12 | 18.32   | 644.96        | 647.27        | 640.11       | 652.12      |
+</code></pre>
+<p><code>mean</code> here is the prediction, and a 95% prediction interval is provided by
+<code>obs_ci_lower</code> and <code>obs_ci_upper</code>. In other words, our model thinks the weight
+of this fish is between 640 and 652 grams with 95% probability.</p>
+<p>We're two thirds of the way there!</p>
+<h2>Providing an explanation</h2>
+<p>We can use the structure of the model to provide an explanation. The prediction is equal to:</p>
+<pre><code>  -918          (the intercept)
+-   80.3 * 31.3 (Length1)
++   79.9 * 34   (Length2)
++   32.5 * 39.5 (Length3)
++    5.3 * 15.1 (Height)
+-    0.5 *  5.6 (Width)
+   ------------
+   646.12
+</code></pre>
+<p>A way we might display how the various features contribute to the overall
+prediction is this:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fish_to_feats</span><span class="p">(</span><span class="n">a_fish</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">feats</span> <span class="o">=</span> <span class="n">a_fish</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">feats</span><span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="k">for</span> <span class="n">species_feat</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">species_feat</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;C(Species)&quot;</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">species</span> <span class="o">=</span> <span class="n">species_feat</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>  <span class="c1"># This is ugly</span>
+        <span class="n">feats</span><span class="p">[</span><span class="n">species_feat</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">feats</span><span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">species</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">del</span> <span class="n">feats</span><span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">feats</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+
+
+<span class="n">contributions</span> <span class="o">=</span> <span class="n">fish_to_feats</span><span class="p">(</span><span class="n">new_fish</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="o">*</span> <span class="n">model</span><span class="o">.</span><span class="n">params</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">amount</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
+    <span class="n">contributions</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iteritems</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="o">-</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="k">if</span> <span class="o">-</span><span class="mf">1e-3</span> <span class="o">&lt;</span> <span class="n">amount</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1e3</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;{name}: {amount[0]}&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p>Which provides the following output:</p>
+<blockquote>
+<p>Length2: 2716.2<br />
+Length1: -2513.5<br />
+Length3: 1285.1<br />
+Intercept: -918.3<br />
+Width: -2.9</p>
+</blockquote>
+<p>This could certainly be made more user friendly, but it does give some kind of
+explanation for why the model believes this fish to weigh 646 grams.</p>
+<h2>Conclusion</h2>
+<p>We've built a model that can provide trustworthy predictions. For example:</p>
+<ol>
+<li>My best guess at the weight of this Bream is 646g.</li>
+<li>With 95% probability, the weight is between 640g and 652g.</li>
+<li>The biggest contributors to this prediction are <code>Length2</code> (pushes the
+   prediction higher), <code>Length1</code> (pushes it lower), and <code>Length3</code> (pushes it
+   higher).</li>
+</ol>
+<p>I highly recommend attacking machine learning problems by starting with an
+incredibly simple model first. Implementing that end-to-end enables focus on the
+truly difficult parts of machine learning (i.e. <em>not</em> the ML bits). For some use
+cases, this post provides yet another reason to love linear models: they are
+trustworthy by default!</p>
+<hr />
+<p>Comments? Questions? Concerns? Please tweet me
+<a rel="nofollow" href="https://twitter.com/SamuelDataT">@SamuelDataT</a> or email me. Thanks!</p>
+  </body>
+</html>
