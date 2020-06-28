@@ -8,10 +8,10 @@
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-podgen v1.1.0 https://podgen.readthedocs.org</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 31 May 2020 16:39:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2020 22:35:31 +0000</lastBuildDate>
     <itunes:author>Samuel Taylor</itunes:author>
     <managingEditor>podcast@samueltaylor.org (Samuel Taylor)</managingEditor>
-    <pubDate>Mon, 01 Jun 2020 10:00:00 -0500</pubDate>
+    <pubDate>Wed, 01 Jul 2020 10:00:00 -0500</pubDate>
     <itunes:category text="Technology"/>
     <itunes:image href="https://www.samueltaylor.org/static/img/podcast_cover_1.jpg"/>
     <itunes:owner>
@@ -19,6 +19,14 @@
       <itunes:email>podcast@samueltaylor.org</itunes:email>
     </itunes:owner>
     <atom:link href="https://www.samueltaylor.org/podcast.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Learning Effectively (a review of Ultralearning)</title>
+      <description><![CDATA[<p>The best way to advance your career is to learn. We can do so haphazardly or effectively -- which do you want to do?</p>]]></description>
+      <guid isPermaLink="false">https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/12-Learning_Effectively_a_review_of_Ultrale.mp3</guid>
+      <enclosure url="https://dts.podtrac.com/redirect.mp3/files.samueltaylor.org/12-Learning_Effectively_a_review_of_Ultrale.mp3" length="5689333" type="audio/mpeg"/>
+      <itunes:duration>07:59</itunes:duration>
+      <pubDate>Wed, 01 Jul 2020 10:00:00 -0500</pubDate>
+    </item>
     <item>
       <title>How to train data scientists and software engineers (a review of Peak)</title>
       <description><![CDATA[<p>You're probably doing your training budgets wrong. Learn the science behind skill development and how to structure a good training program.</p>]]></description>
