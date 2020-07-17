@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="../static/css/code.css" rel="stylesheet" type="text/css">
+    <title>Model-Agnostic Uncertainty Estimates through Bootstrapping - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Model-Agnostic Uncertainty Estimates through Bootstrapping</span>
+<h1>Model-Agnostic Uncertainty Estimates through Bootstrapping</h1>
+<p>A key element of a <a href="trustworthy-models.html">trustworthy model</a> is that it can
+give an estimate of its confidence in a given prediction. We've already talked
+about one way to do this for <a href="trustworthy-linear-models.html">linear models</a>,
+and today we'll talk about a technique for getting uncertainty estimates for any
+model.</p>
+<p>Let's continue using the <a rel="nofollow" href="https://www.kaggle.com/aungpyaeap/fish-market">fish dataset</a>
+from last time:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="n">fish</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/Downloads/Fish.csv&quot;</span><span class="p">))</span>
+</pre></div>
+
+<p>We build a <code>ColumnTransformer</code> for convenience:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.compose</span> <span class="kn">import</span> <span class="n">ColumnTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">OneHotEncoder</span>
+
+<span class="n">ct</span> <span class="o">=</span> <span class="n">ColumnTransformer</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;Length1&quot;</span><span class="p">,</span> <span class="s2">&quot;Length2&quot;</span><span class="p">,</span> <span class="s2">&quot;Length3&quot;</span><span class="p">,</span> <span class="s2">&quot;Height&quot;</span><span class="p">,</span> <span class="s2">&quot;Width&quot;</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">&quot;ohe&quot;</span><span class="p">,</span> <span class="n">OneHotEncoder</span><span class="p">(),</span> <span class="p">[</span><span class="s2">&quot;Species&quot;</span><span class="p">]),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+
+<p>Next we construct a pipeline which uses the <code>ColumnTransformer</code> from above as
+well as <code>scikit-learn</code>'s implementation of bagging. Specifically, our
+<code>BaggingRegressor</code> will consist of 100 ElasticNet models, each one trained on a
+random 25% of the dataset (with replacement).</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
+<span class="kn">import</span> <span class="nn">sklearn.linear_model</span> <span class="kn">as</span> <span class="nn">lm</span>
+
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">ct</span><span class="p">,</span> <span class="n">BaggingRegressor</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">ElasticNetCV</span><span class="p">(),</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,)</span>
+<span class="p">)</span>
+
+<span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fish</span><span class="p">,</span> <span class="n">fish</span><span class="p">[</span><span class="s2">&quot;Weight&quot;</span><span class="p">])</span>
+</pre></div>
+
+<p>Finally, we can snag those 100 models and make a prediction for a new fish:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">BaggingRegressor</span>
+<span class="kn">import</span> <span class="nn">sklearn.linear_model</span> <span class="kn">as</span> <span class="nn">lm</span>
+
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span>
+    <span class="n">ct</span><span class="p">,</span> <span class="n">BaggingRegressor</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">ElasticNetCV</span><span class="p">(),</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,)</span>
+<span class="p">)</span>
+
+<span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">fish</span><span class="p">,</span> <span class="n">fish</span><span class="p">[</span><span class="s2">&quot;Weight&quot;</span><span class="p">])</span>
+
+<span class="n">new_fish</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Species&quot;</span><span class="p">:</span> <span class="s2">&quot;Bream&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Weight&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;Length1&quot;</span><span class="p">:</span> <span class="mf">31.3</span><span class="p">,</span>
+            <span class="s2">&quot;Length2&quot;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+            <span class="s2">&quot;Length3&quot;</span><span class="p">:</span> <span class="mf">39.5</span><span class="p">,</span>
+            <span class="s2">&quot;Height&quot;</span><span class="p">:</span> <span class="mf">15.1285</span><span class="p">,</span>
+            <span class="s2">&quot;Width&quot;</span><span class="p">:</span> <span class="mf">5.5695</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">new_fish</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">estimators</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;twm1_hist.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p>Which gives us a nifty histogram of expected weight:</p>
+<p><img src="/static/img/twm1_hist.png"></p>
+<p>The cool thing about this approach, though, is that we can swap in any model
+within the <code>BaggingRegressor</code>, and the rest of the code is unaffected. For
+instance, here's the distribution of predictions when using decision trees:</p>
+<p><img src="/static/img/twm1_hist1.png"></p>
+<p>Interesting idea, right? There's still a few more approaches I want to highlight
+in coming posts, but after that I'll be comparing them all to see which
+uncertainty estimation technique is best.</p>
+<hr />
+<p>Comments? Questions? Concerns? Please tweet me
+<a rel="nofollow" href="https://twitter.com/SamuelDataT">@SamuelDataT</a> or email me. Thanks!</p>
+  </body>
+</html>
