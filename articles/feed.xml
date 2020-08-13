@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Fri, 17 Jul 2020 00:49:59 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>Model-Agnostic Uncertainty Estimates through Bootstrapping</title><link>https://www.samueltaylor.org/articles/uncertainty-with-bootstrap.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;A key element of a &lt;a href="trustworthy-models.html"&gt;trustworthy model&lt;/a&gt; is that it can
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 13 Aug 2020 02:16:24 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>APChemSolutions review - do not buy</title><link>https://www.samueltaylor.org/articles/apchemsolutions-review.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;Author's note: this is not what I usually write about. If you're an educator
+considering purchasing a product from apchemsolutions.com, please read on!
+Otherwise, don't worry about it.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Executive summary&lt;/h2&gt;
+&lt;p&gt;An educator I know recently contacted me for some IT help with a product they
+had purchased from apchemsolutions.com (AKA AP Chem Solutions). In helping this
+person, I was appalled by the level of contempt the creator(s) of this product
+have for their users. &lt;strong&gt;I strongly recommend against purchasing anything from AP
+Chem Solutions&lt;/strong&gt; (which uses the domain apchemsolutions.com).&lt;/p&gt;
+&lt;h2&gt;More detail&lt;/h2&gt;
+&lt;p&gt;I completely understand that companies have a right to protect their
+intellectual property. However, AP Chem Solutions chooses to use DRM (digital
+rights management) software which harms its customers. Here are a few reasons I
+think their product is bad:&lt;/p&gt;
+&lt;h3&gt;1. Jumping through hoops&lt;/h3&gt;
+&lt;p&gt;The educator who reached out to me receives an email with instructions on how to
+open the PDF files in the provided ZIP file. First, the user must have Adobe
+Reader installed. Then, there is a set of six to seven items which describe how
+to install a certificate on your computer. Then, there are a further 5 steps to
+get Adobe Reader set up to actually read the PDF's.&lt;/p&gt;
+&lt;p&gt;I have a degree in computer science, and I found these steps to be frustrating
+and annoying. It is no wonder that this person needed help! While I have immense
+respect for teachers, the amount of hoops this company expects them to jump
+through is beyond anything I would expect a teacher at any level to accomplish
+on their own.&lt;/p&gt;
+&lt;h3&gt;2. Administrative access&lt;/h3&gt;
+&lt;p&gt;Which brings us to the next point: admin access. To import this certificate in
+the first place, the customer is expected to enter the admin password for the
+computer. This might be all fine and dandy, except that it is rare for teachers
+to have admin access to the computers provided them by the school.&lt;/p&gt;
+&lt;p&gt;You know how much of a pain it is to interact with your IT department? Well, if
+you want to use this product, you're going to have to bug IT. And they might not
+want to help you with this. It's a very real possibility that your request will
+get denied and you will be completely unable to use the product you purchased
+from AP Chem Solutions.&lt;/p&gt;
+&lt;h3&gt;3. Small annoyances&lt;/h3&gt;
+&lt;p&gt;All of my other concerns are more important than any of the minor things I'm
+listing here, but I wanted to list them:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Instructions are at times unclear or poorly written. I can easily see someone
+  getting confused trying to follow them.&lt;/li&gt;
+&lt;li&gt;Instructions are at times factually inaccurate (e.g. you don't need to set
+  your default PDF reader to Adobe Reader)&lt;/li&gt;
+&lt;li&gt;You cannot use these materials on operating systems other than Windows or
+  macOS (because Adobe Reader isn't available on other platforms)&lt;/li&gt;
+&lt;li&gt;They require you to disable some security features of Adobe Reader. I am not a
+  cybersecurity buff, but I imagine this exposes your computer to additional
+  risk of viruses and/or malware.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4. Printing restrictions&lt;/h3&gt;
+&lt;p&gt;Finally, the reason this company has had you jump through all these hoops in the
+first place: to keep you from printing or redistributing certain portions of
+the materials they have provided you. Would you like to print a copy of the
+slides for your students or a sub? You can't!&lt;/p&gt;
+&lt;p&gt;And forget about sharing the PDF's digitally; anyone you send them to will have
+to go through the same setup process you did. Good luck explaining that to them.&lt;/p&gt;
+&lt;h2&gt;An alternative&lt;/h2&gt;
+&lt;p&gt;Rather than use restrictive, draconian DRM software, AP Chem Solutions should
+put its customers first. The company should provide its customers what they
+believe they have purchased: access to materials that will help them make
+students more successful free from restrictive DRM. Teachers, who are already
+overburdened, &lt;em&gt;should not have to have a four year degree in computers just to
+use a product they have purchased&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;To reiterate: &lt;strong&gt;please do not buy anything from AP Chem Solutions&lt;/strong&gt;, which
+operates on the domain name apchemsolutions.com. It appears they care more about
+lining their pockets than they do about your ability to actually use the product
+you purchased.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/apchemsolutions-review.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Thu, 13 Aug 2020 02:15:31 GMT</pubDate></item><item><title>Model-Agnostic Uncertainty Estimates through Bootstrapping</title><link>https://www.samueltaylor.org/articles/uncertainty-with-bootstrap.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;A key element of a &lt;a href="trustworthy-models.html"&gt;trustworthy model&lt;/a&gt; is that it can
 give an estimate of its confidence in a given prediction. We've already talked
 about one way to do this for &lt;a href="trustworthy-linear-models.html"&gt;linear models&lt;/a&gt;,
 and today we'll talk about a technique for getting uncertainty estimates for any
