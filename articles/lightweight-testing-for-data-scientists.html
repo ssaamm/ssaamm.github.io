@@ -23,12 +23,14 @@
 <p>When I began working in analytics, one of the most miserable types of tasks I ended up doing was re-running an old Jupyter notebook. Often it failed part way through with some inscrutable error. Figuring out what was going on was challenging; how am I supposed to remember this particular notebook from five months ago? What's more, the underlying data sometimes stops getting updated, or a column name changes, or the date format in a particular field switches. You may have had similarly frustrating experiences. The good news is that simple techniques from the field of software engineering can dramatically improve this experience.</p>
 <p>As you may have guessed from the title of this article, I'm a big fan of testing. It's easier than you realize, and it'll save you a ton of headaches. For our purposes today, let's consider a machine learning project that consists of three phases: first, exploratory data analysis and prototyping. Second, model training. And third, running in production. All three of these phases can benefit from testing.</p>
 <h2>One: EDA and prototyping</h2>
-<p>When exploring the data, we learn a significant amount of information. Here are some examples of questions we might answer:
-    - How many columns are there in this dataset?
-    - What are the names of each column?
-    - What data type does each column contain?
-    - For string columns, how many unique values exist?
-    - For numeric columns, what range does the data fall into?</p>
+<p>When exploring the data, we learn a significant amount of information. Here are some examples of questions we might answer:</p>
+<ul>
+<li>How many columns are there in this dataset?</li>
+<li>What are the names of each column?</li>
+<li>What data type does each column contain?</li>
+<li>For string columns, how many unique values exist?</li>
+<li>For numeric columns, what range does the data fall into?</li>
+</ul>
 <p>Too often, we keep the answers to these questions in our head alone. This fact is part of what makes it difficult to go back to an old notebook; these answers have fallen out of our short- and long-term memory by the time we return to the notebook. Fortunately for us, computers have excellent memories! We could, of course, write down each of the answers to these questions directly in our Jupyter notebook, which will help us when we return to it. Still better, though, is expressing the answers to these questions as executable code -- as tests.</p>
 <p>When doing initial analysis, I find it cumbersome to even think about running a testing framework inside my notebook. Fortunately, we can get by without one: Python includes the <code>assert</code> keyword, which will do just fine. For example, we might encode the knowledge that our DataFrame should have 8 columns thusly:</p>
 <p><code>assert df.shape[1] == 8</code></p>
