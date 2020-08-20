@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108813396-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108813396-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="../static/css/code.css" rel="stylesheet" type="text/css">
+    <title>Lightweight testing for maintainable data science - Samuel Taylor</title>
+  </head>
+  <body>
+<span class="breadcrumb"><a href="../index.html">Home</a> &gt; <a href="index.html">Articles</a> &gt; Lightweight testing for maintainable data science</span>
+<h1>Lightweight testing for maintainable data science</h1>
+<p>When I began working in analytics, one of the most miserable types of tasks I ended up doing was re-running an old Jupyter notebook. Often it failed part way through with some inscrutable error. Figuring out what was going on was challenging; how am I supposed to remember this particular notebook from five months ago? What's more, the underlying data sometimes stops getting updated, or a column name changes, or the date format in a particular field switches. You may have had similarly frustrating experiences. The good news is that simple techniques from the field of software engineering can dramatically improve this experience.</p>
+<p>As you may have guessed from the title of this article, I'm a big fan of testing. It's easier than you realize, and it'll save you a ton of headaches. For our purposes today, let's consider a machine learning project that consists of three phases: first, exploratory data analysis and prototyping. Second, model training. And third, running in production. All three of these phases can benefit from testing.</p>
+<h2>One: EDA and prototyping</h2>
+<p>When exploring the data, we learn a significant amount of information. Here are some examples of questions we might answer:
+    - How many columns are there in this dataset?
+    - What are the names of each column?
+    - What data type does each column contain?
+    - For string columns, how many unique values exist?
+    - For numeric columns, what range does the data fall into?</p>
+<p>Too often, we keep the answers to these questions in our head alone. This fact is part of what makes it difficult to go back to an old notebook; these answers have fallen out of our short- and long-term memory by the time we return to the notebook. Fortunately for us, computers have excellent memories! We could, of course, write down each of the answers to these questions directly in our Jupyter notebook, which will help us when we return to it. Still better, though, is expressing the answers to these questions as executable code -- as tests.</p>
+<p>When doing initial analysis, I find it cumbersome to even think about running a testing framework inside my notebook. Fortunately, we can get by without one: Python includes the <code>assert</code> keyword, which will do just fine. For example, we might encode the knowledge that our DataFrame should have 8 columns thusly:</p>
+<p><code>assert df.shape[1] == 8</code></p>
+<p>This is an improvement over a comment or markdown cell that simply states "DataFrame should have 8 columns" because the computer will actually check this for us each time the notebook is run. And if that condition is not met, we will see an error:</p>
+<pre><code>---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+&lt;ipython-input-13-ed79b70114d8&gt; in &lt;module&gt;
+----&gt; 1 assert df.shape[1] == 8
+
+AssertionError:
+</code></pre>
+<p>In this case, this may be an acceptable error. We can read the condition that was asserted and back into the conclusion that our DataFrame should have eight columns. But if we're feeling quite charitable toward our future self, we can add a message:</p>
+<p><code>assert df.shape[1] == 8, "Expected 8 columns"</code></p>
+<p>which, assuming the condition is not true, will result in this error:</p>
+<pre><code>---------------------------------------------------------------------------
+AssertionError                            Traceback (most recent call last)
+&lt;ipython-input-14-18deb3201a98&gt; in &lt;module&gt;
+----&gt; 1 assert df.shape[1] == 8, "Expected 8 columns"
+
+AssertionError: Expected 8 columns
+</code></pre>
+<p>Writing an <code>assert</code> statement is a cheap insurance policy against unexpected changes. I highly recommend making assertions about the shape of your dataset, the sparsity of certain columns (<code>assert df['a'].notnull().mean() &gt; 0.9</code>), the existence of particularly important columns (<code>assert 'age' in df</code>), and the range of numeric columns (<code>assert (df['age'] &lt; 0).sum() == 0</code>). As a general rule, if you're making an assumption in your code, consider whether you can express that assumption as an assert statement.</p>
+<h2>Two: training script</h2>
+<p>A common pattern I've seen in machine learning work is to take a Jupyter notebook that contains code to train a model and turn it into a Python script (which is more easily run/monitored in certain environments). To do this, I recommend taking chunks of the notebook which do a discrete unit of work and turning them into standalone functions that the notebook then uses. Specifically, create a <code>.py</code> script in the same directory as the notebook (say, <code>helpers.py</code>), define a new function, and copy the code from the notebook into that function. Then, import the function (for example, <code>from helpers import age_range_to_midpoint</code>), delete the code you pasted into the script, and use the function instead.</p>
+<p>As an example, suppose our data encodes age as a range ("0-25", "25-40", "40-100"), and we have decided that we want to represent this to our model with the midpoint of the range. Our <code>helpers.py</code> script might contain the following:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">age_range_to_midpoint</span><span class="p">(</span><span class="n">age_range</span><span class="p">):</span>
+    <span class="n">endpoints</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">age_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">endpoints</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">endpoints</span><span class="p">)</span>
+</pre></div>
+
+<p>At this point, I believe it's worth it to use a testing framework. Python has one built in, but I love using <a rel="nofollow" href="https://docs.pytest.org/en/stable/">pytest</a>. As we create functions, we can add tests by defining a function (or functions) whose name(s) begin with "test_":</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_age_range</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">age_range_to_midpoint</span><span class="p">(</span><span class="s1">&#39;20-30&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">25</span>
+    <span class="k">assert</span> <span class="n">age_range_to_midpoint</span><span class="p">(</span><span class="s1">&#39;0-31&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mf">15.5</span>
+</pre></div>
+
+<p>Just like the asserts we created during EDA encode information about our data, these tests encode information about how our code works. By the end of this process, we have a nice file of functions and a notebook which largely runs those functions in a certain order. Turning this notebook into a Python script is now simple, as the complex logic is already present in our helper file.</p>
+<p>We can run our tests with a simple command:</p>
+<pre><code>% pytest helpers.py
+================================== test session starts ===================================
+platform darwin -- Python 3.8.5, pytest-6.0.1, py-1.9.0, pluggy-0.13.1
+rootdir: /my/cool/project
+collected 1 item
+
+helpers.py .                                                                       [100%]
+
+=================================== 1 passed in 0.00s ====================================
+</code></pre>
+<p>These tests enable us to make changes to our code more confidently. We can run these tests ourselves after changes we've made to make sure we haven't broken anything. Ideally, we can set up some sort of automated process that runs these tests as commits are made (both GitLab and GitHub offer tools that do this).</p>
+<p>Further, these tests serve as executable documentation. While it is easy for comments to go stale, tests remain an accurate description of what a function does. If I introduce a change to the way a function works, I must also edit the tests (or else they will fail, and I will be sad). In this way, tests are a far more reliable and accurate kind of documentation than comments.</p>
+<h2>Three: production</h2>
+<p>While a thorough treatment of putting a model in production is outside the scope of this article, testing is certainly a part of it. In his book <em>Building Machine Learning Powered Applications</em>, Emmanuel Ameisen coins the term "check" to describe a test that runs in the production prediction pipeline (rather than in a CI/CD pipeline). The same kinds of common sense <code>assert</code> statements you wrote in your Jupyter notebook are also helpful sanity checks in a prediction pipeline.</p>
+<p>You should write checks for both inputs and outputs of your model. Is someone passing in a negative value for the age of a human being? Is our model predicting that a car will have a fuel efficiency of over 9,000 miles per gallon? Both of these cases seem unexpected! Depending on the business requirements, we may take a variety of actions. For instance, if our model is predicting a huge value for miles per gallon, we might refuse to make a prediction:</p>
+<div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">y_pred</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y_pred</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">PredictionError</span><span class="p">(</span><span class="s1">&#39;Problem predicting mpg for this car&#39;</span><span class="p">)</span>
+</pre></div>
+
+<p>In other cases, we may be able to use a heuristic:</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">y_pred</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y_pred</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">30</span>
+</pre></div>
+
+<p>Sometimes, we may be able to swap in a simpler model if it's available and more robust. Or we can replace nonsensical feature values for nulls, or impute a value. There's a lot of options here, and you should be careful about choosing the right one for your use case. A well-written check prevents a certain class of bug from becoming an issue, thereby improving the robustness of the system overall.</p>
+<h2>Go forth and test</h2>
+<p>Keep in mind how you can introduce testing throughout your process. Whether it's a quick <code>assert</code> statement in a Jupyter notebook, a unit test in a Python script, or a check that runs in production, well-written tests are a gift to your future self and your team. Tests make code less error prone, easier to debug, and less vulnerable to decay.</p>
+  </body>
+</html>
