@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Wed, 18 Nov 2020 01:29:47 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>How to Join a New Team and Learn a New Codebase</title><link>https://www.samueltaylor.org/articles/how-to-join-a-new-team.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Alternate title: &lt;em&gt;new codebase who dis?&lt;/em&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Wed, 18 Nov 2020 02:27:29 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>How to Join a New Team and Learn a New Codebase</title><link>https://www.samueltaylor.org/articles/how-to-join-a-new-team.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Alternate title: &lt;em&gt;new codebase who dis?&lt;/em&gt;&lt;/p&gt;
 &lt;div class="embed-responsive"&gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/O2eEfPtaWA4" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
 
 &lt;p&gt;Delivered at:&lt;/p&gt;
@@ -2143,8 +2143,6 @@ procedure goes like this:&lt;/p&gt;
    one.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2&gt;Example code&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;Note: scikit-learn calls this &lt;a href="https://scikit-learn.org/stable/modules/generated/sklearn.inspection.permutation_importance.html#sklearn.inspection.permutation_importance"&gt;"permutation
-importance"&lt;/a&gt;. I didn't realize that at the time I wrote this article.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Here's an example of how we could actually perform this procedure in Python
 using scikit-learn.&lt;/p&gt;
 &lt;p&gt;First, we import some things we'll need: &lt;code&gt;load_digits&lt;/code&gt; will load in the digits
