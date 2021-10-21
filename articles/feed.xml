@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Sat, 16 Jan 2021 14:28:45 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>How to Join a New Team and Learn a New Codebase</title><link>https://www.samueltaylor.org/articles/how-to-join-a-new-team.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Alternate title: &lt;em&gt;new codebase who dis?&lt;/em&gt;&lt;/p&gt;
+<rss version="2.0"><channel><title>Samuel Taylor – Blog</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>Building good software is challenging but rewarding. On my blog, I share the things I'm learning as a practitioner in this exciting industry.</description><lastBuildDate>Thu, 21 Oct 2021 01:04:10 GMT</lastBuildDate><generator>PyRSS2Gen-1.1.0</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><image><url>/static/img/me.jpg</url><title>Samuel Taylor</title><link>https://www.samueltaylor.org/utm_source=rss&amp;utm_campaign=st-blog-feed</link></image><item><title>How to Join a New Team and Learn a New Codebase</title><link>https://www.samueltaylor.org/articles/how-to-join-a-new-team.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Alternate title: &lt;em&gt;new codebase who dis?&lt;/em&gt;&lt;/p&gt;
 &lt;div class="embed-responsive"&gt;&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/O2eEfPtaWA4" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/div&gt;
 
 &lt;p&gt;Delivered at:&lt;/p&gt;
@@ -2769,8 +2769,7 @@ person who loves email like that. And then also I am happy to read people's twee
 take those via Twitter as well. I'm @SamuelDataT. Would love to hear from you. &lt;/p&gt;
 &lt;p&gt;Thank you so much for letting me talk to you and take this time out of your day. I appreciate it so much. I really hope
 you're able to get something out of this if you have any other questions. We have about 5 minutes that I can take
-questions if you have them or I'm also happy to talk about it after this, but thank you.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/machine-learning-crash-course.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 10 Apr 2018 17:54:24 GMT</pubDate></item><item><title>Work Queues in Software and Productivity</title><link>https://www.samueltaylor.org/articles/work-queues-software-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;Prefer to listen? This article is also available as episode 6 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;My first job at a real software company was after my sophomore year in college. As you might imagine, I learned a ton
+questions if you have them or I'm also happy to talk about it after this, but thank you.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/machine-learning-crash-course.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Tue, 10 Apr 2018 17:54:24 GMT</pubDate></item><item><title>Work Queues in Software and Productivity</title><link>https://www.samueltaylor.org/articles/work-queues-software-productivity.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;My first job at a real software company was after my sophomore year in college. As you might imagine, I learned a ton
 that summer. I learned about how companies organize themselves. I learned how software teams organize around different
 pieces of the product. I learned specific technical things. I learned how to read code. I learned about navigating large
 codebases. But the thing that that stuck with me most was a specific architectural decision that they had made: to
@@ -2921,8 +2920,7 @@ LINE 1: SELECT DISTINCT ON (store_id) name, quantity, item_name
                             ^
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If you run into a situation wherein you need to choose a specific row in a group based on some rules, try using
-&lt;code&gt;DISTINCT ON&lt;/code&gt;. For more detail, check out the &lt;a href="https://www.postgresql.org/docs/10/static/sql-select.html#SQL-DISTINCT"&gt;Postgres documentation&lt;/a&gt;.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/postgres-distinct-on.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 12 Feb 2018 00:39:08 GMT</pubDate></item><item><title>Work-Self Balance</title><link>https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;Prefer to listen? This article is also available as episode 4 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;It's a few months ago. I'm enjoying my job and trying to bring value to my team. A high-visibility project comes up.
+&lt;code&gt;DISTINCT ON&lt;/code&gt;. For more detail, check out the &lt;a href="https://www.postgresql.org/docs/10/static/sql-select.html#SQL-DISTINCT"&gt;Postgres documentation&lt;/a&gt;.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/postgres-distinct-on.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Mon, 12 Feb 2018 00:39:08 GMT</pubDate></item><item><title>Work-Self Balance</title><link>https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;It's a few months ago. I'm enjoying my job and trying to bring value to my team. A high-visibility project comes up.
 Despite being unfamiliar with the framework we plan to use, I'm excited to work on this project. I set out to "learn by
 doing", implementing a chunk of the project with this framework. After reading some code, writing some new code by trial
 and error, and asking a lot of questions, I'm able to get this chunk finished. More exciting than that, my
@@ -2969,8 +2967,7 @@ human. And really, aren't we all?&lt;/p&gt;
 &lt;a href="https://www.goodreads.com/book/show/11516274-redirect"&gt;&lt;em&gt;Redirect&lt;/em&gt;&lt;/a&gt;, which explores a bunch of interesting research in
 self narrative.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;2&lt;/strong&gt;: I'm sure there are other ways of increasing this kind of self-awareness. &lt;a href="mailto:sgt@samueltaylor.org"&gt;Let me
-know&lt;/a&gt; if you have any tips of what has worked for you in the past.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 03 Jan 2018 12:58:11 GMT</pubDate></item><item><title>Poetry for Software Engineers</title><link>https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;em&gt;This is a modified transcript of episode 3 of &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="/static/img/poetry_fountain_pen.jpg"&gt;&lt;/p&gt;
+know&lt;/a&gt; if you have any tips of what has worked for you in the past.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/work-self-balance.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Wed, 03 Jan 2018 12:58:11 GMT</pubDate></item><item><title>Poetry for Software Engineers</title><link>https://www.samueltaylor.org/articles/poetry-for-software-engineers.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;&lt;img src="/static/img/poetry_fountain_pen.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Photo by &lt;a href="https://unsplash.com/photos/hjwKMkehBco"&gt;Álvaro Serrano&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;I am not a poet. But when I was barely three years old, I was sitting at the kitchen table with my mother and older
 sister. They were working on rhyming words, because that is apparently the stage of childhood development my sister was
@@ -3225,8 +3222,7 @@ categories of damage sustained (none, minor, or major).&lt;/p&gt;</description><
 
 &lt;p&gt;Delivered at:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.devspaceconf.com/"&gt;DevSpace&lt;/a&gt; on 14 Oct 2017. Audio available on &lt;a href="/podcast.html"&gt;my podcast&lt;/a&gt;. Slides
-  available &lt;a href="/static/pdf/find_job_ml.pdf"&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.devspaceconf.com/"&gt;DevSpace&lt;/a&gt; on 14 Oct 2017. Slides available &lt;a href="/static/pdf/find_job_ml.pdf"&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://datascicon.tech/"&gt;DataSciCon&lt;/a&gt; on 30 Nov 2017. Slides available &lt;a href="/static/pdf/datascicon_find_job_ml.pdf"&gt;here&lt;/a&gt;.
   Video available &lt;a href="https://www.recallact.com/presentation/use-machine-learning-find-your-next-job"&gt;here&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
@@ -3469,7 +3465,6 @@ in our work. But in an age where everyone seems to be in a time crunch, we want 
 possible. We want to get as much learning out of our books, courses, and videos as we can. Counterintuitively, I believe
 one of the best ways to maximize knowledge gain is by reading books that do not apply easily to technologies or concepts
 we already understand.&lt;/p&gt;
-&lt;p&gt;(Prefer to listen? &lt;a href="/podcast.html"&gt;Subscribe to my podcast&lt;/a&gt; for a narrated version.)&lt;/p&gt;
 &lt;p&gt;Over the last year, I've read two books that aren't written in Python (the primary language I use at work): &lt;em&gt;Working
 Effectively with Legacy Code&lt;/em&gt;, by Michael Feathers, and &lt;em&gt;Practical Object-Oriented Design in Ruby&lt;/em&gt; by Sandi Metz.
 Initially, I was skeptical as to whether I would gain much from them, as specific tactics seemed like they wouldn't be
@@ -3589,7 +3584,6 @@ decorate our &lt;code&gt;http_get&lt;/code&gt; function with.&lt;/p&gt;
 toolbox. The &lt;a href="https://docs.python.org/3/reference/datamodel.html#emulating-callable-objects"&gt;official docs are here&lt;/a&gt;.
 Keep this in mind the next time you're refactoring something; it may be the right choice.&lt;/p&gt;</description><author>Samuel Taylor</author><guid isPermaLink="true">https://www.samueltaylor.org/articles/function-with-memory.html?utm_source=rss&amp;utm_campaign=st-blog-feed</guid><pubDate>Sat, 28 Oct 2017 16:32:48 GMT</pubDate></item><item><title>How to Attend a Tech Conference</title><link>https://www.samueltaylor.org/articles/how-to-attend-tech-conference.html?utm_source=rss&amp;utm_campaign=st-blog-feed</link><description>&lt;p&gt;Conferences can be both fun and valuable, but they can also be a huge waste of time. Here's some things I've learned
 that have helped me get the most out of conferences as an attendee.&lt;/p&gt;
-&lt;p&gt;(Prefer to listen? &lt;a href="/podcast.html"&gt;Subscribe to my podcast&lt;/a&gt;) for a narrated version.)&lt;/p&gt;
 &lt;h2&gt;Consider skipping talks&lt;/h2&gt;
 &lt;p&gt;This advice sounds crazy, I know; the whole point of conferences is to hear the speakers, right? I'm not convinced.  The
 most valuable experiences I've had at conferences are centered around the people, not the talks.&lt;/p&gt;
